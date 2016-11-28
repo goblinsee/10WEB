@@ -21,5 +21,20 @@
         public function test(){
             echo "hello world";
         }
+
+        public function activity($id = 0){
+            $activity = array(
+                array(
+                    "name" => "测试活动1",
+                    "date" => "2016年11月28日19:42:09"
+                ),
+                array(
+                    "name" => "测试活动2",
+                    "date" => "2016年11月28日19:42:09"
+                ),
+            );
+
+            echo json_encode($activity);
+        }
     }
 ?>
