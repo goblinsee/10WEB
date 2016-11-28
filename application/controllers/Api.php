@@ -9,8 +9,17 @@
         *
         */
         public function signup(){
-            $account = $_POST['UserAccount'];
-            echo $account;
+            $account = $_POST['Account'];
+            $password = $_POST['Password'];
+            $user_info = array(
+                'Account' =>  $account,
+                'Password' => $password
+            );
+            echo json_encode($user_info);
+        }
+
+        public function test(){
+            echo "hello world";
         }
     }
 ?>
