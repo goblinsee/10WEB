@@ -14,12 +14,18 @@
             url:'api/signup',
             type:'post',
             data:{
-                UserAccount:"hello",
-                password:"asdasdasdsadweqwe"
+                UserAccount:"tonyhjp888@gmail.com",
+                password:"HelloWorld"
             },
             success:function(data){
                 alert(data);
-                alert("我们已经给你发了一封邮件到你的邮箱里，查收完成注册");
+                data=JSON.parse(data);
+                if(data['Flag'] == 100)
+                    alert("我们已经给你发了一封邮件到你的邮箱里，查收完成注册");
+                else if(data['Flag'] == -101)
+                    alert("账号已存在");
+                else 
+                    alert("ERROR");
             }
         });
     });
