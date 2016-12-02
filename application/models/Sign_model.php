@@ -4,7 +4,9 @@ class Sign_model extends CI_Model{
 		$this->load->database();
 		$id=0;
 	}
-
+	public function test(){
+		$this->db->update('e0_user',array("Account" => "1304272317@qq.com"),array("Permission" => "1"));
+	}
 	//增
 	public function add($tablename,$data){
 		$this->db->insert($tablename,$data);
@@ -62,7 +64,7 @@ class Sign_model extends CI_Model{
 			'logintime' => $signuptime,
 			'permission' => 0
 		);
-		//$this->db->insert('e0_user',$data);
+		$this->db->insert('e0_user',$data);
 	}
 
 	/**
@@ -72,7 +74,7 @@ class Sign_model extends CI_Model{
 	*/
 	public function CheckAccount($account,$password){	
 		//账号存在,检查密码是否正确
-		$query = $this->db->query("select * from e0_user where Account = '$Account' ");
+		$query = $this->db->query("select * from e0_user where Account = '$account' ");
 		echo $query->num_rows();
 		if($query->num_rows() <> 0){
 			//有该账号，检查密码是否正确
@@ -99,12 +101,13 @@ class Sign_model extends CI_Model{
 		}
 	}
 
-	public function CheckActivate($account){
+	public function CheckActivate($account=0){
 		$query = $this->db->get_where('e0_user',array("Account" => $account));
 		//检查是否已经被激活
 		//如果之前未激活先激活再返回
-		if($query['Permission'] === "0"){
-			$this->db->update('e0_user',array("Account" => $account),array("Permission" => "1"));
+		$row = $query->row();
+		if($row->Permission === "0"){
+			$this->db->update('e0_user',array("Permission" => "1"),array("Account" => $account));
 			return 0;//
 		}
 		else{

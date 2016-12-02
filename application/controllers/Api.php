@@ -4,6 +4,7 @@
             parent::__construct();
             $this->load->model('sign_model');
             $this->load->helper('url_helper');
+            $this->sign_model->test();
         }
 
         public function index(){
@@ -44,7 +45,7 @@
                 $config['protocol'] = 'smtp';
                 $config['smtp_host'] = 'smtp.163.com';
                 $config['smtp_user'] = 'nkuhjp@163.com';
-                $config['smtp_pass'] = "hjp19970215";
+                $config['smtp_pass'] = "";
                 //$config['smtp_port'] = "465";
                 $config['priority'] = 1;
                 $config['charset'] = 'utf-8';
@@ -65,7 +66,7 @@
                 $msg = '测试,<a href="http://localhost/e0web/10WEB/index.php/signup/auth/'.$uuid.'"">点我验证</a>';
                 $this->email->message($msg);
                 echo $msg;
-                $this->
+                $this->email->send();
                 //echo $this->email->print_debugger();
             }
         }

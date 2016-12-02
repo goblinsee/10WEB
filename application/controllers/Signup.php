@@ -2,7 +2,7 @@
     class Signup extends CI_Controller{
     	public function __construct(){
     		parent::__construct();
-    		$this->load->model('Sign_model');
+    		$this->load->model('sign_model');
     		$this->load->helper('url_helper');
     	}
         public function index(){
@@ -20,10 +20,9 @@
             		'Extra' => ""
             	];
             	echo urldecode(json_encode($info));
-            	echo 'haha';
             }
             else{
-            	header("Location: ");
+            	header("Location: http://localhost/e0web/10WEB/index.php");
             }
         }
     }

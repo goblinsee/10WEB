@@ -14,7 +14,7 @@
             url:'api/signup',
             type:'post',
             data:{
-                UserAccount:"tonyhjp888@gmail.com",
+                UserAccount:"1304272317@qq.com",
                 password:"HelloWorld"
             },
             success:function(data){
