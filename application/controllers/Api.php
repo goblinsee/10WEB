@@ -5,7 +5,7 @@
             parent::__construct();
             $this->load->model('sign_model');
             $this->load->helper('url_helper');
-            $this->sign_model->test();
+            $this->config->load('email',TRUE,TRUE);
         }
         public function index(){
 			
@@ -35,7 +35,9 @@
         /*注册登陆api*/
 
         /**
-        * 注册文档
+        *   注册文档
+        *   @param account varchar(40)
+        *   @param password varchar(20)
         *   
         */
         public function SignUp(){
@@ -63,22 +65,9 @@
                 //发送邮件给用户
                 require("phpmailer/class.smtp.php");
                 $this->load->library('email');
-                $config['protocol'] = 'smtp';
-                $config['smtp_host'] = 'smtp.163.com';
-                $config['smtp_user'] = 'nkuhjp@163.com';
-                $config['smtp_pass'] = "";
-                //$config['smtp_port'] = "465";
-                $config['priority'] = 1;
-                $config['charset'] = 'utf-8';
-                $config['mailpath'] = '/usr/sbin/sendmail';
-                //$config['smtp_timeout'] = 30;
-                $config['mailtype'] = 'html';
-                $config['wordwrap'] = TRUE;
-                $config['crlf'] = "\r\n";
-                $config['newline'] = "\r\n";
-                $this->email->initialize($config);
-                //'1304272317@qq.com'
-                $this->email->from('nkuhjp@163.com', '我是亿灵');
+                
+                //$this->email->initialize($config);
+                
                 $this->email->to($account);
                // $this->email->cc('another@another-example.com');
                // $this->email->bcc('them@their-example.com');
@@ -96,6 +85,8 @@
         *   登陆文档:登陆之前先检查账号密码信息：
         *   1.未激活 3.账号被封 4.密码错误 5.账号不存在 -------不登陆
         *   2.账号密码正确且已经激活 --------登陆
+        *   @param account varchar(40)
+        *   @param password varchar(20)
         */
         public function SignIn(){
             $account = $_POST['UserAccount'];
