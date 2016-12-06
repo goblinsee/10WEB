@@ -1,10 +1,36 @@
 <?php
+
+
+function sendMail($account,$email_info){
+    require("phpmailer/class.phpmailer.php"); 
+    $email_host = $email_info['email_host'];
+    $email_username = $email_info['email_username'];
+    $email_password = $email_info['email_password'];
+
+    $mail = new PHPMailer(); //建立邮件发送类
+    $address = $account;
+    $mail->IsSMTP(); // 使用SMTP方式发送
+    $mail->Host = $email_host; // 您的企业邮局域名
+    $mail->SMTPAuth = true; // 启用SMTP验证功能
+    $mail->Username = $email_username; // 邮局用户名(请填写完整的email地址)
+    $mail->Password = $email_password; // 邮局密码
+    $mail->From = $email_username; //邮件发送者email地址
+    $mail->FromName = "亿灵";
+    $mail->AddAddress("$address", "$address");//收件人地址，可以替换成任何想要接收邮件的email信箱,格式是AddAddress("收件人email","收件人姓名")
+    $mail->Subject = "eling验证"; //邮件标题：要以英文开头
+    $uuid = urlencode(base64_encode($account));
+    $msg = '测试,<a href="http://www.jyonline.cc:6070/index.php/signup/auth/'.$uuid.'">点我验证</a>';
+    $mail->Body = $msg; //邮件内容
+    $mail->Send();
+}
+
+
     class Api extends CI_Controller {
         public function __construct(){
             parent::__construct();
             $this->load->model('sign_model');
             $this->load->helper('url_helper');
-            $this->config->load('email',TRUE,TRUE);
+            
         }
 
         public function index(){
@@ -20,7 +46,7 @@
         *   
         */
         public function SignUp(){
-            $account = $_POST['UserAccount'];            
+            $account = $_POST['UserAccount'];    
             //先检查账号是否存在       
             if($this->sign_model->AccountExist($account)){
                 $info = array(
@@ -39,26 +65,14 @@
                     'Flag' => 100,//成功
                     'Content' => urlencode("用户创建成功"),
                     'Extra' => ""
-                );
-                echo urldecode(json_encode($info));
+                );          
+                $email_info =$this->config->item('email');//获取email配置信息
                 //发送邮件给用户
-                require("phpmailer/class.smtp.php");
-                $this->load->library('email');
-                
-                //$this->email->initialize($config);
-                
-                $this->email->to($account);
-               // $this->email->cc('another@another-example.com');
-               // $this->email->bcc('them@their-example.com');
-                $uuid = urlencode(base64_encode($account));
-                $this->email->subject('测试');
-                $msg = '测试,<a href="http://localhost/e0web/10WEB/index.php/signup/auth/'.$uuid.'"">点我验证</a>';
-                $this->email->message($msg);
-                echo $msg;
-                $this->email->send();
-                //echo $this->email->print_debugger();
+                sendMail($account,$email_info);
+                echo urldecode(json_encode($info));
             }
         }
+
 
         /**
         *   登陆文档:登陆之前先检查账号密码信息：
