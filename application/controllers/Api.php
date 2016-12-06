@@ -124,21 +124,11 @@
 		public function archive($opname){
 			switch($opname){
 				case 'add': {
-					$Title = $_POST['Title'];
-					$Source = $_POST['Source'];
-					$RedirectUrl = "";
-					$LitPic = "";
-					if(isset($_POST['RedirectUrl']))
-						$RedirectUrl = $_POST['RedirectUrl'];
-					if(isset($_POST['LitPic']))
-						$LitPic = $_POST['LitPic'];
-					$PubDate = date("Y-m-d H:i:s");
-					$id = md5($PubDate.$Title);
-					$error_code = $this->Archives_model->addArc($id, $Title, $Source, $RedirectUrl, $LitPic, $PubDate);
+					$error_code = $this->Archives_model->addArchive();
 					if ($error_code) {
 						$info = array(
 							"Flag" => 101,
-							"Content" => "asdasdasd",
+							"Content" => "Add Archive Success!",
 							"Extra" => ""
 						);
 					} else {
@@ -152,13 +142,11 @@
 					break;
 				}
 				case 'del' : {
-					$Title = $_POST['Title'];
-					$ID = $_POST['ID'];
-					$error_code = $this->Archives_model->delArc($ID,$Title);
+					$error_code = $this->Archives_model->delArchive();
 					if ($error_code) {
 						$info = array(
 							"Flag" => 101,
-							"Content" => "asdasdasd",
+							"Content" => "Delete Archive Success!",
 							"Extra" => ""
 						);
 					} else {
@@ -169,6 +157,42 @@
 						);
 					}
 					echo json_encode($info) ;
+					break;
+				}
+				case 'edit' : {
+					$error_code = $this->Archives_model->editArchive();
+					if ($error_code) {
+						$info = array(
+							"Flag" => 101,
+							"Content" => "Edit Archive Success!",
+							"Extra" => ""
+						);
+					} else {
+						$info = array(
+							"Flag" => -100,
+							"Content" => "",
+							"Extra" => ""
+						);
+					}
+					echo json_encode($info);
+					break;
+				}
+				case 'find' : {
+					$row = $this->Archives_model->findArchive();
+					if ($row) {
+						$info = array(
+							"Flag" => 101,
+							"Content" => "Find Archive Success!",
+							"Extra" => ""
+						);
+					} else {
+						$info = array(
+							"Flag" => -100,
+							"Content" => "Find Archive Fail!",
+							"Extra" => ""
+						);
+					}
+					echo json_encode($info);
 					break;
 				}
 			}

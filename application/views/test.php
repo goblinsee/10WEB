@@ -9,12 +9,12 @@
             url:'../api/archive/add',
             type:'post',
             data:{
-                Title:"hello",
-                Source:"asdasdasdsadweqwe"
+                Source:"1238418",
+                Title:"122222"
             },
             success:function(data){
                 alert(data);
-                alert("tianjia wen zhang cheng gong");
+                alert("edit archive success");
             }
         });
     });
