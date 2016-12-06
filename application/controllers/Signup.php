@@ -11,6 +11,7 @@
         //激活账号
         public function auth($uid = null){
             $account = base64_decode(urldecode($uid));
+            echo $account;
             $state = $this->sign_model->CheckActivate($account);
             //检查账号是否已经激活过
             if($state === 1){
@@ -22,7 +23,7 @@
             	echo urldecode(json_encode($info));
             }
             else{
-            	header("Location: http://localhost/e0web/10WEB/index.php");
+            	header("Location: http://www.jyonline.cc:6070/index.php");
             }
         }
 	
