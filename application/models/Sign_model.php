@@ -2,6 +2,7 @@
 class Sign_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
+		$this->load->model('Archives_model');
 		$id=0;
 	}
 	//增

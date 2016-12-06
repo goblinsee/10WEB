@@ -25,5 +25,7 @@
             	header("Location: http://localhost/e0web/10WEB/index.php");
             }
         }
-    }
+	
+	}
+	
 ?>
