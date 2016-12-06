@@ -87,7 +87,7 @@ function sendMail($account,$email_info){
             //在数据库中查找是否有该账号以及检查该账号是否可用
             $state = $this->sign_model->CheckAccount($account,$password);
             $info=[
-                "Flag" => -100,
+                "Flag" => -101,
                 "Content" => urlencode("该账号未激活，请激活后登陆"),
                 "Extra" => ""
             ];
@@ -97,6 +97,7 @@ function sendMail($account,$email_info){
             }
             //已经激活，可以登陆
             else if($state === 2){
+               $info['Flag'] = 100;
                $info["Content"] = urlencode("账号密码正确，可以登陆");
             }
             //账号被封
