@@ -2,7 +2,16 @@
 class Sign_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
+		$this->load->model('Archives_model');
 		$id=0;
+	}
+	public function test(){
+		$id = 2;
+		//$sql = "UPDATE news SET ID = ".$this->db->escape($id);
+		$sql = "SELECT * FROM news";
+		$results = $this->db->query($sql);
+		$d=array();
+		echo gettype($d);
 	}
 	//增
 	public function add($tablename,$data){

@@ -26,5 +26,7 @@
             	header("Location: http://www.jyonline.cc:6070/index.php");
             }
         }
-    }
+	
+	}
+	
 ?>
