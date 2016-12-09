@@ -30,9 +30,12 @@ function sendMail($account,$email_info){
         public function __construct(){
             parent::__construct();
             $this->load->model('sign_model');
+            $this->load->model('archives_model');
+            $this->load->model('usermessage_model');
             $this->load->helper('url_helper');
             
         }
+
         public function index(){
 			
 			// 添加文章
@@ -51,11 +54,8 @@ function sendMail($account,$email_info){
 			// $this->Archives_model->delArc($id, $title);
 			
 			// 修改文章
-			
-			
 			// 查询文章
-			
-			
+		    echo "api接口入口";
         }
 
         /*注册登陆api*/
@@ -67,6 +67,7 @@ function sendMail($account,$email_info){
         *   
         */
         public function SignUp(){
+            //$this->sign_model->test();
             $account = $_POST['UserAccount'];    
             //先检查账号是否存在       
             if($this->sign_model->AccountExist($account)){
@@ -134,7 +135,132 @@ function sendMail($account,$email_info){
             }
             echo urldecode(json_encode($info));
         }
-		
+
+        /*用户api*/
+
+        /**
+        *   管理与自己相关的文章
+        *   用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
+        *如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
+        */
+        public function GetUserArchives(){
+            $type = $this->input->post('type');
+            $archives = $this->archives_model->findArchive($type);//传入
+            echo $archives;
+        }
+
+        /**
+        *   用户编辑文章
+        */
+        public function EditArchive(){
+            $type = 'edit';
+            archive($type);
+        }
+
+        /**
+        *   查看和自己发过消息的用户
+        *   @return users array()
+        */
+        public function GetCommunicatedUsers(){
+            $userid = $this->input->post('userid');
+            $users = $this->usermessage_model->GetCommunicatedUser($userid);
+            echo $users;
+        }
+
+        /**
+        *   查看与某一用户的消息内容
+        */
+        public function GetMessage(){
+            $userid = $this->input->post('userid');
+            $mesuserid = $this->input->post('mesuserid');
+            $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
+            echo $messages;
+        }
+
+        /**
+        *   用户删除消息
+        */
+        public function DeleteMessage(){
+            $messageid = $this->input->post('messageid');
+            $info = array(
+                "Flag" => 100,
+                "Content" => urlencode("消息删除成功"),
+                "Extra" => ""
+            );
+            if($this->usermessage_model->DeleteMessage($messageid) === FALSE){
+                $info['Flag'] = -101;
+                $info['Content'] = urlencode("消息删除失败");
+            }
+            echo urldecode(json_encode($info));
+        }
+
+        /**
+        *   用户读取消息，在表中将State设为1,0->未读，1->已读
+        */
+        public function ReadMessage(){
+            $userid = $this->input->post('userid');
+            $messageid = $this->input->post('messageid');
+            $this->usermessage_model->SetMessageRead($userid,$messageid);
+        }
+
+
+        /*管理员api*/
+
+        /**
+        *   查看所有用户的消息
+        */
+        public function GetAllUsersMessages(){
+            $messages = $this->usermessage_model->GetAllUsersMessages();
+            echo $messages;
+        }
+
+        /**
+        *   给用户发消息,如果有用户id传入就给该用户发送消息，否则给所有用户发送消息
+        */
+        public function SendMessageToUser(){
+            $userid = $this->input->post('userid');
+            $content = $this->input->post('content');
+            $info = array(
+                "Flag" => -101,
+                "Content" => "",
+                "Extra" => ""
+            );
+                echo urldecode(json_encode($info));
+            if($content === null){
+                $info['Content'] = urlencode("请输入内容");
+            }
+            else{
+                if($this->usermessage_model->SendMessageToUser($userid,$content)){
+                    $info['Flag'] = 100;
+                    $info['Content'] = urlencode("消息发送成功");
+                }
+                else{
+                    $info['Content'] = urlencode("消息发送失败");
+                }
+            }
+            echo urldecode(json_encode($info));
+        }
+
+        /**
+        *   管理员删除消息
+        */
+        public function DeleteMessageForAdmin(){
+            $messageid = $this->input->post('messageid');
+            $info = array(
+                "Flag" => -101,
+                "Content" => "",
+                "Extra" => ""
+            );
+            if($this->usermessage_model->DeleteMessageForAdmin($messageid)){
+                $info['Flag'] = 100;
+                $info['Content'] = urlencode("删除消息成功");
+            }
+            else{
+                $info['Content'] = urlencode("删除消息失败");
+            }
+            echo urldecode(json_encode($info));
+        }
+
 		public function archive($opname){
 			switch($opname){
 				case 'add': {
