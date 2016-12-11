@@ -23,8 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '../../../../';
-
+$config['base_url'] = 'http://www.jyonline.cc:6070';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -513,5 +512,3 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 $config['email'] = array('email_host' => 'smtp.163.com','email_username' => 'nkuhjp@163.com','email_password' => 'hjp19970215');
-
-
