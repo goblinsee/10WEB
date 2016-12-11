@@ -5,7 +5,8 @@ class User extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('sign_model');
-        $this->load->model('userMessage_model');
+        $this->load->model('usermessage_model');
+        $this->load->model('archives_model');
         $this->load->helper('url_helper');
     }
 
@@ -103,16 +104,18 @@ class User extends CI_Controller {
     */
     public function GetUserArchives(){
         $type = $this->input->post('type');
-        $archives = $this->archives_model->findArchive($type);//传入
-        echo $archives;
+        $archives = $this->Archives_model->findArchive($type);//传入
+        print_r($archives);
     }
 
     /**
     *   用户编辑文章
     */
     public function EditArchive(){
-        $type = 'edit';
-        archive($type);
+        //$type = 'edit';
+        //archive($type);
+      include 'Archive.php';
+      edit();
     }
 
     /**
@@ -122,7 +125,7 @@ class User extends CI_Controller {
     public function GetCommunicatedUsers(){
         $userid = $this->input->post('userid');
         $users = $this->usermessage_model->GetCommunicatedUser($userid);
-        echo $users;
+        print_r($users);
     }
 
     /**
@@ -132,7 +135,7 @@ class User extends CI_Controller {
         $userid = $this->input->post('userid');
         $mesuserid = $this->input->post('mesuserid');
         $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
-        echo $messages;
+        print_r($messages);
     }
 
     /**
@@ -156,25 +159,11 @@ class User extends CI_Controller {
     *   用户读取消息，在表中将State设为1,0->未读，1->已读
     */
     public function ReadMessage(){
-        $userid = $this->input->post('userid');
         $messageid = $this->input->post('messageid');
-        $this->usermessage_model->SetMessageRead($userid,$messageid);
+        $this->usermessage_model->SetMessageRead($messageid);
     }
 
-    /*管理员api*/
-
-    /**
-    *   查看所有用户的消息
-    */
-    public function GetAllUsersMessages(){
-        $messages = $this->usermessage_model->GetAllUsersMessages();
-        echo $messages;
-    }
-
-    /**
-    *   给用户发消息,如果有用户id传入就给该用户发送消息，否则给所有用户发送消息
-    */
-    public function SendMessageToUser(){
+     public function SendMessageToUser(){
         $userid = $this->input->post('userid');
         $content = $this->input->post('content');
         $info = array(
@@ -197,6 +186,10 @@ class User extends CI_Controller {
         }
         echo urldecode(json_encode($info));
     }
+
+    /*管理员api*/
+
+    
 
 }
 ?>

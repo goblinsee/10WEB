@@ -87,7 +87,7 @@ class Sign_model extends CI_Model{
 			//有该账号，检查密码是否正确
 			foreach($query->result() as $row){
 				//密码正确
-				if($row->password === $password){
+				if($row->Password === $password){
 					//检查该账号状态
 					if($row->Permission === "0"){
 						return 1;//未激活

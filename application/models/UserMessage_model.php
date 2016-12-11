@@ -12,8 +12,8 @@ class UserMessage_model extends CI_MODEL{
 	public function GetCommunicatedUser($userid){
 		$sql = "SELECT DISTINCT Receiver FROM e0_msg WHERE Sender = ".$this->db->escape($userid)." AND Type = ".$this->db->escape(2);
 		$sql2 = "SELECT DISTINCT Sender FROM e0_msg WHERE Receiver = ".$this->db->escape($userid)." AND Type = ".$this->db->escape(2);
-		$users1 = $this->db->query($sql);
-		$users2 = $this->db->query($sql2);
+		$users1 = $this->db->query($sql)->result_array();
+		$users2 = $this->db->query($sql2)->result_array();
 		//先合并两个数组，然后删除重复的用户
 		$users = array_unique(array_merge($users1,$users2));
 		return $users;
@@ -25,9 +25,9 @@ class UserMessage_model extends CI_MODEL{
 	*	@param mesuserid varchar(20) 查找目标用户
 	*/
 	public function GetMessage($userid,$mesuserid){
-		$sql = "SELECT * FROM e0_msg WHERE ( Sender = ".$this->db->escape($userid)." AND Receiver = ".$this->db->escape($mesuserid)."OR Sender = ".$this->db->escape($mesuserid)." AND Receiver = ".$this->db->escape($userid);
+		$sql = "SELECT * FROM e0_msg WHERE ( Sender = ".$this->db->escape($userid)." AND Receiver = ".$this->db->escape($mesuserid)." OR Sender = ".$this->db->escape($mesuserid)." AND Receiver = ".$this->db->escape($userid)." )";
 		$messages = $this->db->query($sql);
-		return $messages;
+		return $messages->result_array();
 	}
 
 	/**
@@ -67,7 +67,7 @@ class UserMessage_model extends CI_MODEL{
 	public function GetAllUsersMessages(){
 		$sql = "SELECT * FROM e0_msg";
 		$messages = $this->db->query($sql);
-		return $messages;
+		return $messages->result_array();
 	}
 
 	/**
@@ -81,12 +81,13 @@ class UserMessage_model extends CI_MODEL{
 			foreach ($allusers as $row) {
 				$userid = $row['ID'];
 				$msgid = md5(uniqid());
-				$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape("Administrator").", ".$this->db->escape($userid).", ".$this->db->escape($content).", ".$this->db->escape(1);
+				$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape("Administrator").", ".$this->db->escape($userid).", ".$this->db->escape($content).", ".$this->db->escape(1)." )";
 				return $this->db->query($sql);
 			}
 		}
 		else{
-			$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape("Administrator").", ".$this->db->escape($userid).", ".$this->db->escape($content).", ".$this->db->escape(1);
+			$msgid = md5(uniqid());
+			$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape("Administrator").", ".$this->db->escape($userid).", ".$this->db->escape($content).", ".$this->db->escape(1)." )";
 			return $this->db->query($sql);
 		}
 	}

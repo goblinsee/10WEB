@@ -9,7 +9,7 @@ class Archives_model extends CI_Model {
 	public function addArchive() {
 		$Title = $_POST['Title'];
 		$Source = $_POST['Source'];
-
+		$Writer = $_POST['Writer'];
 		$RedirectUrl = "";
 		$LitPic = "";
 		if(isset($_POST['RedirectUrl']))
@@ -106,8 +106,8 @@ class Archives_model extends CI_Model {
 			$ArchiveIDs = $this->db->query($sql);
 			//根据文章id在文章表中查找
 			$Archives = array();
-			foreach ($ArchiveIDs as $row) {
-				$sql2 = "SELECT * FROM e0_archives WHERE ID = ".$this->db->escape($row['ArchiveID']);
+			foreach ($ArchiveIDs->result() as $row) {
+				$sql2 = "SELECT * FROM e0_archives WHERE ID = ".$this->db->escape($row->ArchiveID);
 				array_push($Archives,$this->db->query($sql2)->row());
 			}
 			return $Archives;
