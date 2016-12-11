@@ -4,7 +4,8 @@ class Archives_model extends CI_Model {
 		parent::__construct();
 		$this->load->database();
 	}
-	
+
+
 	public function addArchive() {
 		$Title = $_POST['Title'];
 		$Source = $_POST['Source'];
@@ -20,14 +21,14 @@ class Archives_model extends CI_Model {
 		$error_code = $this->addArc($id, $Title,$Writer, $Source, $RedirectUrl, $LitPic, $PubDate);
 		return $error_code;
 	}
-	
+
 	public function delArchive($ID, $Title) {
 		$Title = $_POST['Title'];
 		$ID = $_POST['ID'];
 		$error_code = $this->delArc($ID,$Title);
 		return $error_code;
 	}
-	
+
 	public function editArchive() {
 		$OldTitle = $_POST['OldTitle'];
 		$ID = $_POST['ID'];
@@ -61,7 +62,7 @@ class Archives_model extends CI_Model {
 		$row = $this->findArc($ID,$Title,$Type);
 		return $row;
 	}
-	
+
 	public function addArc($ID, $Title, $Writer,$Source, $RedirectUrl, $LitPic, $PubDate) {
 		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).")";
 		$sql2 = "INSERT INTO e0_userarchives (UserID , ArchiveID , OpType) VALUES (".$this->db->escape($UserId).",".$this->db->escape($ID).",".$this->db->escape(1);
@@ -69,14 +70,14 @@ class Archives_model extends CI_Model {
 
 		return $this->db->query($sql);
 	}
-	
+
 	public function delArc($ID, $Title) {
 		$sql = "DELETE FROM e0_archives WHERE ID = ".$this->db->escape($ID)."AND Title = ".$this->db->escape($Title);
 		//echo "delArc() affected ".$this->db->affected_rows()." row.";
 		return $this->db->query($sql);
-		
+
 	}
-	
+
 
 	public function editArc($ID, $UserID, $OldTitle, $NewTitle, $Source, $RedirectUrl, $LitPic,$Release = null) {
 		if($Release === null){
@@ -92,15 +93,15 @@ class Archives_model extends CI_Model {
 			$this->db->query($sql);
 			return $this->db->affected_rows();
 		}
-		
+
 	}
-	
+
 	//Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户尚未发布的文章	3 -> 查找用户的所有文章
 	public function findArc($ID,$Title = null,$Type = 0) {
 		if($Title === null){
 			$sql = "SELECT ArchiveID FROM e0_userarchives WHERE UserID = ".$this->db->escape($ID)." AND OpType = ".$this->db->escape($Type);
 			if($Type == 3){
-				$sql = "SELECT ArchiveID FROM e0_userarchives WHERE UserID = ".$this->db->escape($ID)." AND OpType = ".$this->db->escape(1)." OR OpType = ".$this->db->escape(2);  
+				$sql = "SELECT ArchiveID FROM e0_userarchives WHERE UserID = ".$this->db->escape($ID)." AND OpType = ".$this->db->escape(1)." OR OpType = ".$this->db->escape(2);
 			}
 			$ArchiveIDs = $this->db->query($sql);
 			//根据文章id在文章表中查找
@@ -117,7 +118,7 @@ class Archives_model extends CI_Model {
 			$row = $query->row_array();
 			return $row;
 		}
-		
+
 	}
 }
 ?>
