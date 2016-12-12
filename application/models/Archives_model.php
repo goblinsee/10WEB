@@ -9,7 +9,7 @@ class Archives_model extends CI_Model {
 	public function addArchive() {
 		$Title = $_POST['Title'];
 		$Source = $_POST['Source'];
-
+		$Writer = $_POST['Writer'];
 		$RedirectUrl = "";
 		$LitPic = "";
 		if(isset($_POST['RedirectUrl']))
@@ -64,16 +64,16 @@ class Archives_model extends CI_Model {
 	}
 
 	public function addArc($ID, $Title, $Writer,$Source, $RedirectUrl, $LitPic, $PubDate) {
-		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).")";
+		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate,State) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).",0)";
 		$sql2 = "INSERT INTO e0_userarchives (UserID , ArchiveID , OpType) VALUES (".$this->db->escape($UserId).",".$this->db->escape($ID).",".$this->db->escape(1);
 		$this->db->query($sql2);
 
 		return $this->db->query($sql);
 	}
-
+		
+	// State: 0 -> 待审核	1 -> 审核通过	2 -> 已删除
 	public function delArc($ID, $Title) {
-		$sql = "DELETE FROM e0_archives WHERE ID = ".$this->db->escape($ID)."AND Title = ".$this->db->escape($Title);
-		//echo "delArc() affected ".$this->db->affected_rows()." row.";
+		$sql = "UPDATE e0_archives SET State = 2 WHERE ID = ".$this->db->escape($ID)." AND Title = "$this->db->escape($Title);
 		return $this->db->query($sql);
 
 	}
@@ -81,13 +81,13 @@ class Archives_model extends CI_Model {
 
 	public function editArc($ID, $UserID, $OldTitle, $NewTitle, $Source, $RedirectUrl, $LitPic,$Release = null) {
 		if($Release === null){
-			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl)." WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
+			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl)." State = 0 WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
 			$this->db->query($sql);
 			//echo "edit() affected ".$this->db->affected_rows()." row.";
 			return $this->db->affected_rows();
 		}
 		else{
-			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl).", State = ".$this->db->escape($Release)." WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
+			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl).", State = ".$this->db->escape($Release)." State = 0 WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
 			$sql2 = "UPDATE e0_userarchives SET OpType = ".$this->db->escape($Release)." WHERE UserID = ".$this->db->escape($UserID)." AND ArchiveID = ".$this->db->escape($ID);
 			$this->db->query($sql2);
 			$this->db->query($sql);
