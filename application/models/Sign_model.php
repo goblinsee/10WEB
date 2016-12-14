@@ -35,6 +35,15 @@ class Sign_model extends CI_Model{
 	}
 
 
+	/**
+	*	根据账号返回用户信息作为session
+	*	@param Account varchar(40)
+	*/
+	public function GetUserInfo($account){
+		$sql = "SELECT * FROM e0_user WHERE Account = ".$this->db->escape($account);
+		return $this->db->query($sql)->result_array();
+	}
+
 
 	/**
 	*  检查账号：传入账号，返回数据库中是否已经存在该账号
@@ -87,7 +96,7 @@ class Sign_model extends CI_Model{
 			//有该账号，检查密码是否正确
 			foreach($query->result() as $row){
 				//密码正确
-				if($row->password === $password){
+				if($row->Password === $password){
 					//检查该账号状态
 					if($row->Permission === "0"){
 						return 1;//未激活
