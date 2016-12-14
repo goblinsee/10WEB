@@ -22,35 +22,13 @@ class Admin extends CI_Controller {
     /**
     *   给用户发消息,如果有用户id传入就给该用户发送消息，否则给所有用户发送消息
     */
-    public function SendMessageToUser(){
-        $userid = $this->input->post('userid');
-        $content = $this->input->post('content');
-        $info = array(
-            "Flag" => -101,
-            "Content" => "",
-            "Extra" => ""
-        );
-            echo urldecode(json_encode($info));
-        if($content === null){
-            $info['Content'] = urlencode("请输入内容");
-        }
-        else{
-            if($this->usermessage_model->SendMessageToUser($userid,$content)){
-                $info['Flag'] = 100;
-                $info['Content'] = urlencode("消息发送成功");
-            }
-            else{
-                $info['Content'] = urlencode("消息发送失败");
-            }
-        }
-        echo urldecode(json_encode($info));
-    }
+   
 
     /**
     *   管理员删除消息
     */
     public function DeleteMessageForAdmin(){
-        $messageid = $this->input->post('messageid');
+        $messageid = $this->input->post('MessageID');
         $info = array(
             "Flag" => -101,
             "Content" => "",

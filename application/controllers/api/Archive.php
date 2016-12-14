@@ -6,7 +6,7 @@
 class Archive extends CI_Controller {
     public function __construct(){
         parent::__construct();
-        $this->load->model('archives_model');
+        $this->load->model('Archives_model');
         $this->load->helper('url_helper');
     }
 
@@ -78,6 +78,21 @@ class Archive extends CI_Controller {
       }
       echo json_encode($info) ;
     }
+	
+    // /**
+//      * use to find user's archive
+//      */
+//     public function findUserArc($Type = 1){
+//       $row = $this->Archives_model->findUserArchive($Type);
+//       if ($row) {
+//         $info = $this->getInfo(100,json_encode($row),"");
+//       } else {
+//         $info = $this->getInfo(-101,"fail","");
+//       }
+//       echo json_encode($info) ;
+//     }
+//	Please use User.php -> GetUserArchives() .
+
 }
 
 ?>
