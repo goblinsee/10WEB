@@ -3,14 +3,28 @@ class Archives_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->database();
+		$this->load->library('session');
 	}
 
 
 	public function addArchive() {
 		$Title = $_POST['Title'];
 		$Source = $_POST['Source'];
-		$Writer = $_POST['Writer'];
-		$UserID = $_POST['UserID'];
+		$Writer = null;
+		$UserID = null;
+		if($this->session->has_userdata('ID')){
+          $UserID = $this->session->userdata('ID');
+          $Writer = $this->session->userdata('Account');
+        }
+        else{
+          $info = array(
+              "Flag" => -101,
+              "Content" => urldecode("你没登陆"),
+              "Extra" => ""
+          );
+          echo urldecode(json_encode($info));
+          return;
+        }
 		$RedirectUrl = "";
 		$LitPic = "";
 		if(isset($_POST['RedirectUrl']))
@@ -33,7 +47,19 @@ class Archives_model extends CI_Model {
 	public function editArchive() {
 		$OldTitle = $_POST['OldTitle'];
 		$ID = $_POST['ID'];
-		$UserID = $_POST['UserID'];
+		$UserID = null;
+		if($this->session->has_userdata('ID')){
+          $UserID = $this->session->userdata('ID');
+        }
+        else{
+          $info = array(
+              "Flag" => -101,
+              "Content" => urldecode("你没登陆"),
+              "Extra" => ""
+          );
+          echo urldecode(json_encode($info));
+          return;
+        }
 		$NewTitle = $OldTitle;
 		$Source = $_POST['OldSource'];
 		$RedirectUrl = $_POST['OldRedirectUrl'];

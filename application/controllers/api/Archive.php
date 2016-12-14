@@ -8,6 +8,7 @@ class Archive extends CI_Controller {
         parent::__construct();
         $this->load->model('Archives_model');
         $this->load->helper('url_helper');
+        $this->load->library('session');
     }
 
     public function index()
