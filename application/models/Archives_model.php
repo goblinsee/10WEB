@@ -97,7 +97,6 @@ class Archives_model extends CI_Model {
 		return $row;
 	}
 
-
 	public function addArc($ID, $Title, $UserID, $Writer, $Source,  $RedirectUrl, $LitPic, $PubDate) {
 		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate,State) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).",0)";
 		$sql2 = "INSERT INTO e0_userarchives (UserID , ArchiveID , OpType) VALUES (".$this->db->escape($UserID).",".$this->db->escape($ID).", 1)";
@@ -122,7 +121,7 @@ class Archives_model extends CI_Model {
 			return $this->db->affected_rows();
 		}
 		else{
-			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl).", State = ".$this->db->escape($Release)." State = 0 WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
+			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl).", State = ".$this->db->escape($Release)." WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
 			$sql2 = "UPDATE e0_userarchives SET OpType = ".$this->db->escape($Release)." WHERE UserID = ".$this->db->escape($UserID)." AND ArchiveID = ".$this->db->escape($ID);
 			$this->db->query($sql2);
 			$this->db->query($sql);
