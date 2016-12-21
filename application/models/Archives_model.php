@@ -86,7 +86,7 @@ class Archives_model extends CI_Model {
 		if(isset($_POST['Title']))
 			$Title = $_POST['Title'];
 		$ID = $_POST['ID'];
-		$row = $this->findArc($ID,$Title,$Type);
+		$row = $this->findArc($ID,$Title,);
 		return $row;
 	}
 	
