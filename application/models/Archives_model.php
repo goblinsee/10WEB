@@ -12,9 +12,9 @@ class Archives_model extends CI_Model {
 		$Source = $_POST['Source'];
 		$Writer = null;
 		$UserID = null;
-		if($this->session->has_userdata('ID')){
-          $UserID = $this->session->userdata('ID');
-          $Writer = $this->session->userdata('Account');
+		if($this->session->userdata['info'][0]['ID']){
+          $UserID = $this->session->userdata['info'][0]['ID'];
+          $Writer = $this->session->userdata['info'][0]['Account'];
         }
         else{
           $info = array(
@@ -48,8 +48,9 @@ class Archives_model extends CI_Model {
 		$OldTitle = $_POST['OldTitle'];
 		$ID = $_POST['ID'];
 		$UserID = null;
-		if($this->session->has_userdata('ID')){
-          $UserID = $this->session->userdata('ID');
+		if($this->session->userdata['info'][0]['ID']){
+          $UserID = $this->session->userdata['info'][0]['ID'];
+          print_r($this->session->userdata['info'][0]);//api test
         }
         else{
           $info = array(
@@ -86,7 +87,7 @@ class Archives_model extends CI_Model {
 		if(isset($_POST['Title']))
 			$Title = $_POST['Title'];
 		$ID = $_POST['ID'];
-		$row = $this->findArc($ID,$Title,);
+		$row = $this->findArc($ID,$Title);
 		return $row;
 	}
 	

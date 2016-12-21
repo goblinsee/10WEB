@@ -5,14 +5,7 @@ class Sign_model extends CI_Model{
 		$this->load->model('Archives_model');
 		$id=0;
 	}
-	public function test(){
-		$id = 2;
-		//$sql = "UPDATE news SET ID = ".$this->db->escape($id);
-		$sql = "SELECT * FROM news";
-		$results = $this->db->query($sql);
-		$d=array();
-		echo gettype($d);
-	}
+	
 	//增
 	public function add($tablename,$data){
 		$this->db->insert($tablename,$data);
@@ -91,7 +84,7 @@ class Sign_model extends CI_Model{
 	public function CheckAccount($account,$password){	
 		//账号存在,检查密码是否正确
 		$query = $this->db->query("select * from e0_user where Account = '$account' ");
-		echo $query->num_rows();
+		//echo $query->num_rows();
 		if($query->num_rows() <> 0){
 			//有该账号，检查密码是否正确
 			foreach($query->result() as $row){

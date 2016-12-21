@@ -12,9 +12,9 @@ class Activities_model extends CI_Model {
 		$Source = $_POST['Source'];
 		$Writer = null;
 		$UserID = null;
-		if($this->session->has_userdata('ID')){
-          $UserID = $this->session->userdata('ID');
-          $Writer = $this->session->userdata('Account');
+		if($this->session->userdata['info'][0]['ID']){
+          $UserID = $this->session->userdata['info'][0]['ID'];
+          $Writer = $this->session->userdata['info'][0]['Account'];
         }
         else{
           $info = array(
@@ -48,8 +48,8 @@ class Activities_model extends CI_Model {
 		$OldTitle = $_POST['OldTitle'];
 		$ID = $_POST['ID'];
 		$UserID = null;
-		if($this->session->has_userdata('ID')){
-          $UserID = $this->session->userdata('ID');
+		if($this->session->userdata['info'][0]['ID']){
+          $UserID = $this->session->userdata['info'][0]['ID'];
         }
         else{
           $info = array(
