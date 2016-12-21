@@ -77,6 +77,7 @@ class UserMessage_model extends CI_MODEL{
 	*	发送消息给用户
 	*	@param userid varchar(20) 发送消息对象用户，如果为空表示发送给所有用户
 	*	@param content varchar(255)
+	*	@return 改变数据库行数：可用来判断发送消息是否成功
 	*/
 	public function SendMessageToUser($userid,$targetuserid,$content){
 		if($targetuserid === null){
@@ -85,14 +86,15 @@ class UserMessage_model extends CI_MODEL{
 				$userid = $row->ID;
 				$msgid = md5(uniqid());
 				$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape($userid).", ".$this->db->escape($targetuserid).", ".$this->db->escape($content).", ".$this->db->escape(1)." )";
-				return $this->db->query($sql);
+				$this->db->query($sql);
 			}
 		}
 		else{
 			$msgid = md5(uniqid());
 			$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape($userid).", ".$this->db->escape($targetuserid).", ".$this->db->escape($content).", ".$this->db->escape(1)." )";
-			return $this->db->query($sql);
+			$this->db->query($sql);
 		}
+		return $this->db->affected_rows();
 	}
 
 	/**
@@ -100,7 +102,8 @@ class UserMessage_model extends CI_MODEL{
 	*/
 	public function DeleteMessageForAdmin($messageid){
 		$sql = "UPDATE e0_msg SET STATE = ".$this->db->escape(3)." WHERE ID = ".$this->db->escape($messageid);
-		return $this->db->query($sql);
+		$this->db->query($sql);
+		return $this->db->affected_rows();
 	}
 
 

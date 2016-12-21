@@ -34,7 +34,7 @@ class Admin extends CI_Controller {
             "Content" => "",
             "Extra" => ""
         );
-        if($this->usermessage_model->DeleteMessageForAdmin($messageid)){
+        if($this->usermessage_model->DeleteMessageForAdmin($messageid) <> 0){
             $info['Flag'] = 100;
             $info['Content'] = urlencode("删除消息成功");
         }
