@@ -83,8 +83,9 @@ class User extends CI_Controller {
       else if($state === 2){
          $info["Content"] = urlencode("账号密码正确，可以登陆");
          $userinfomation = $this->sign_model->GetUserInfo($account);
-         $this->session->set_userdata($userinfomation);
-
+         //$this->session->set_userdata($userinfomation);
+         $this->session->userdata['info'] = $userinfomation;
+         print_r($this->session->userdata['info'][0]);
       }
       //账号被封
       else if($state === 3){
@@ -119,8 +120,8 @@ class User extends CI_Controller {
     */
     public function GetCommunicatedUsers(){
         $userid = null;
-        if($this->session->has_userdata('ID')){
-          $userid = $this->session->userdata('ID');
+        if($this->session->userdata['info'][0]['ID']){
+          $userid = $this->session->userdata['info'][0]['ID'];
         }
         else{
           $info = array(
@@ -140,8 +141,8 @@ class User extends CI_Controller {
     */
     public function GetMessage(){
         $userid = null;
-        if($this->session->has_userdata('ID')){
-          $userid = $this->session->userdata('ID');
+        if($this->session->userdata['info'][0]['ID']){
+          $userid = $this->session->userdata['info'][0]['ID'];
         }
         else{
           $info = array(
@@ -185,8 +186,9 @@ class User extends CI_Controller {
 
      public function SendMessageToUser(){
         $userid = null;
-        if($this->session->has_userdata('ID')){
-          $userid = $this->session->userdata('ID');
+        if($this->session->userdata['info'][0]['ID']){
+          $userid = $this->session->userdata['info'][0]['ID'];
+          print_r($this->session->userdata['info'][0]);//api test
         }
         else{
           $info = array(
@@ -211,7 +213,7 @@ class User extends CI_Controller {
           echo urldecode(json_encode($info));
           return;
         }
-        if($targetuserid === null and $this->session->userdata('Permission') <> 3){
+        if($targetuserid === null and $this->session->userdata['info'][0]['Permission'] <> 3){
           $info['Content'] = urlencode("请选择发送消息对象");
         }
         else{
