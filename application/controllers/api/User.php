@@ -5,8 +5,10 @@ class User extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('sign_model');
-        $this->load->model('userMessage_model');
+        $this->load->model('usermessage_model');
+        $this->load->model('archives_model');
         $this->load->helper('url_helper');
+        $this->load->library('session');
     }
 
     public function index()
@@ -18,6 +20,7 @@ class User extends CI_Controller {
      *   used to signup and send a auth email to user
      */
     public function signUp(){
+            
         $info = array(
             'Flag' => -101,//验证失败
             'Content' =>"",//验证结果
@@ -62,8 +65,8 @@ class User extends CI_Controller {
      * used to signIn
      */
     public function signIn(){
-      $account = $_POST['UserAccount'];
-      $password = $_POST['password'];
+      $account = $_POST['Account'];
+      $password = $_POST['Password'];
       //在数据库中查找是否有该账号以及检查该账号是否可用
       $state = $this->sign_model->CheckAccount($account,$password);
       $info=[
@@ -79,6 +82,9 @@ class User extends CI_Controller {
       //已经激活，可以登陆
       else if($state === 2){
          $info["Content"] = urlencode("账号密码正确，可以登陆");
+         $userinfomation = $this->sign_model->GetUserInfo($account);
+         $this->session->set_userdata($userinfomation);
+
       }
       //账号被封
       else if($state === 3){
@@ -102,44 +108,60 @@ class User extends CI_Controller {
     *如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
     */
     public function GetUserArchives(){
-        $type = $this->input->post('type');
-        $archives = $this->archives_model->findArchive($type);//传入
-        echo $archives;
+        $archives = $this->Archives_model->findUserArchive();//传入
+        print_r($archives);
     }
 
-    /**
-    *   用户编辑文章
-    */
-    public function EditArchive(){
-        $type = 'edit';
-        archive($type);
-    }
 
     /**
     *   查看和自己发过消息的用户
     *   @return users array()
     */
     public function GetCommunicatedUsers(){
-        $userid = $this->input->post('userid');
+        $userid = null;
+        if($this->session->has_userdata('ID')){
+          $userid = $this->session->userdata('ID');
+        }
+        else{
+          $info = array(
+              "Flag" => -101,
+              "Content" => urldecode("你没登陆"),
+              "Extra" => ""
+          );
+          echo urldecode(json_encode($info));
+          return;
+        }
         $users = $this->usermessage_model->GetCommunicatedUser($userid);
-        echo $users;
+        print_r($users);
     }
 
     /**
     *   查看与某一用户的消息内容
     */
     public function GetMessage(){
-        $userid = $this->input->post('userid');
-        $mesuserid = $this->input->post('mesuserid');
+        $userid = null;
+        if($this->session->has_userdata('ID')){
+          $userid = $this->session->userdata('ID');
+        }
+        else{
+          $info = array(
+              "Flag" => -101,
+              "Content" => urldecode("你没登陆"),
+              "Extra" => ""
+          );
+          echo urldecode(json_encode($info));
+          return;
+        }
+        $mesuserid = $this->input->post('MesUserID');
         $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
-        echo $messages;
+        print_r($messages);
     }
 
     /**
     *   用户删除消息
     */
     public function DeleteMessage(){
-        $messageid = $this->input->post('messageid');
+        $messageid = $this->input->post('MessageID');
         $info = array(
             "Flag" => 100,
             "Content" => urlencode("消息删除成功"),
@@ -156,38 +178,44 @@ class User extends CI_Controller {
     *   用户读取消息，在表中将State设为1,0->未读，1->已读
     */
     public function ReadMessage(){
-        $userid = $this->input->post('userid');
-        $messageid = $this->input->post('messageid');
-        $this->usermessage_model->SetMessageRead($userid,$messageid);
+        $messageid = $this->input->post('MessageID');
+        $messagecontent = $this->usermessage_model->SetMessageRead($messageid);
+        print_r($messagecontent);
     }
 
-    /*管理员api*/
-
-    /**
-    *   查看所有用户的消息
-    */
-    public function GetAllUsersMessages(){
-        $messages = $this->usermessage_model->GetAllUsersMessages();
-        echo $messages;
-    }
-
-    /**
-    *   给用户发消息,如果有用户id传入就给该用户发送消息，否则给所有用户发送消息
-    */
-    public function SendMessageToUser(){
-        $userid = $this->input->post('userid');
-        $content = $this->input->post('content');
+     public function SendMessageToUser(){
+        $userid = null;
+        if($this->session->has_userdata('ID')){
+          $userid = $this->session->userdata('ID');
+        }
+        else{
+          $info = array(
+              "Flag" => -101,
+              "Content" => urldecode("你没登陆"),
+              "Extra" => ""
+          );
+          echo urldecode(json_encode($info));
+          return;
+        }
+        $content = $this->input->post('Content');
         $info = array(
             "Flag" => -101,
             "Content" => "",
             "Extra" => ""
         );
-            echo urldecode(json_encode($info));
+
+        $targetuserid = $this->input->post('TargetUserID');
+
         if($content === null){
-            $info['Content'] = urlencode("请输入内容");
+          $info['Content'] = urlencode("请输入内容");
+          echo urldecode(json_encode($info));
+          return;
+        }
+        if($targetuserid === null and $this->session->userdata('Permission') <> 3){
+          $info['Content'] = urlencode("请选择发送消息对象");
         }
         else{
-            if($this->usermessage_model->SendMessageToUser($userid,$content)){
+            if($this->usermessage_model->SendMessageToUser($userid,$targetuserid,$content)){
                 $info['Flag'] = 100;
                 $info['Content'] = urlencode("消息发送成功");
             }
@@ -197,6 +225,9 @@ class User extends CI_Controller {
         }
         echo urldecode(json_encode($info));
     }
+
+
+    
 
 }
 ?>
