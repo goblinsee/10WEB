@@ -168,7 +168,7 @@ class User extends CI_Controller {
             "Content" => urlencode("消息删除成功"),
             "Extra" => ""
         );
-        if($this->usermessage_model->DeleteMessage($messageid) === FALSE){
+        if($this->usermessage_model->DeleteMessage($messageid) === 0){
             $info['Flag'] = -101;
             $info['Content'] = urlencode("消息删除失败");
         }

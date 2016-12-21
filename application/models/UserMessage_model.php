@@ -36,7 +36,8 @@ class UserMessage_model extends CI_MODEL{
 	*/
 	public function DeleteMessage($messageid){
 		$sql = "UPDATE e0_msg SET Type = ".$this->db->escape(3)." WHERE ID = ".$this->db->escape($messageid);
-		return $this->db->query($sql);
+		$this->db->query($sql);
+		return $this->db->affected_rows();
 	}
 
 	/**
