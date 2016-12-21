@@ -103,10 +103,11 @@ class User extends CI_Controller {
       }
       echo urldecode(json_encode($info));
     }
+
     /**
     * 返回session
     */
-    public class GetSession(){
+    public function GetSession(){
       $info = array(
           "Flag" => -101,
           "Content" => "fail",
@@ -115,9 +116,9 @@ class User extends CI_Controller {
       if($this->session->userdata['info'][0]){
         $info['Flag'] = 100;
         $info['Content'] = "success";
-        $info['Extra'] = json_encode($info);
+        $info['Extra'] = json_encode($this->session->userdata['info'][0]);
       }
-      echo $info;
+      echo urldecode(json_encode($info));
     }
 
     /*用户api*/
