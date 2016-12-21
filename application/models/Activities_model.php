@@ -1,5 +1,5 @@
 <?php
-class Archives_model extends CI_Model {
+class Activities_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->database();
@@ -7,7 +7,7 @@ class Archives_model extends CI_Model {
 	}
 
 
-	public function addArchive() {
+	public function addActivity() {
 		$Title = $_POST['Title'];
 		$Source = $_POST['Source'];
 		$Writer = null;
@@ -33,18 +33,18 @@ class Archives_model extends CI_Model {
 			$LitPic = $_POST['LitPic'];
 		$PubDate = date("Y-m-d H:i:s");
 		$id = md5($PubDate.$Title);
-		$error_code = $this->addArc($id, $Title, $UserID, $Writer, $Source, $RedirectUrl, $LitPic, $PubDate);
+		$error_code = $this->addAct($id, $Title, $UserID, $Writer, $Source, $RedirectUrl, $LitPic, $PubDate);
 		return $error_code;
 	}
 
-	public function delArchive() {
+	public function delActivity() {
 		$Title = $_POST['Title'];
 		$ID = $_POST['ID'];
-		$error_code = $this->delArc($ID,$Title);
+		$error_code = $this->delAct($ID,$Title);
 		return $error_code;
 	}
 
-	public function editArchive() {
+	public function editActivity() {
 		$OldTitle = $_POST['OldTitle'];
 		$ID = $_POST['ID'];
 		$UserID = null;
@@ -77,42 +77,42 @@ class Archives_model extends CI_Model {
 
 		if(isset($_POST['Release']))
 			$Release = $_POST['Release'];
-		$error_code = $this->editArc($ID,$UserID,$OldTitle,$NewTitle,$Source,$RedirectUrl,$LitPic,$Release);
+		$error_code = $this->editAct($ID,$UserID,$OldTitle,$NewTitle,$Source,$RedirectUrl,$LitPic,$Release);
 		return $error_code;
 	}
 	//Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户没有发布的文章	3 -> 查找用户所有的文章
-	public function findArchive() {
+	public function findActivity() {
 		$Title = null;
 		if(isset($_POST['Title']))
 			$Title = $_POST['Title'];
 		$ID = $_POST['ID'];
-		$row = $this->findArc($ID,$Title,);
+		$row = $this->findAct($ID,$Title);
 		return $row;
 	}
 	
-	public function findUserArchive() {
+	public function findUserActivity() {
 		$Type = $_POST['Type'];
 		$UserID = $_POST['UserID'];
-		$row = $this->findUserArc($UserID, $Type);
+		$row = $this->findUserAct($UserID, $Type);
 		return $row;
 	}
 
-	public function addArc($ID, $Title, $UserID, $Writer, $Source,  $RedirectUrl, $LitPic, $PubDate) {
-		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate,State) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).",0)";
+	public function addAct($ID, $Title, $UserID, $Writer, $Source,  $RedirectUrl, $LitPic, $PubDate) {
+		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate,State,Keyword) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).",0,1)";
 		$sql2 = "INSERT INTO e0_userarchives (UserID , ArchiveID , OpType) VALUES (".$this->db->escape($UserID).",".$this->db->escape($ID).", 1)";
 		$this->db->query($sql2);
 		return $this->db->query($sql);
 	}
 		
 	// State: 0 -> 待审核	1 -> 审核通过	2 -> 已删除
-	public function delArc($ID, $Title) {
+	public function delAct($ID, $Title) {
 		$sql = "UPDATE e0_archives SET State = 2 WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($Title);
 		$this->db->query($sql);
 		return $this->db->affected_rows();
 	}
 
 
-	public function editArc($ID, $UserID, $OldTitle, $NewTitle, $Source, $RedirectUrl, $LitPic,$Release = null) {
+	public function editAct($ID, $UserID, $OldTitle, $NewTitle, $Source, $RedirectUrl, $LitPic,$Release = null) {
 		if($Release === null){
 			$sql = "UPDATE e0_archives SET Title = ".$this->db->escape($NewTitle).", Source = ".$this->db->escape($Source).", RedirectUrl = ".$this->db->escape($RedirectUrl).", LitPic = ".$this->db->escape($RedirectUrl).", State = 0 WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($OldTitle);
 			$this->db->query($sql);
@@ -130,7 +130,7 @@ class Archives_model extends CI_Model {
 	}
 
 	
-	public function findArc($ID, $Title) {
+	public function findAct($ID, $Title) {
 		$sql = "SELECT * FROM e0_archives WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($Title);
 		$query =  $this->db->query($sql);
 		$row = $query->row_array();
@@ -138,7 +138,7 @@ class Archives_model extends CI_Model {
 	}
 	
 	//Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户尚未发布的文章	3 -> 查找用户的所有文章
-	public function findUserArc($UserID, $Type = 0) {
+	public function findUserAct($UserID, $Type = 0) {
 		$sql = "SELECT ArchiveID FROM e0_userarchives WHERE UserID = ".$this->db->escape($UserID)." AND OpType = ".$this->db->escape($Type);
 		if($Type == 3){
 			$sql = "SELECT ArchiveID FROM e0_userarchives WHERE UserID = ".$this->db->escape($UserID)." AND OpType = ".$this->db->escape(1)." OR OpType = ".$this->db->escape(2);
