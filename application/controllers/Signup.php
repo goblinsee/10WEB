@@ -8,6 +8,7 @@
         public function index(){
             $this->load->view('user/signup');
         }
+        
         //激活账号
         public function auth($uid = null){
             $account = base64_decode(urldecode($uid));
