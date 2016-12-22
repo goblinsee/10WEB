@@ -70,7 +70,7 @@ class User extends CI_Controller {
       //在数据库中查找是否有该账号以及检查该账号是否可用
       $state = $this->sign_model->CheckAccount($account,$password);
       $info=[
-          "Flag" => -100,
+          "Flag" => -101,
           "Content" => urlencode("该账号未激活，请激活后登陆"),
           "Extra" => ""
       ];
@@ -82,10 +82,12 @@ class User extends CI_Controller {
       //已经激活，可以登陆
       else if($state === 2){
          $info["Content"] = urlencode("账号密码正确，可以登陆");
+         $info['Flag'] = 100;
          $userinfomation = $this->sign_model->GetUserInfo($account);
          //$this->session->set_userdata($userinfomation);
          $this->session->userdata['info'] = $userinfomation;
-         print_r($this->session->userdata['info'][0]);
+         $info['Extra'] = json_encode($this->session->userdata['info'][0]);
+         //print_r($this->session->userdata['info'][0]);
       }
       //账号被封
       else if($state === 3){
@@ -98,6 +100,23 @@ class User extends CI_Controller {
       //没有该账号
       else if($state === 5){
           $info["Content"] = urlencode("账号不存在");
+      }
+      echo urldecode(json_encode($info));
+    }
+
+    /**
+    * 返回session
+    */
+    public function GetSession(){
+      $info = array(
+          "Flag" => -101,
+          "Content" => "fail",
+          "Extra" => ""
+      );
+      if($this->session->userdata['info'][0]){
+        $info['Flag'] = 100;
+        $info['Content'] = "success";
+        $info['Extra'] = json_encode($this->session->userdata['info'][0]);
       }
       echo urldecode(json_encode($info));
     }
@@ -168,7 +187,7 @@ class User extends CI_Controller {
             "Content" => urlencode("消息删除成功"),
             "Extra" => ""
         );
-        if($this->usermessage_model->DeleteMessage($messageid) === FALSE){
+        if($this->usermessage_model->DeleteMessage($messageid) === 0){
             $info['Flag'] = -101;
             $info['Content'] = urlencode("消息删除失败");
         }
@@ -217,7 +236,7 @@ class User extends CI_Controller {
           $info['Content'] = urlencode("请选择发送消息对象");
         }
         else{
-            if($this->usermessage_model->SendMessageToUser($userid,$targetuserid,$content)){
+            if($this->usermessage_model->SendMessageToUser($userid,$targetuserid,$content) <> 0){
                 $info['Flag'] = 100;
                 $info['Content'] = urlencode("消息发送成功");
             }
