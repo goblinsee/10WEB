@@ -1,0 +1,31 @@
+version: '2'
+services:
+  db:
+    image: mariadb:10.1
+    environment:
+      MYSQL_ROOT_PASSWORD: "mxd6980k9"
+      MYSQL_DATABASE: "e0web"
+    volumes:
+      - ./db:/var/lib/mysql
+    expose:
+      - "3306"
+    ports:
+      - "6700:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: "db"
+
+  web:
+    image: eboraas/apache-php
+    ports:
+      - "6070:80"
+    volumes:
+      - "./10web:/var/www/html"
+
+volumes:
+  db:
+    driver: local
