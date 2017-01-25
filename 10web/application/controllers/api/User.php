@@ -69,6 +69,7 @@ class User extends CI_Controller {
       $password = $_POST['Password'];
       //在数据库中查找是否有该账号以及检查该账号是否可用
       $state = $this->sign_model->CheckAccount($account,$password);
+
       $info=[
           "Flag" => -101,
           "Content" => urlencode("该账号未激活，请激活后登陆"),
@@ -246,9 +247,5 @@ class User extends CI_Controller {
         }
         echo urldecode(json_encode($info));
     }
-
-
-    
-
 }
 ?>

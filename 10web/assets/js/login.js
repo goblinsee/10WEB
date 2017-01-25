@@ -1,31 +1,4 @@
 
-$("#login-btn").click(function(e){
-  var text =  disableBtn(e);
-  var username = $("＃login-username").val();
-  var passoword = $("＃login-password").val();
-  
-});
-
-$("#sign-btn").click(function(e){
-  var text = disableBtn(e);
-  var usernick = $("＃sign-usernick").val();
-  var username = $("＃sign-username").val();
-  var passoword = $("＃sign-password").val();
-});
-
-
-var loading = '<i class="am-icon-spinner am-icon-pulse"></i>';
-function disableBtn(e){
-  var $elem = $(e.currentTarget);
-  var word = $elem.text();
-  //设置不能够再点击
-  $elem.attr({"disabled":"true"});
-  $elem.html(loading);
-
-  return word;
-}
-
-
 //加载背景图片
 particlesJS('login-bg',  
   {

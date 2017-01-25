@@ -108,11 +108,11 @@
       </ul>
       
       <div class="am-topbar-right">
-        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span> 注册</button>
+        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><a href="/index.php/signup"><span class="am-icon-pencil"></span> 注册</a></button>
       </div>
 
       <div class="am-topbar-right">
-        <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><span class="am-icon-user"></span> 登录</button>
+        <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><a href="/index.php/signup"><span class="am-icon-user"></span> 登录</a></button>
       </div>
     </div>
   </div>
