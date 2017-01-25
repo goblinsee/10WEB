@@ -143,7 +143,7 @@
       <div class="am-g">
         <div class="am-u-lg-3 am-u-md-6 am-u-sm-12 detail-mb">
 
-          <h3 class="detail-h3">
+          <h3 class="detail-h3">            
             <i class="am-icon-mobile am-icon-sm"></i>
             社团简介
           </h3>
@@ -156,7 +156,8 @@
             大声告诉它们亿灵是做什么的！
             大声告诉它们亿灵是做什么的！
           </p>
-          <a href="www.baidu.com">详情>></a>
+          <a href="/index.php/team/detail">详情>></a>
+
         </div>
         <div class="am-u-lg-3 am-u-md-6 am-u-sm-12 detail-mb">
           <h3 class="detail-h3">
