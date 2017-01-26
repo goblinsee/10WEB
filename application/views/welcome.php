@@ -236,6 +236,19 @@
   </div>
 </div>
 
+<!--评论代码-->
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js"></script>
+<!-- UY END -->
+
+
+
+
+
+
+
+
 <footer class="footer">
   <p>友情链接       <a href="http://www.yunshipei.com" target="_blank">亿灵首页|</a>南开主页|<a
       href="http://opensource.org/licenses/MIT" target="_blank">教育在线|</a>南开大学软件学院</p>

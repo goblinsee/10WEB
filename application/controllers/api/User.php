@@ -35,9 +35,9 @@ class User extends CI_Controller {
         }
 
         //read the arguments
-        $account = $_POST['Account'];
-        $password = $_POST["Password"];
-
+        $account = $this->input->post('Account');
+        $password = $this->input->post('Password');
+        $nickname = $this->input->post('Nickname');
         //先检查账号是否存在
         if($this->sign_model->AccountExist($account)){
             $info["Content"] = "already exsit";
