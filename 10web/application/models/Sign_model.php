@@ -1,4 +1,4 @@
-<?php 
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 class Sign_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
@@ -60,14 +60,17 @@ class Sign_model extends CI_Model{
 	*	 @param account varchar(40)
 	*	 @param password varchar(20)
 	*/
-	public function InsertAccount($account,$password){
+	public function InsertAccount($account,$password,$nickname){
 		$signuptime=date("Y-m-d H:i:s");//注册时间，放到profile中去
 		$id = md5($signuptime);
 		$data = array(
 			'id' => $id,
 			'account' => $account,
 			'password' => $password,
-			'profile' => $signuptime,
+			'profile' => json_encode(array(
+				"signuptime" => $signuptime,
+				"nickname" => $nickname
+			)),
 			'logintime' => $signuptime,
 			'permission' => 0
 		);
@@ -116,6 +119,7 @@ class Sign_model extends CI_Model{
 	*	@return 已激活返回1，未激活先激活然后返回0
 	*/
 	public function CheckActivate($account=0){
+		echo $account;
 		$query = $this->db->get_where('e0_user',array("Account" => $account));
 		//检查是否已经被激活
 		//如果之前未激活先激活再返回
