@@ -1,4 +1,4 @@
-<?php (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 class Activities_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();

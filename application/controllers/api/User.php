@@ -46,7 +46,7 @@ class User extends CI_Controller {
         }
 
         //在数据库中插入一条记录，状态设置为未激活，同时发送邮件给用户
-        $this->sign_model->InsertAccount($account,$password);
+        $this->sign_model->InsertAccount($account,$password,$nickname);
         $info['Flag'] = 100;
         $info['Content'] = 'signup success';
 
