@@ -35,9 +35,9 @@ class User extends CI_Controller {
         }
 
         //read the arguments
-        $account = $_POST['Account'];
-        $password = $_POST["Password"];
-
+        $account = $this->input->post('Account');
+        $password = $this->input->post('Password');
+        $nickname = $this->input->post('Nickname');
         //先检查账号是否存在
         if($this->sign_model->AccountExist($account)){
             $info["Content"] = "already exsit";
@@ -46,7 +46,7 @@ class User extends CI_Controller {
         }
 
         //在数据库中插入一条记录，状态设置为未激活，同时发送邮件给用户
-        $this->sign_model->InsertAccount($account,$password);
+        $this->sign_model->InsertAccount($account,$password,$nickname);
         $info['Flag'] = 100;
         $info['Content'] = 'signup success';
 
