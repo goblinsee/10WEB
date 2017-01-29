@@ -29,4 +29,5 @@
       - "./10web:/var/www/html"
     links:
       - "db"
+    restart: "always"
 

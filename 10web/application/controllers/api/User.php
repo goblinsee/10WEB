@@ -1,4 +1,5 @@
-<?php
+ <?php
+
 require("tools.php");
 
 class User extends CI_Controller {
@@ -56,7 +57,7 @@ class User extends CI_Controller {
           $info['Flag'] = -101;
           $info['Content'] = 'signup fail';
         }
-
+        
         echo urldecode(json_encode($info));
     }
 
@@ -124,9 +125,9 @@ class User extends CI_Controller {
 
     /*用户api*/
     /**
-    *   管理与自己相关的文章
-    *   用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
-    *如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
+    * 管理与自己相关的文章
+    * 用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
+    * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
     */
     public function GetUserArchives(){
         $archives = $this->Archives_model->findUserArchive();//传入
@@ -135,8 +136,8 @@ class User extends CI_Controller {
 
 
     /**
-    *   查看和自己发过消息的用户
-    *   @return users array()
+    * 查看和自己发过消息的用户
+    * @return users array()
     */
     public function GetCommunicatedUsers(){
         $userid = null;
@@ -157,7 +158,7 @@ class User extends CI_Controller {
     }
 
     /**
-    *   查看与某一用户的消息内容
+    * 查看与某一用户的消息内容
     */
     public function GetMessage(){
         $userid = null;
@@ -196,7 +197,7 @@ class User extends CI_Controller {
     }
 
     /**
-    *   用户读取消息，在表中将State设为1,0->未读，1->已读
+    * 用户读取消息，在表中将State设为1,0->未读，1->已读
     */
     public function ReadMessage(){
         $messageid = $this->input->post('MessageID');
@@ -220,6 +221,7 @@ class User extends CI_Controller {
           return;
         }
         $content = $this->input->post('Content');
+
         $info = array(
             "Flag" => -101,
             "Content" => "",

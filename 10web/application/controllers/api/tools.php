@@ -30,12 +30,11 @@ function sendMail($account,$email_info,$base_url = "localhost:6070"){
 
     //收件人地址，可以替换成任何想要接收邮件的email信箱,格式是AddAddress("收件人email","收件人姓名")
     $mail->Subject = "eling验证"; //邮件标题：要以英文开头
-    $uuid = urlencode(base64_encode($account));
+    $_account = urlencode(base64_encode($account));
 
     //the url input
-    $msg = sprintf("%s/index.php/signup/auth/%s",$base_url,$uuid);
-    $web_url = $base_url;
-
+    $msg = sprintf("%s/index.php/user/activeUser/%s",$base_url,$_account);
+    $web_url = $base_url;    
     //the function is used to format a html verifcation html email
     $msg = getVerifi($msg,$web_url);
 

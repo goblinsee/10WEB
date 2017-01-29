@@ -116,6 +116,8 @@
   <script type="text/javascript" src="/assets/js/login.js"></script>
 
   <script type="text/javascript">
+
+$(document).ready(function(){
     //切换注册和登陆的监听
     $to_login = $(".to_login a"); 
     $to_sign = $(".to_sign a");
@@ -140,18 +142,20 @@
     const EMAIL_FORMAT_ERROR = -102;
     const ILLEGAL_SYMBOL_ERROR = -103;
     const TOO_LONG_ERROR = -104;
+    const SERVER_ERROR = -105;
     var waring_word = {};
 
     waring_word[WHITE_SPACE_ERROR] = "不能为空";
     waring_word[EMAIL_FORMAT_ERROR] = "邮箱格式错误";
     waring_word[ILLEGAL_SYMBOL_ERROR] = "非法的符号(只支持汉字,英文和下划线)";
     waring_word[TOO_LONG_ERROR] = "字符串太长了";
-
+    waring_word[SERVER_ERROR] = "服务器发生错误，请刷新重试，或者联系管理员";
 
     //登陆监听开始
     $login_btn.click(function(e){
       login_fn(e,function(err,data){
         if(err){
+          login_waring("错误代码:" + err.Flag  + "错误信息" + err.Content);
           return ;
         }else{
           login_waring("登陆成功，正在跳转");
@@ -166,6 +170,7 @@
     $sign_btn.click(function(e){
       sign_fn(e,function(err,data){
         if(err){
+          login_waring("错误代码:" + err.Flag + "错误信息" + err.Content);
           return ;
         }else{
           login_waring("注册成功，我们将会发一封验证邮件到你的邮箱，请注意查收");
@@ -196,6 +201,11 @@
 
         //加载登陆动画
         var word = disableBtn(e).trim();
+        console.log({
+            Account:username,
+            Password:hex_md5(password)
+          });
+
         //发送ajax请求
         $.ajax({
           url:'/index.php/api/user/Signin',
@@ -205,7 +215,18 @@
             Password:hex_md5(password)
           },
           success:function(data){
-            console.log(data);
+            //简单处理信息
+            try{
+              data = JSON.parse(data);  
+            }catch(e){
+              login_waring(waring_word[SERVER_ERROR]);
+              return;
+            }
+            //返回错误
+            if(data.Flag < 0){
+              return cb(data);
+            }
+
             enableBtn(e,word);
             cb(null,data);
           },
@@ -241,20 +262,32 @@
       //字符串检测
       var word = disableBtn(e).trim();
       $.ajax({
-        url:'/index.php/api/user/login',
+        url:'/index.php/api/user/signup',
         type:'post',
         data:{
           Account:username,
           Password:hex_md5(password)
         },
         success:function(data){
+          //简单处理信息
+          try{
+            data = JSON.parse(data);  
+          }catch(e){
+            login_waring(waring_word[SERVER_ERROR]);
+            return;
+          }
+          //返回错误
+          if(data.Flag < 0){
+            return cb(data);
+          }
+
           cb(null,data);
           enableBtn(e,word);
         },
         error:function(data){
           cb(data);
           enableBtn(e,word);
-          login_waring("服务器发生错误，请刷新重试，或者联系管理员")
+          login_waring(waring_word[SERVER_ERROR])
         }
       });
     } 
@@ -328,6 +361,7 @@
 
       return 100;
     }
+});
 
   </script>
 </body>

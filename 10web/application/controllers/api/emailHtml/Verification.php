@@ -7,8 +7,8 @@
 	 * @return {string} -返回的验证邮件的html
 	 */
 	function getVerifi($auth_url = "#",$web_url = "#"){
-		 $id = fopen('emailHtml/Verification.html','r');
-		 $Verification =  file_get_contents('emailHtml/Verification.html');
+		$id = fopen('emailHtml/Verification.html','r');
+		$Verification =  file_get_contents('emailHtml/Verification.html');
 		return sprintf($Verification,$auth_url,$web_url);
 	}
 ?>

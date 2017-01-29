@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://www.jyonline.cc:6070';
+$config['base_url'] = 'http://localhost:6070';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -34,7 +34,7 @@ $config['base_url'] = 'http://www.jyonline.cc:6070';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.html';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------

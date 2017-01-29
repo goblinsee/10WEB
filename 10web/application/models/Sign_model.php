@@ -1,4 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+
 class Sign_model extends CI_Model{
 	public function __construct(){
 		$this->load->database();
@@ -119,7 +120,6 @@ class Sign_model extends CI_Model{
 	*	@return 已激活返回1，未激活先激活然后返回0
 	*/
 	public function CheckActivate($account=0){
-		echo $account;
 		$query = $this->db->get_where('e0_user',array("Account" => $account));
 		//检查是否已经被激活
 		//如果之前未激活先激活再返回
@@ -135,6 +135,4 @@ class Sign_model extends CI_Model{
 }
 	
 
-
-
- ?>
+?>
