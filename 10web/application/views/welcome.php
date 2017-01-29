@@ -19,7 +19,7 @@
   <div class="am-container am-topbar-height">
     <div class="am-topbar-brand am-brand">
       <div style="float:left;">
-      <img src="assets/i/examples/10logo1.png" style="height:60px; margin:0 1%;" >
+      <img src="assets/i/10logo1.png" style="height:60px; margin:0 1%;" >
       </div>
       <div class="am-span">
       <a class="am-dropdown-toggle"  href="javascript:;">
@@ -65,9 +65,9 @@
 <div id="am-wrapper">
   <div id="am-banner">
     <ul id="am-imglist">
-    <li><img src="./index_files/gungun.png" class="am-banner"></li>
-    <li><img src="./index_files/gungun.png" class="am-banner"></li>
-    <li><img src="./index_files/gungun.png" class="am-banner"></li>
+    <li><img src="assets/i/gungun.png" class="am-banner"></li>
+    <li><img src="assets/i/gungun.png" class="am-banner"></li>
+    <li><img src="assets/i/gungun.png" class="am-banner"></li>
   </div>
   <div class="am-container">
     <div ><a class="am-icon-chevron-circle-right am-icon-lg" id="next" href=""></a></div>
@@ -123,22 +123,22 @@
 
 <div class="am-summary am-container">
   <div class="am-summary1">
-    <div class="am-summary-pic"><img src="assets/i/examples/p1153075313.jpg " class="am-summary-pic"></div>
+    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content am-wrap2">现今Javascript已经成为网络开发中不可或缺的一部分</p>
   </div>
     <div class="am-summary1">
-    <div class="am-summary-pic"><img src="assets/i/examples/p1153075313.jpg " class="am-summary-pic"></div>
+    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
   </div>
     <div class="am-summary1">
-    <div class="am-summary-pic"><img src="assets/i/examples/p1153075313.jpg " class="am-summary-pic"></div>
+    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
   </div>
     <div class="am-summary1">
-    <div class="am-summary-pic"><img src="assets/i/examples/p1153075313.jpg " class="am-summary-pic"></div>
+    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
   </div>
