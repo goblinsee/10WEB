@@ -15,7 +15,9 @@
 </head>
 <body class="am-with-topbar-fixed-top">
 <header class="am-topbar am-topbar-fixed-top am-topbar-white">
-  <div class="am-header-border ">                </div>
+ <div class="am-header-border ">                
+ </div>
+ <div class="am-topbar-wrapper">
   <div class="am-container am-topbar-height">
     <div class="am-topbar-brand am-brand">
       <div style="float:left;">
@@ -31,9 +33,10 @@
       </div>
       <div class="am-span ">
       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+
       <li class="am-dropdown am-navvv" data-am-dropdown="">
-      <span class="dis ">导航栏</span></a>
-      </a>
+      <span class="dis ">导航</span></a>
+     
           <ul class="am-dropdown-content am-content">
             <li class=""></li>
             <li><a href="">社团简介</a></li>
@@ -42,23 +45,28 @@
             <li><a href="">生活服务</a></li>
           </ul>
       </li>
+      </a>
       </div>
 
-       
-      <div class="am-topright am-topbar-right am-topright" style="float:right;">
+      </div>          
+   </div>
+   <div class="am-right-wrapper am-topbar-height">
+      <div class="am-topright am-topbar-right " style="float:left;text-align:center;">
+       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+        <span class="am-icon-user "></span> 登录</button>
+      </a>
+      </div>
+
+
+      <div class="am-topright am-topbar-right am-topright" style="float:left;text-align:center;">
        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
         <span class="am-icon-pencil "></span> 注册</button>
        </a> 
       </div>
 
-      <div class="am-topright am-topbar-right " style="float:right;">
-       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-        <span class="am-icon-user "></span> 登录</button>
-      </a>
-      </div>
-    </div>      
-    </div>
-  </div>
+
+   </div>
+ </div>
 </header>
 
 
@@ -66,53 +74,58 @@
   <div id="am-banner">
     <ul id="am-imglist">
     <li><img src="assets/i/gungun.png" class="am-banner"></li>
-    <li><img src="assets/i/gungun.png" class="am-banner"></li>
-    <li><img src="assets/i/gungun.png" class="am-banner"></li>
-  </div>
-  <div class="am-container">
+    </ul>
+    <div id="am-text">
+      <h2>你是开发的艺术家</h2>
+      <p class="am-text-style">南开亿灵软件联盟是一个软件艺术联盟。所有你做的，不过是往艺术的道路更进一步</p>
+      <p class="am-text-footer">-今日语录-</p>
+    </div>
     <div ><a class="am-icon-chevron-circle-right am-icon-lg" id="next" href=""></a></div>
     <div ><a class="am-icon-chevron-circle-left am-icon-lg" id="prev" href=""></a></div>
-    
   </div>
+
+
+    
 </div>
 
 
 
 <div class="detail am-container">
-    <div class="intro">
-
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;"> 
+    <div class="intro">      
       <div class="am-center am-icon-book am-icon-lg am-wrap1"></div>
       <div class="intro am-wrap2">社团简介
-        
+ 
         <p class="am-fontsize">我们是一个什么样的社团嗯？
         </p>
-
       </div>
-
     </div>
+    </a>
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;"> 
     <div class="article">
-
       <div class="am-center am-icon-gear am-icon-lg am-wrap1">
       </div>
       <div class="article am-wrap2">技术文章
         <p class="am-fontsize">让我们遨游在技术的海洋里！</p>
       </div>
-
-    </div>    
+    </div> 
+    </a>
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">        
     <div class="activity">
-
       <div class="am-center am-icon-motorcycle am-icon-lg am-wrap1"></div>
       <div class="activity am-wrap2">社团活动
         <p class="am-fontsize">一起来看看社团最新的活动！</p>
       </div>
- 
     </div>
+    </a>
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">     
     <div class="service ">  
       <div class="am-center am-icon-plane am-icon-lg am-wrap1"></div>
       <div class="service am-wrap2">生活服务
         <p class="am-fontsize">查天气，查公交，应有尽有！</p>
       </div>
     </div>
+    </a>
 </div>
 <hr class=" am-container am-article-divider">
 
@@ -123,24 +136,32 @@
 
 <div class="am-summary am-container">
   <div class="am-summary1">
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
     <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content am-wrap2">现今Javascript已经成为网络开发中不可或缺的一部分</p>
+    </a>
   </div>
     <div class="am-summary1">
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
     <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
+    </a>
   </div>
     <div class="am-summary1">
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
     <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
+    </a>
   </div>
     <div class="am-summary1">
+    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
     <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg " class="am-summary-pic"></div>
     <h2 class="am-summary-title">Javascript全接触</h2>
     <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
+    </a>
   </div>
 </div>
 <div>
@@ -187,10 +208,8 @@
 
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="./index_files/jquery-3.1.1.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery-3.1.1.min.js"></script>
 <!--<![endif]-->
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/app.js"></script>
-<script type="text/javascript">
-</script>
 </body></html>
