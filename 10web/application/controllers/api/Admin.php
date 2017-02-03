@@ -12,6 +12,18 @@ class Admin extends CI_Controller {
     }
 
     /**
+     * use to make a info
+     *
+     * @param int $Flag - the flag
+     * @param string $Content -the content
+     * @param string $Extra -the extra info
+     * @return array
+     */
+    private function getInfo($Flag = 101,$Content = "",$Extra = ""){
+      return array("Flag" => $Flag,"Content" => $Content,"Extra" => $Extra);
+    }
+
+    /**
     *   查看所有用户的消息
     */
     public function GetAllUsersMessages(){
@@ -29,17 +41,12 @@ class Admin extends CI_Controller {
     */
     public function DeleteMessageForAdmin(){
         $messageid = $this->input->post('MessageID');
-        $info = array(
-            "Flag" => -101,
-            "Content" => "",
-            "Extra" => ""
-        );
+        $info = null;
         if($this->usermessage_model->DeleteMessageForAdmin($messageid) <> 0){
-            $info['Flag'] = 100;
-            $info['Content'] = urlencode("删除消息成功");
+            $info = $this->getInfo(100,"delete message successful","");
         }
         else{
-            $info['Content'] = urlencode("删除消息失败");
+            $info = $this->getInfo(-13,"delete message fail","");
         }
         echo urldecode(json_encode($info));
     }
