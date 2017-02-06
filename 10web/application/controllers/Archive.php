@@ -5,7 +5,7 @@ class Archive extends CI_Controller {
 
     public function __construct(){
       parent::__construct();
-      $this->load->model('sign_model');
+      // $this->load->model('sign_model');
       $this->load->helper('url');
     }
 
