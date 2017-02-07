@@ -17,7 +17,7 @@
 
 <body>
 <?php 
-  include '/../template/header.php'
+  require('./application/views/template/header.php');
 ?>
 
 <script src="/assets/js/jquery.min.js"></script>

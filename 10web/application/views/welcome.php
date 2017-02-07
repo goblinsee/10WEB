@@ -18,7 +18,7 @@
 
 <!-- 通用宽屏头部 -->
 <?php 
-  include '/template/header.php'
+  require('./application/views/template/header.php');
 ?>
 
 <!-- banner -->
