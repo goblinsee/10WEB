@@ -63,7 +63,8 @@ class Sign_model extends CI_Model{
 	*/
 	public function InsertAccount($account,$password,$nickname){
 		$signuptime=date("Y-m-d H:i:s");//注册时间，放到profile中去
-		$id = md5($signuptime);
+		//$id = md5($signuptime);
+		$id = base_convert(uniqid(), 16, 10);//生成独立id
 		$data = array(
 			'id' => $id,
 			'account' => $account,
