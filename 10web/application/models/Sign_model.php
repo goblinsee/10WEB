@@ -1,3 +1,4 @@
+
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Sign_model extends CI_Model{
@@ -136,3 +137,4 @@ class Sign_model extends CI_Model{
 	
 
 ?>
+
