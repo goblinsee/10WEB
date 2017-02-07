@@ -16,6 +16,7 @@
 </head>
 
 <body>
+
 <?php 
   require('./application/views/template/header.php');
 ?>

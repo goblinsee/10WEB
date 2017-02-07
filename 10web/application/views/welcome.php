@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html class="js cssanimations">
+<?php  
+   //html 开始通用头部
+   require('./application/views/template/html_begin.php');
+?>
 
-<head lang="en">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta charset="UTF-8">
-  <title>亿灵软件开发联盟</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
-  <link rel="alternate icon" type="image/png" href="/assets/i/favicon.png">
-  <link rel="stylesheet" href="/assets/css/amazeui.min.css">
-  <link rel="stylesheet" href="/assets/css/app.css">
-</head>
-
+<link rel="stylesheet" href="/assets/css/app.css">
 <body class="am-with-topbar-fixed-top">
 
 <!-- 通用宽屏头部 -->
@@ -180,7 +170,7 @@
 </div>
 
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/amazeui.min.js"></script>
-</body>
-</html>
+<?php  
+  //html 结束通用底部
+  require('./application/views/template/html_end.php');
+?>
