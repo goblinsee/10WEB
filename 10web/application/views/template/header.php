@@ -135,14 +135,14 @@
 
    <div class="am-right-wrapper am-topbar-height">
       <div class="am-topright am-topbar-right " style="float:left;text-align:center;">
-       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
         <span class="am-icon-user "></span> 登录</button>
       </a>
       </div>
 
 
       <div class="am-topright am-topbar-right am-topright" style="float:left;text-align:center;">
-       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
         <span class="am-icon-pencil "></span> 注册</button>
        </a> 
       </div>

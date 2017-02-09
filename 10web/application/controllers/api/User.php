@@ -62,7 +62,6 @@ class User extends CI_Controller {
         if(!sendMail($account,$email_info,$this->config->item('base_url'))){
           $info = $this->getInfo(-3,"signup fail","");
         }
-        
         echo urldecode(json_encode($info));
     }
 
@@ -128,8 +127,7 @@ class User extends CI_Controller {
         print_r($archives);
     }
 
-
-    /**
+        /**
     * 查看和自己发过消息的用户
     * @return users array()
     */
@@ -144,8 +142,9 @@ class User extends CI_Controller {
           echo urldecode(json_encode($info));
           return;
         }
+        
         $users = $this->usermessage_model->GetCommunicatedUser($userid);
-        print_r($users);
+        echo json_encode($users);
     }
 
     /**
@@ -165,7 +164,7 @@ class User extends CI_Controller {
         }
         $mesuserid = $this->input->post('MesUserID');
         $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
-        print_r($messages);
+        echo json_encode($messages);
     }
 
     /**
@@ -195,7 +194,6 @@ class User extends CI_Controller {
         $info = null;
         if($this->session->userdata['info'][0]['ID']){
           $userid = $this->session->userdata['info'][0]['ID'];
-          print_r($this->session->userdata['info'][0]);//api test
         }
         else{
           //没有登陆
@@ -203,6 +201,7 @@ class User extends CI_Controller {
           echo urldecode(json_encode($info));
           return;
         }
+
         $content = $this->input->post('Content');
 
         $targetuserid = $this->input->post('TargetUserID');

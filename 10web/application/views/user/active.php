@@ -30,7 +30,7 @@ a:active {
   background-size: cover;
   color: white;
   font-family: "幼圆","微软雅黑";
-  background-image: url(bk.jpg);
+  background-image: url(/assets/i/active_bk.jpg);
   background-position: center
 }
 
@@ -54,30 +54,34 @@ a:active {
     .signup-suc-bk{margin: 4cm 0cm 1cm 2cm;
     font-size: 15px;
   }
-  </style>
-  <script type = "text/javascript" >
-    var t = 3;
-    var int = self.setInterval("clock()", 1000);
-    function clock() {
-      t--
-      <?php //激活某一个用户(完成验证)  
-      if($active == 0){  ?>  
-        document.getElementById("clock").value="注册成功，将在"+t+"s后回到主页"  
-        <?php 
-      }
-      else{?>  
-        document.getElementById("clock").value="已验证成功，无需再次验证，将在"+t+"s后回到主页"<?php } ?>  
-      }
-      var int=window.setTimeout("jump()",3000);
-      function jump(){window.location.href = '/index.php/archive';}
-  </script>
-    
+  </style>    
  </head>
  <body class="signup-suc-bk">
   <output type="text" id="clock" style="border:none"> 
-   <!--?phpif($active == 0){ ?--> 注册成功，将在3s后回到主页 
-   <!--?php }else{?--> 已验证成功，无需再次验证，将在3s后回到主页 
-   <!--?php } ?--> </output>
+     <?php if($active == 0){ ?> 
+        注册成功，将在3s后回到主页 
+     <? php }else{ ?> 
+        已验证成功，无需再次验证，将在3s后回到主页 
+     <?php } ?> 
+   </output>
   <p class="signup-suc-text" onclick="jump()"><a href="/index.php/archive">立即返回</a></p> 
  </body>
+
+ <script type = "text/javascript" >
+  var t = 3;
+  var int = self.setInterval("clock()", 1000);
+  function clock() {
+    t--
+    <?php //激活某一个用户(完成验证)  
+    if($active == 0){  ?>  
+      document.getElementById("clock").value="注册成功，将在"+t+"s后回到主页"  
+      <?php 
+    }
+    else{?>  
+      document.getElementById("clock").value="已验证成功，无需再次验证，将在"+t+"s后回到主页"<?php } ?>  
+    }
+    var int=window.setTimeout("jump()",3000);
+    function jump(){window.location.href = '/index.php/archive';}
+  </script>
+
 </html>

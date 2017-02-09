@@ -10,13 +10,16 @@ class UserMessage_model extends CI_Model{
 	*	@param userid varchar(20)
 	*/
 	public function GetCommunicatedUser($userid){
-		$sql = "SELECT DISTINCT Receiver FROM e0_msg WHERE Sender = ".$this->db->escape($userid)." AND Type = ".$this->db->escape(2);
-		$sql2 = "SELECT DISTINCT Sender FROM e0_msg WHERE Receiver = ".$this->db->escape($userid)." AND Type = ".$this->db->escape(2);
-		$users1 = $this->db->query($sql)->result_array();
-		$users2 = $this->db->query($sql2)->result_array();
-		//先合并两个数组，然后删除重复的用户
-		$users = array_unique(array_merge($users1,$users2));
-		return $users;
+
+		$sql_format=<<<STR
+		SELECT 
+		DISTINCT Receiver,Sender,SenderNickName,ReceiverNickName,SenderHeadIcon,ReceiverHeadIcon,Abouter
+		FROM e0_view_user_msg
+		WHERE Abouter='%s'
+STR;
+
+		$sql = sprintf($sql_format,$userid);
+		return $this->db->query($sql)->result_array();
 	}
 
 	/**
@@ -25,7 +28,15 @@ class UserMessage_model extends CI_Model{
 	*	@param mesuserid varchar(20) 查找目标用户
 	*/
 	public function GetMessage($userid,$mesuserid){
-		$sql = "SELECT * FROM e0_msg WHERE ( Sender = ".$this->db->escape($userid)." AND Receiver = ".$this->db->escape($mesuserid)." OR Sender = ".$this->db->escape($mesuserid)." AND Receiver = ".$this->db->escape($userid)." )";
+		$sql_format = <<<STR
+			SELECT 
+			*
+			FROM e0_view_user_msg
+			WHERE 
+			Abouter = '%s' AND 
+			(Sender = '%s' OR Receiver = '%s') 
+STR;
+		$sql = sprintf($sql_format,$userid,$mesuserid,$mesuserid);
 		$messages = $this->db->query($sql);
 		return $messages->result_array();
 	}
@@ -105,8 +116,6 @@ class UserMessage_model extends CI_Model{
 		$this->db->query($sql);
 		return $this->db->affected_rows();
 	}
-
-
 }
 
 
