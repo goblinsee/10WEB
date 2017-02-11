@@ -83,11 +83,11 @@ class Archives_model extends CI_Model {
 	}
 	//Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户没有发布的文章	3 -> 查找用户所有的文章
 	public function findArchive() {
-		$Title = null;
-		if(isset($_POST['Title']))
-			$Title = $_POST['Title'];
+		if(!isset($_POST['ID'])){
+			return null;
+		}
 		$ID = $_POST['ID'];
-		$row = $this->findArc($ID,$Title);
+		$row = $this->findArcByID($ID);
 		return $row;
 	}
 	
@@ -131,8 +131,12 @@ class Archives_model extends CI_Model {
 	}
 
 	
-	public function findArc($ID, $Title) {
-		$sql = "SELECT * FROM e0_archives WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($Title);
+	public function findArcByID($ID) {
+		$sql_format = <<<STR
+			SELECT * FROM e0_view_user_archives 
+			WHERE ID = '%s'
+STR;
+		$sql = sprintf($sql_format,$ID);
 		$query =  $this->db->query($sql);
 		$row = $query->row_array();
 		return $row;
