@@ -133,7 +133,7 @@
       </div>          
    </div>
 
-   <div class="am-right-wrapper am-topbar-height">
+   <div class="am-right-wrapper am-topbar-height" id="header-right">
       <div class="am-topright am-topbar-right " style="float:left;text-align:center;">
        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
         <span class="am-icon-user "></span> 登录</button>
@@ -146,8 +146,23 @@
         <span class="am-icon-pencil "></span> 注册</button>
        </a> 
       </div>
-
    </div>
+
+   <script type="text/javascript">
+     $.get('/index.php/api/User/GetUserInfoBySession',function(data){
+        data = JSON.parse(data);
+        if(data.Flag < 0){
+          console.log(data.Content);
+          return ;
+        }
+        var Content = data.Content;
+        //已经登陆，显示其他的内容
+        $("#header-right").html(
+          Content.NickName||"用户xxx"
+        );
+     });
+   </script>
+
  </div>
 </header>
 
