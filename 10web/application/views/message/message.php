@@ -24,7 +24,7 @@
 		for(var i in messages){
 	   var val = messages[i];
 	   //解决哪一个是我的问题
-	   var {Sender,Receiver,Abouter,SenderNickName,ReceiverNickName} = val;
+	   var {Sender,Receiver,Abouter,SenderNickName,ReceiverNickName,Content} = val;
 	   var _re_id = Sender == Abouter ? Receiver:Sender;
 	   var _re_nickname = _re_id == Sender ? SenderNickName : ReceiverNickName;
 	   if(!_re_nickname){
@@ -34,6 +34,8 @@
 	<div>
 		<a href="/index.php/message/detail/<%- _re_id %>">
 		<%= _re_nickname %>
+		<!-- 最近的一条消息 -->
+		<%- Content %> 
 		</a>
 	</div>
 	<% } %>

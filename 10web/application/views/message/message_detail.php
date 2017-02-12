@@ -118,7 +118,7 @@ $(document).ready(function(){
 
     var _msg_box_html = `
         <%  
-            var default_head = '/assets/i/test_user_head_2.png';
+            var default_head = '/assets/i/default_head_icon.gif';
             for(var i in messages){
                 var val = messages[i];
                 val.SenderHeadIcon = val.SenderHeadIcon||default_head;

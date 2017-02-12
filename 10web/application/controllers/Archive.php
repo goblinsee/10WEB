@@ -17,6 +17,10 @@ class Archive extends CI_Controller {
     public function edit(){
       $this->load->view('archive/edit');
     }
+
+    public function p($id){
+      $this->load->view('archive/p');
+    }
 }
 
 ?>

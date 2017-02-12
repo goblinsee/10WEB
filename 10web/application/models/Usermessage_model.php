@@ -12,10 +12,17 @@ class UserMessage_model extends CI_Model{
 	public function GetCommunicatedUser($userid){
 
 		$sql_format=<<<STR
-		SELECT 
-		DISTINCT Receiver,Sender,SenderNickName,ReceiverNickName,SenderHeadIcon,ReceiverHeadIcon,Abouter
-		FROM e0_view_user_msg
-		WHERE Abouter='%s'
+		select * from 
+		(
+		(select *,Sender as Abouter ,Receiver as Relater from e0_view_user_msg)
+		union 
+		(select *,Receiver as Abouter ,Sender as Relater from e0_view_user_msg)
+		order by SendTime desc
+		)
+		as t
+		where Abouter = '%s'
+		group by Relater
+		order by SendTime desc
 STR;
 
 		$sql = sprintf($sql_format,$userid);
@@ -30,13 +37,13 @@ STR;
 	public function GetMessage($userid,$mesuserid){
 		$sql_format = <<<STR
 			SELECT 
-			*
+			*,'%s' as Abouter
 			FROM e0_view_user_msg
 			WHERE 
-			Abouter = '%s' AND 
-			(Sender = '%s' OR Receiver = '%s') 
+			(Sender = '%s' AND Receiver = '%s') OR
+			(Sender = '%s' AND Receiver = '%s')
 STR;
-		$sql = sprintf($sql_format,$userid,$mesuserid,$mesuserid);
+		$sql = sprintf($sql_format,$userid,$userid,$mesuserid,$mesuserid,$userid);
 		$messages = $this->db->query($sql);
 		return $messages->result_array();
 	}
@@ -60,9 +67,6 @@ STR;
 		$this->db->query($sql);
 		return $this->db->query($sql2)->result_array();
 	}
-
-
-
 
 	/*管理员部分*/
 
@@ -91,18 +95,25 @@ STR;
 	*	@return 改变数据库行数：可用来判断发送消息是否成功
 	*/
 	public function SendMessageToUser($userid,$targetuserid,$content){
+		$send_time=date("Y-m-d H:i:s");
 		if($targetuserid === null){
 			$allusers = GetAllUsersID();
 			foreach ($allusers->result() as $row) {
 				$userid = $row->ID;
-				$msgid = md5(uniqid());
+				$msgid = uniqid();
 				$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape($userid).", ".$this->db->escape($targetuserid).", ".$this->db->escape($content).", ".$this->db->escape(1)." )";
 				$this->db->query($sql);
 			}
 		}
 		else{
-			$msgid = md5(uniqid());
-			$sql = "INSERT INTO e0_msg (ID , Sender, Receiver , Content , Type ) VALUES (".$this->db->escape($msgid).", ".$this->db->escape($userid).", ".$this->db->escape($targetuserid).", ".$this->db->escape($content).", ".$this->db->escape(1)." )";
+			$msgid = uniqid();
+			$sql_format = <<<STR
+			INSERT INTO e0_msg 
+			(ID,Sender,Receiver,Content,SendTime,Type,State)
+			VALUES 
+			('%s','%s','%s','%s','%s',%s,%s)
+STR;
+			$sql = sprintf($sql_format,$msgid,$userid,$targetuserid,$content,$send_time,1,0);
 			$this->db->query($sql);
 		}
 		return $this->db->affected_rows();
@@ -117,6 +128,4 @@ STR;
 		return $this->db->affected_rows();
 	}
 }
-
-
- ?>
+?>
