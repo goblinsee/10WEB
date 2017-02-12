@@ -64,17 +64,20 @@ class Sign_model extends CI_Model{
 	*/
 	public function InsertAccount($account,$password,$nickname){
 		$signuptime=date("Y-m-d H:i:s");//注册时间，放到profile中去
-		$id = md5($signuptime);
+		//$id = md5($signuptime);
+		$id = uniqid();
 		$data = array(
 			'id' => $id,
 			'account' => $account,
 			'password' => $password,
 			'profile' => json_encode(array(
-				"signuptime" => $signuptime,
-				"nickname" => $nickname
+				// "signuptime" => $signuptime,
+				// "nickname" => $nickname
 			)),
 			'logintime' => $signuptime,
-			'permission' => 0
+			'permission' => 0,
+			'nickname' => $nickname,
+			'signuptime' => $signuptime
 		);
 		$this->db->insert('e0_user',$data);
 	}

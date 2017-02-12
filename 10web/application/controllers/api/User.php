@@ -48,6 +48,14 @@ class User extends CI_Controller {
         $account = $this->input->post('Account');
         $password = $this->input->post('Password');
         $nickname = $this->input->post('Usernick');
+
+        //先检查密码长度是否为32以及是否全是小写
+        if(!(strlen($password) === 32 && preg_match('/^[a-z0-9]+$/',$password))){
+            $info = $this->getInfo(-14,"wrong password format","");
+            echo urldecode(json_encode($info));
+            return ;
+        }
+
         //先检查账号是否存在
         if($this->sign_model->AccountExist($account)){
             $info = $this->getInfo(-2,"account already exists","");
@@ -63,6 +71,7 @@ class User extends CI_Controller {
         if(!sendMail($account,$email_info,$this->config->item('base_url'))){
           $info = $this->getInfo(-3,"signup fail","");
         }
+        
         echo urldecode(json_encode($info));
     }
 
@@ -118,10 +127,10 @@ class User extends CI_Controller {
 
     /*用户api*/
     /**
-    * 管理与自己相关的文章
-    * 用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
-    * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
-    */
+     * 管理与自己相关的文章
+     * 用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
+     * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
+     */
     public function GetUserArchives(){
         $archives = $this->Archives_model->findUserArchive();//传入
         print_r($archives);
@@ -144,108 +153,7 @@ class User extends CI_Controller {
       }catch(Exception $e){
         echo $this->getInfo('-1',$e);
       }
-    }
-
-    /**
-     * 查看和自己发过消息的用户
-     * @return users array()
-     */
-    public function GetCommunicatedUsers(){
-        $userid = null;
-        $info = null;
-        if($this->session->userdata['info'][0]['ID']){
-          $userid = $this->session->userdata['info'][0]['ID'];
-        }
-        else{
-          $info = $this->getInfo(-8,"you have not logged in","");
-          echo urldecode(json_encode($info));
-          return;
-        }
-        
-        $users = $this->usermessage_model->GetCommunicatedUser($userid);
-        echo json_encode($users);
-    }
-
-    /**
-    * 查看与某一用户的消息内容
-    */
-    public function GetMessage(){
-        $userid = null;
-        $info = null;
-        if($this->session->userdata['info'][0]['ID']){
-          $userid = $this->session->userdata['info'][0]['ID'];
-        }
-        else{
-          //没有登陆
-          $info = $this->getInfo(-8,"you have not logged in","");
-          echo urldecode(json_encode($info));
-          return;
-        }
-        $mesuserid = $this->input->post('MesUserID');
-        $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
-        echo json_encode($messages);
-    }
-
-    /**
-    *   用户删除消息
-    */
-    public function DeleteMessage(){
-        $messageid = $this->input->post('MessageID');
-        $info = $this->getInfo(100,"delete message successful","");
-        if($this->usermessage_model->DeleteMessage($messageid) === 0){
-            //删除消息失败
-            $info = $this->getInfo(-9,"delete message fail","");
-        }
-        echo urldecode(json_encode($info));
-    }
-
-    /**
-    * 用户读取消息，在表中将State设为1,0->未读，1->已读
-    */
-    public function ReadMessage(){
-        $messageid = $this->input->post('MessageID');
-        $messagecontent = $this->usermessage_model->SetMessageRead($messageid);
-        print_r($messagecontent);
-    }
-
-     public function SendMessageToUser(){
-        $userid = null;
-        $info = null;
-        if($this->session->userdata['info'][0]['ID']){
-          $userid = $this->session->userdata['info'][0]['ID'];
-        }
-        else{
-          //没有登陆
-          $info = $this->getInfo(-8,"you have not logged in","");
-          echo urldecode(json_encode($info));
-          return;
-        }
-
-        $content = $this->input->post('Content');
-
-        $targetuserid = $this->input->post('TargetUserID');
-
-        if($content === null){
-          //未输入消息内容
-          $info = $this->getInfo(-10,"please enter content","");
-          echo urldecode(json_encode($info));
-          return;
-        }
-        if($targetuserid === null and $this->session->userdata['info'][0]['Permission'] <> 3){
-          //未选择发送对象
-          $info = $this->getInfo(-11,"please choose target user","");
-        }
-        else{
-            if($this->usermessage_model->SendMessageToUser($userid,$targetuserid,$content) <> 0){
-                //发送消息成功
-                $info = $this->getInfo(100,"send message successful","");
-            }
-            else{
-                //发送消息失败
-                $info = $this->getInfo(-12,"send message fail","");
-            }
-        }
-        echo urldecode(json_encode($info));
-    }
+    }  
 }
+    
 ?>
