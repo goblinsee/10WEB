@@ -8,6 +8,7 @@ class User extends CI_Controller {
         $this->load->model('sign_model');
         $this->load->model('usermessage_model');
         $this->load->model('archives_model');
+        $this->load->model('user_model');
         $this->load->helper('url_helper');
         $this->load->library('session');
     }
@@ -79,7 +80,6 @@ class User extends CI_Controller {
      * used to signIn
      */
     public function signIn(){
-
       $account = $_POST['Account'];
       $password = $_POST['Password'];
       //在数据库中查找是否有该账号以及检查该账号是否可用
@@ -127,17 +127,33 @@ class User extends CI_Controller {
 
     /*用户api*/
     /**
-    * 管理与自己相关的文章
-    * 用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
-    * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
-    */
+     * 管理与自己相关的文章
+     * 用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
+     * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
+     */
     public function GetUserArchives(){
         $archives = $this->Archives_model->findUserArchive();//传入
         print_r($archives);
     }
 
-
-    
+    /**
+     * 根据session获取用户的个人信息，以及未读的私信数目
+     */
+    public function GetUserInfoBySession(){
+      //判断
+      if(!isset($this->session->userdata['info'])){
+        $info = $this->getInfo(-8,"you have not logged in","");
+        echo json_encode($info);
+        return ;
+      }
+      $user_id = $this->session->userdata['info'][0]['ID'];
+      try{
+        $result = $this->user_model-> get_by_id($user_id);
+        echo json_encode($this->getInfo(100,$result[0]));
+      }catch(Exception $e){
+        echo $this->getInfo('-1',$e);
+      }
+    }  
 }
     
 ?>
