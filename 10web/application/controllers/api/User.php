@@ -50,7 +50,7 @@ class User extends CI_Controller {
 
         //先检查密码长度是否为32以及是否全是小写
         if(!(strlen($password) === 32 && preg_match('/^[a-z0-9]+$/',$password))){
-            $info = $this->getInfo(-6,"wrong password","");
+            $info = $this->getInfo(-14,"wrong password format","");
             echo urldecode(json_encode($info));
             return ;
         }
