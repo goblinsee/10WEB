@@ -102,7 +102,7 @@ class Sign_model extends CI_Model{
 					if($row->Permission === "0"){
 						return 1;//未激活
 					}
-					else if($row->Permission === "1"　|| $row->Permission === "3"){
+					else if($row->Permission === "1"|| $row->Permission === "3"){
 						return 2;//激活状态
 					}
 					else if($row->Permission === "2"){
