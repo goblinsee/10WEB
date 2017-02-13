@@ -52,7 +52,7 @@
 	            	</div>
             	</a>
             	<div class="msg-setting msg-setting-hidden">
-            		<span class="am-icon-caret-down msg-setting-btn" ></span>
+            		<div class="msg-setting-btn"><span class="am-icon-caret-down " ></span></div>
             		<div class="msg-setting-box">
             			<div class="setting-item setting-delete" data-relater-id="<?php echo $msg['Relater']; ?>">
             				<i class="am-icon-trash"></i>
@@ -82,6 +82,10 @@
 				url:'/index.php/api/message/'
 			});
 		}
+
+        $("#back-btn").click(function(e){
+            history.go(-1);
+        });
 </script>
 
 <?php  

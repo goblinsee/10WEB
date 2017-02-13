@@ -64,15 +64,6 @@ class Message extends CI_Controller{
         echo urldecode(json_encode($info));
     }
 
-    /**
-    * 用户读取消息，在表中将State设为1,0->未读，1->已读
-    */
-    public function ReadMessage(){
-        $messageid = $this->input->post('MessageID');
-        $messagecontent = $this->usermessage_model->SetMessageRead($messageid);
-        print_r($messagecontent);
-    }
-
      public function SendMessageToUser(){
         $userid = null;
         $info = null;
@@ -110,6 +101,20 @@ class Message extends CI_Controller{
             }
         }
         echo urldecode(json_encode($info));
+    }
+
+    /**
+     * 获取该用户未读的消息数量(State 为 0 )
+     */
+    public function GetUnreadMsgCount(){
+        if(!isset($this->session->userdata['info'][0])){
+            echo $info = $this->getInfo(-8,"you have not logged in","");
+            return ;
+        }
+        $user_id = $this->session->userdata['info'][0]['ID'];
+        $result = $this->usermessage_model->GetUnreadCount($user_id);
+        $info = $this->getInfo(100,$result,"");
+        echo json_encode($info);
     }
 
     //管理员部分

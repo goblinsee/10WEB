@@ -10,14 +10,14 @@ class UserMessage_model extends CI_Model{
 	*	@param userid varchar(20)
 	*/
 	public function GetCommunicatedUser($userid){
-
 		$sql_format=<<<STR
-		select * ,User as Abouter from 
-		e0_view_user_msg
-		where User = '%s'
-		group by Relater
-		order by SendTime desc
+		SELECT 
+		* ,User as Abouter 
+		FROM e0_view_user_msg
+		WHERE User = '%s'
+		GROUP BY Relater
 STR;
+
 		$sql = sprintf($sql_format,$userid);
 		return $this->db->query($sql)->result_array();
 	}
@@ -34,11 +34,13 @@ STR;
 			FROM e0_view_user_msg
 			WHERE 
 			User = '%s' AND Relater = '%s'
-			Order By SendTime
-STR;
+			ORDER BY SendTime
+STR;	
+		//设置消息已读
+		// $this->SetUserMsgRead($userid,$mesuserid);
+		//选出消息
 		$sql = sprintf($sql_format,$userid,$userid,$mesuserid);
 		$messages = $this->db->query($sql);
-		$this->SetUserMsgRead($userid,$mesuserid);
 		return $messages->result_array();
 	}
 
@@ -62,17 +64,6 @@ STR;
 		return $this->db->query($sql2)->result_array();
 	}
 
-	public function SetUserMsgRead($userid,$mesuserid){
-		$sql_format = <<<STR
-		UPDATE e0_msg
-		SET State = 1
-		Where 
-		User = '%s' AND Relater = '%s'
-		AND State = 0
-STR;
-		$sql = sprintf($sql_format,$userid,$mesuserid);
-		$this->db->query($sql);
-	}
 
 	/*管理员部分*/
 
@@ -119,21 +110,21 @@ STR;
 			VALUES 
 			('%s','%s','%s','%s','%s','%s','%s',%s,%s)
 STR;
-			$sql_main = sprintf($sql_format,$msgid,$userid,$targetuserid,$userid,$targetuserid,$content,$send_time,1,0);
-			$sql_re = sprintf($sql_format,$msgid,$targetuserid,$userid,$userid,$targetuserid,$content,$send_time,1,0);
-			$this->db->query($sql_main);
-			$this->db->query($sql_re);
+			$sql_user = sprintf($sql_format,$msgid,$userid,$targetuserid,$userid,$targetuserid,$content,$send_time,1,0);
+			$sql_relater = sprintf($sql_format,$msgid,$targetuserid,$userid,$userid,$targetuserid,$content,$send_time,1,0);
+			$this->db->query($sql_user);
+			$this->db->query($sql_relater);
 		}
-		return $this->db->affected_rows();
+		// return $this->db->affected_rows();
 	}
 
-	/**
-	*	管理员删除消息
-	*/
-	public function DeleteMessageForAdmin($messageid){
-		$sql = "UPDATE e0_msg SET STATE = ".$this->db->escape(3)." WHERE ID = ".$this->db->escape($messageid);
-		$this->db->query($sql);
-		return $this->db->affected_rows();
-	}
-}
+	// /**
+	// *	管理员删除消息
+	// */
+	// public function DeleteMessageForAdmin($messageid){
+	// 	$sql = "UPDATE e0_msg SET STATE = ".$this->db->escape(3)." WHERE ID = ".$this->db->escape($messageid);
+	// 	$this->db->query($sql);
+	// 	return $this->db->affected_rows();
+	// }
+// }
 ?>
