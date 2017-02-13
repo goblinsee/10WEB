@@ -1,10 +1,11 @@
 <?php 
 class Message extends CI_Controller{
 	
-	public function __construct{
+	public function __construct(){
 		parent::__construct();
         $this->load->model('usermessage_model');
         $this->load->helper('url_helper');
+        $this->load->library('session');
 	}
 
 	private function getInfo($Flag = 101,$Content = "",$Extra = ""){
@@ -27,7 +28,7 @@ class Message extends CI_Controller{
           return;
         }
         $users = $this->usermessage_model->GetCommunicatedUser($userid);
-        print_r($users);
+        echo json_encode($this->getInfo(100,$users));
     }
 
     /**
@@ -47,7 +48,7 @@ class Message extends CI_Controller{
         }
         $mesuserid = $this->input->post('MesUserID');
         $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
-        print_r($messages);
+        echo json_encode($this->getInfo(100,$messages));
     }
 
     /**
@@ -77,7 +78,6 @@ class Message extends CI_Controller{
         $info = null;
         if($this->session->userdata['info'][0]['ID']){
           $userid = $this->session->userdata['info'][0]['ID'];
-          print_r($this->session->userdata['info'][0]);//api test
         }
         else{
           //没有登陆
@@ -96,7 +96,7 @@ class Message extends CI_Controller{
           return;
         }
         if($targetuserid === null and $this->session->userdata['info'][0]['Permission'] <> 3){
-          //未选择发送对象
+          //未选择发送对象g
           $info = $this->getInfo(-11,"please choose target user","");
         }
         else{

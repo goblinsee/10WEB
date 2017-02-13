@@ -30,7 +30,7 @@
     </div>
 
     <ul id="am-imglist">
-      <li><img src="assets/i/banner.png" class="am-banner"></li>
+      <li><img src="/assets/i/banner.png" class="am-banner"></li>
     </ul>
   </div>
 </div>

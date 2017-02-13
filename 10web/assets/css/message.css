@@ -1,9 +1,14 @@
 html,body{height: 100%;}
 .clearfix{overflow: hidden;}
+.hidden{display: none;}
 body{
     background: #eeeeee;
     min-width: 1000px;
 }
+.clearfix{
+    overflow: hidden;
+}
+
 
 /*消息框部分*/
 .e0-msg-box{
@@ -140,3 +145,78 @@ body{
     margin-top: 5px;
 }
 
+/*消息列表部分*/
+
+.e0-msg-com{
+    height: 90px;
+    border-bottom: 1px solid #a0a0a0;
+    padding: 20px 0 ;
+}
+.e0-msg-com a:link{
+    color: black !important;
+}
+
+.e0-msg-com a:visited{
+    color: black !important;
+}
+
+.e0-msg-com > a > div{
+    float: left;
+}
+
+.e0-msg-com .msg-info {
+    padding-left: 10px;
+}
+
+.e0-msg-com .msg-info  > div{
+    width: 840px;
+}
+
+.info-t .user-name{
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info-t .msg-time{
+    float: right;
+    color: #a0a0a0;
+}
+
+.info-d{
+    color: #a0a0a0;
+    font-size: 16px;
+}
+
+.head-icon{
+    height: 50px;
+}
+
+.head-icon img{
+    height: 100%;
+}
+
+.msg-setting{
+    color: #a0a0a0;
+    text-indent: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+
+.msg-setting-box{    
+    position: absolute;
+    right: 0;
+    box-shadow: 0px 5px 10px grey;
+    color: black;
+}
+.setting-item{
+    padding: 10px;
+}
+.setting-item:hover{
+    background: #ddd;
+}
+
+.msg-setting-hidden .msg-setting-box{
+    display: none;
+}

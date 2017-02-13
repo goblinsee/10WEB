@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'db',
+	'hostname' => 'www.jyonline.cc:6700',
 	'username' => 'root',
 	'password' => 'password',
 	'database' => 'e0web',
