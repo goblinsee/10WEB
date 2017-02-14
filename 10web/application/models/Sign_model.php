@@ -57,6 +57,7 @@ class Sign_model extends CI_Model{
 		$signuptime=date("Y-m-d H:i:s");//注册时间，放到profile中去
 		//$id = md5($signuptime);
 		$id = uniqid();
+		$icon = '/assets/i/default_head_icon/'.['uh_1.gif','uh_2.gif','uh_3.gif','uh_4.gif','uh_5.gif','uh_6.gif','uh_7.gif','uh_8.gif','uh_9.gif'][rand(0,8)];
 		$data = array(
 			'id' => $id,
 			'account' => $account,
@@ -68,7 +69,8 @@ class Sign_model extends CI_Model{
 			'logintime' => $signuptime,
 			'permission' => 0,
 			'nickname' => $nickname,
-			'signuptime' => $signuptime
+			'signuptime' => $signuptime,
+			'headicon' => $icon
 		);
 		$this->db->insert('e0_user',$data);
 	}
