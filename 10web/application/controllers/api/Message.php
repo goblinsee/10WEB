@@ -1,10 +1,11 @@
 <?php 
 class Message extends CI_Controller{
 	
-	public function __construct{
+	public function __construct(){
 		parent::__construct();
         $this->load->model('usermessage_model');
         $this->load->helper('url_helper');
+        $this->load->library('session');
 	}
 
 	private function getInfo($Flag = 101,$Content = "",$Extra = ""){
@@ -27,7 +28,7 @@ class Message extends CI_Controller{
           return;
         }
         $users = $this->usermessage_model->GetCommunicatedUser($userid);
-        print_r($users);
+        echo json_encode($this->getInfo(100,$users));
     }
 
     /**
@@ -47,7 +48,7 @@ class Message extends CI_Controller{
         }
         $mesuserid = $this->input->post('MesUserID');
         $messages = $this->usermessage_model->GetMessage($userid,$mesuserid);
-        print_r($messages);
+        echo json_encode($this->getInfo(100,$messages));
     }
 
     /**
@@ -63,21 +64,11 @@ class Message extends CI_Controller{
         echo urldecode(json_encode($info));
     }
 
-    /**
-    * 用户读取消息，在表中将State设为1,0->未读，1->已读
-    */
-    public function ReadMessage(){
-        $messageid = $this->input->post('MessageID');
-        $messagecontent = $this->usermessage_model->SetMessageRead($messageid);
-        print_r($messagecontent);
-    }
-
      public function SendMessageToUser(){
         $userid = null;
         $info = null;
         if($this->session->userdata['info'][0]['ID']){
           $userid = $this->session->userdata['info'][0]['ID'];
-          print_r($this->session->userdata['info'][0]);//api test
         }
         else{
           //没有登陆
@@ -96,7 +87,7 @@ class Message extends CI_Controller{
           return;
         }
         if($targetuserid === null and $this->session->userdata['info'][0]['Permission'] <> 3){
-          //未选择发送对象
+          //未选择发送对象g
           $info = $this->getInfo(-11,"please choose target user","");
         }
         else{
@@ -110,6 +101,20 @@ class Message extends CI_Controller{
             }
         }
         echo urldecode(json_encode($info));
+    }
+
+    /**
+     * 获取该用户未读的消息数量(State 为 0 )
+     */
+    public function GetUnreadMsgCount(){
+        if(!isset($this->session->userdata['info'][0])){
+            echo $info = $this->getInfo(-8,"you have not logged in","");
+            return ;
+        }
+        $user_id = $this->session->userdata['info'][0]['ID'];
+        $result = $this->usermessage_model->GetUnreadCount($user_id);
+        $info = $this->getInfo(100,$result,"");
+        echo json_encode($info);
     }
 
     //管理员部分
