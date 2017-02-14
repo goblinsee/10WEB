@@ -2,7 +2,7 @@
     require('./application/views/template/html_begin.php');
     require('./application/views/template/header.php');
 ?>
-<link rel="stylesheet" type="text/css" href="/assets/css/message_detail.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/message.css">
 <body class="am-with-topbar-fixed-top">
     <div class="e0-msg-box">
         <!-- 聊天框标题 -->
@@ -40,14 +40,14 @@ $(document).ready(function(){
     var getInitData = function(cb){
         //知道和我对话的人是谁
         $.ajax({
-            url:'/index.php/api/user/GetMessage',
+            url:'/index.php/api/message/GetMessage',
             type:'post',
             data:{
                 MesUserID:re_id
             },
             success:function(data){
                 data = JSON.parse(data);
-                cb(null,data);
+                cb(null,data.Content);
             }
         });
     };
@@ -55,7 +55,7 @@ $(document).ready(function(){
     //发送消息
     var sendMsg = function(cb){
         $.ajax({
-            url:'/index.php/api/user/SendMessageToUser',
+            url:'/index.php/api/message/SendMessageToUser',
             type:'post',
             data:{
                 Content:$msg_content.val(),
@@ -64,6 +64,10 @@ $(document).ready(function(){
             success:function(data){
                 try{
                     data = JSON.parse(data);
+                    if(data.Flag < 0){
+                        alert(data.Content);
+                        // return ;
+                    }
                     cb(null,data);
                 }catch(e){
                     cb(e);
@@ -118,7 +122,7 @@ $(document).ready(function(){
 
     var _msg_box_html = `
         <%  
-            var default_head = '/assets/i/test_user_head_2.png';
+            var default_head = '/assets/i/default_head_icon.gif';
             for(var i in messages){
                 var val = messages[i];
                 val.SenderHeadIcon = val.SenderHeadIcon||default_head;

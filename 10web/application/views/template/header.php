@@ -92,6 +92,26 @@
 .am-topright:hover{
   background-color: #f8f8f8 !important;
 } 
+
+
+/*右边的用户头像和登陆注册按钮*/
+
+/*重写amaze ui 样式*/
+#header-right .am-dropdown-content{
+    width: 110px;
+    min-width: 0;
+    text-align: center;
+}
+
+.header-user-icon{
+  line-height: 100px;
+  cursor: pointer;
+}
+
+.header-user-icon img{
+  height: 45px;
+  padding-right: 10px;
+}
 </style>
 
 <header class="am-topbar am-topbar-fixed-top am-topbar-white">
@@ -101,11 +121,13 @@
   <div class="am-container am-topbar-height">
     <div class="am-topbar-brand am-brand">    
         <div style="float:left;">
-          <img src="/assets/i/10_mian_logo.png" style="height:60px; margin:0 1%;" />
+          <a href="/">
+            <img src="/assets/i/10_mian_logo.png" style="height:60px; margin:0 1%;" />
+          </a>
         </div>
 
         <div class="am-span">
-          <a class="am-dropdown-toggle"  href="javascript:;">
+          <a class="am-dropdown-toggle"  href="/">
             <span class="dis">首页</span>
           </a>
         </div>
@@ -133,19 +155,43 @@
       </div>          
    </div>
 
-   <div class="am-right-wrapper am-topbar-height">
-      <div class="am-topright am-topbar-right " style="float:left;text-align:center;">
-       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
-        <span class="am-icon-user "></span> 登录</button>
-      </a>
-      </div>
-
-
-      <div class="am-topright am-topbar-right am-topright" style="float:left;text-align:center;">
-       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
-        <span class="am-icon-pencil "></span> 注册</button>
-       </a> 
-      </div>
+   <div class="am-right-wrapper am-topbar-height" id="header-right">
+      
+      <?php
+        if(!isset($_SESSION['info']['0'])){
+      ?>
+        <div class="am-topright am-topbar-right " style="float:left;text-align:center;">
+         <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
+          <span class="am-icon-user "></span> 登录</button>
+        </a>
+        </div>
+        <div class="am-topright am-topbar-right am-topright" style="float:left;text-align:center;">
+         <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="/index.php/signup">
+          <span class="am-icon-pencil "></span> 注册</button>
+         </a> 
+        </div>
+      <?php
+        }else{
+          $user = $_SESSION['info']['0'];
+          $head_icon = $user['HeadIcon'];
+          if(!$head_icon)
+            $head_icon = '/assets/i/default_head_icon.gif';
+          
+      ?>
+        <div class="am-dropdown" data-am-dropdown>
+            <div class="am-dropdown-toggle header-user-icon" data-am-dropdown-toggle>
+              <img src=" <?php echo $head_icon; ?>">
+              <span class="am-icon-caret-down"></span>
+            </div>
+            <ul class="am-dropdown-content">
+              <li><a href="#">我的主页</a></li>
+              <li><a href="#">我的文章</a></li>
+              <li><a href="/index.php/message">我的私信<span class="am-badge am-badge-danger am-round">6</span></a></li>
+              <li><a href="#">我的活动</a></li>
+              <li><a href="#">我的关注</a></li>
+            </ul>
+        </div>
+      <?php } ?>
 
    </div>
  </div>
