@@ -110,7 +110,7 @@ class Archive extends CI_Controller {
 
         $user_id = $this->session->userdata['info'][0]['ID'];
         $result = $this->Archives_model->findAllArc($user_id);
-        $info = $this->getInfo(100,$result[0],"");
+        $info = $this->getInfo(100,$result,"");
         echo json_encode($info);
     }
 
