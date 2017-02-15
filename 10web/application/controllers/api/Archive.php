@@ -79,7 +79,9 @@ class Archive extends CI_Controller {
       }
       echo json_encode($info) ;
     }
-	
+
+
+//--------------------------->2017年2月15日增加
     /**
      * 根据用户ID获取用户发布的文章
      */
@@ -110,6 +112,19 @@ class Archive extends CI_Controller {
         $result = $this->Archives_model->findAllArc($user_id);
         $info = $this->getInfo(100,$result[0],"");
         echo json_encode($info);
+    }
+
+    /**
+     * 获取推荐的文章,以10篇为一组
+     */
+    public function getComArc($range = 0){
+      $result = $this->Archives_model->getComArc($range);
+      $info = $this->getInfo(100,$result,"");
+      echo json_encode($info);
+    }
+
+    public function search(){
+      echo "还未开放";
     }
 }
 

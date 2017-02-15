@@ -178,7 +178,6 @@ STR;
 		WHERE Mid = '%s' AND State = %s
 STR;
 		$sql = sprintf($sql_format,$user_id,$state);
-		print_r($sql);
 		$result = $this->db->query($sql);
 		return $result->result_array();
 	}
@@ -206,8 +205,19 @@ STR;
 	 * 获取推荐的文章
 	 * 
 	 * @param int $range 文章的范围,以10篇为1组，
+	 * @return array 返回的文章
 	 */ 
 	public function getComArc($range= 0){
+		$sql_format = <<<STR
+		SELECT * FROM 
+		e0_view_user_archives
+		WHERE State = 1
+		ORDER BY SortRank + IsCommend*10 DESC
+		LIMIT %s,%s
+STR;
+		$sql = sprintf($sql_format,$range,$range + 10);
+		$result = $this->db->query($sql);
+		return $result->result_array();
 	}
 }
 ?>
