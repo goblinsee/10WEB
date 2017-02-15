@@ -64,7 +64,7 @@ class Message extends CI_Controller{
         echo urldecode(json_encode($info));
     }
 
-     public function SendMessageToUser(){
+    public function SendMessageToUser(){
         $userid = null;
         $info = null;
         if($this->session->userdata['info'][0]['ID']){
@@ -108,7 +108,8 @@ class Message extends CI_Controller{
      */
     public function GetUnreadMsgCount(){
         if(!isset($this->session->userdata['info'][0])){
-            echo $info = $this->getInfo(-8,"you have not logged in","");
+            $info = $this->getInfo(-8,"you have not logged in","");
+            echo json_encode($info);
             return ;
         }
         $user_id = $this->session->userdata['info'][0]['ID'];

@@ -74,6 +74,17 @@ STR;
 		$this->db->query($sql);
 	}
 
+	public function GetUnreadCount($user_id){
+		$sql_format = <<<STR
+		SELECT count(*) AS UnreadCount
+		FROM e0_view_user_msg
+		WHERE User = '%s'AND State = 0 
+STR;
+		$sql = sprintf($sql_format,$user_id);
+		$result = $this->db->query($sql);
+		return $result->result_array()[0];
+	}
+
 	/*管理员部分*/
 
 	/**
