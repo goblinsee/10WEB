@@ -6,7 +6,6 @@ class Archives_model extends CI_Model {
 		$this->load->library('session');
 	}
 
-
 	public function addArchive() {
 		$Title = $_POST['Title'];
 		$Source = $_POST['Source'];
@@ -81,6 +80,7 @@ class Archives_model extends CI_Model {
 		$error_code = $this->editArc($ID,$UserID,$OldTitle,$NewTitle,$Source,$RedirectUrl,$LitPic,$Release);
 		return $error_code;
 	}
+	
 	//Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户没有发布的文章	3 -> 查找用户所有的文章
 	public function findArchive() {
 		if(!isset($_POST['ID'])){
@@ -105,7 +105,7 @@ class Archives_model extends CI_Model {
 		return $this->db->query($sql);
 	}
 		
-	// State: 0 -> 待审核	1 -> 审核通过	2 -> 已删除
+	// State: 0 -> 待审核	1 -> 审核通过	 2 -> 已删除
 	public function delArc($ID, $Title) {
 		$sql = "UPDATE e0_archives SET State = 2 WHERE ID = ".$this->db->escape($ID)." AND Title = ".$this->db->escape($Title);
 		$this->db->query($sql);
@@ -130,7 +130,11 @@ class Archives_model extends CI_Model {
 
 	}
 
-	
+	/**
+	 * 根据文章的id查找文章
+	 * 
+	 * @param int $ID 文章的ID
+	 */
 	public function findArcByID($ID) {
 		$sql_format = <<<STR
 			SELECT * FROM e0_view_user_archives 
@@ -156,6 +160,54 @@ STR;
 			array_push($Archives,$this->db->query($sql2)->row());
 		}
 		return $Archives;
+	}
+	//---------------------------------->2017年02月15日补充部分
+	
+	/**
+	 * 通过用户的ID寻找这个用户的文章
+	 * 
+	 * @param string $user_id 用户的id
+	 * @param int $state 文章的状态，默认是选取发布的文章d
+	 */ 
+	public function findArcByUserID($user_id,$state = 1){
+		if(!$user_id)
+			return null;
+
+		$sql_format = <<<STR
+		SELECT * FROM e0_view_user_archives
+		WHERE Mid = '%s' AND State = %s
+STR;
+		$sql = sprintf($sql_format,$user_id,$state);
+		print_r($sql);
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
+
+
+	/**
+	 * 通过用户的ID寻找这个用户所有没有删除的文章
+	 * 
+	 * @param string $user_id 用户的id
+	 * @param int $state 文章的状态，默认是选取发布的文章d
+	 */ 
+	public function findAllArc($user_id){
+		if(!$user_id)
+			return null;
+		$sql_format = <<<STR
+		SELECT * FROM e0_view_user_archives
+		WHERE Mid = '%s'AND State <> -1
+STR;
+		$sql = sprintf($sql_format,$user_id);
+		$result = $this->db->query($sql);
+		return $result->result_array();
+	}
+
+	/**
+	 * 获取推荐的文章
+	 * 
+	 * @param int $range 文章的范围,以10篇为1组，
+	 */ 
+	public function getComArc($range= 0){
 	}
 }
 ?>

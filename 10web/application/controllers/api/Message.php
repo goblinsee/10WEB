@@ -14,7 +14,6 @@ class Message extends CI_Controller{
 
 	/**
     * 查看和自己发过消息的用户
-    * @return users array()
     */
     public function GetCommunicatedUsers(){
         $userid = null;
@@ -64,6 +63,9 @@ class Message extends CI_Controller{
         echo urldecode(json_encode($info));
     }
 
+    /**
+     * 发消息给某一个用户
+     */
     public function SendMessageToUser(){
         $userid = null;
         $info = null;
@@ -103,6 +105,7 @@ class Message extends CI_Controller{
         echo urldecode(json_encode($info));
     }
 
+
     /**
      * 获取该用户未读的消息数量(State 为 0 )
      */
@@ -115,6 +118,34 @@ class Message extends CI_Controller{
         $user_id = $this->session->userdata['info'][0]['ID'];
         $result = $this->usermessage_model->GetUnreadCount($user_id);
         $info = $this->getInfo(100,$result,"");
+        echo json_encode($info);
+    }
+
+    /**
+     * 标记与某一个用户的私信删除
+     */
+    public function DelRelMsg(){
+        if(!isset($this->session->userdata['info'][0])){
+            $info = $this->getInfo(-8,"you have not logged in","");
+            echo json_encode($info);
+            return ;
+        }
+
+        if(!isset($_POST['RelaterID'])){
+            $info = $this->getInfo(-1,"缺少参数RelaterID","");
+            echo json_encode($info);
+            return ;
+        }
+
+        $user_id = $this->session->userdata['info'][0]['ID'];
+        $relater_id = $_POST['RelaterID'];
+        $result = $this->usermessage_model->DelRelMsg($user_id,$relater_id);
+        if(!$result){
+            $info = $this->getInfo(-100,"数据库操作失败","");
+            echo json_encode($info);
+            return ;
+        }
+        $info = $this->getInfo(100,"操作成功","");
         echo json_encode($info);
     }
 

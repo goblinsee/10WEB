@@ -80,20 +80,37 @@ class Archive extends CI_Controller {
       echo json_encode($info) ;
     }
 	
-    // /**
-//      * use to find user's archive
-//      */
-//     public function findUserArc($Type = 1){
-//       $row = $this->Archives_model->findUserArchive($Type);
-//       if ($row) {
-//         $info = $this->getInfo(100,json_encode($row),"");
-//       } else {
-//         $info = $this->getInfo(-101,"fail","");
-//       }
-//       echo json_encode($info) ;
-//     }
-//	Please use User.php -> GetUserArchives() .
+    /**
+     * 根据用户ID获取用户发布的文章
+     */
+    public function findUserPubArc(){
+      //参数检测
+      if(!isset($_POST['UserID'])){
+        $info = $this->getInfo(-1,"缺少参数","");
+        echo json_encode($info);
+        return ;
+      }
+      $user_id = $_POST['UserID'];
+      $result = $this->Archives_model->findArcByUserID($user_id,1);
+      $info = $this->getInfo(100,$result,"");
+      echo json_encode($info);
+    }
 
+    /**
+     * 根据session获取当前用户的所有文章(除了删除的)
+     */
+    public function findMyArc(){
+        if(!isset($this->session->userdata['info'][0]['ID'])){
+           $info = $this->getInfo(-8,"未登录","");
+           echo json_encode($info);
+           return ;
+        }
+
+        $user_id = $this->session->userdata['info'][0]['ID'];
+        $result = $this->Archives_model->findAllArc($user_id);
+        $info = $this->getInfo(100,$result[0],"");
+        echo json_encode($info);
+    }
 }
 
 ?>
