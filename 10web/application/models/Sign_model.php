@@ -84,7 +84,7 @@ class Sign_model extends CI_Model{
 
 	/**
 	*	检查文档：登陆时查找数据库中是否有该账号和密码，以及检查该账号是否可用
-	*	Permission: 0->未激活，1->激活， 2->账号被封
+	*	Permission: 0->未激活，1->激活， 2->账号被封，	３->管理员
 	*	@param account varchar(40)
 	*	@param password varchar(20)
 	*	@return 1->未激活，2->激活， 3->账号被封， 4->密码错误， 5->账号不存在
@@ -102,7 +102,7 @@ class Sign_model extends CI_Model{
 					if($row->Permission === "0"){
 						return 1;//未激活
 					}
-					else if($row->Permission === "1"){
+					else if($row->Permission === "1"|| $row->Permission === "3"){
 						return 2;//激活状态
 					}
 					else if($row->Permission === "2"){

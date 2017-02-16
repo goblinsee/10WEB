@@ -12,19 +12,12 @@ class UserMessage_model extends CI_Model{
 	public function GetCommunicatedUser($userid){
 
 		$sql_format=<<<STR
-		select * from 
-		(
-		(select *,Sender as Abouter ,Receiver as Relater from e0_view_user_msg)
-		union 
-		(select *,Receiver as Abouter ,Sender as Relater from e0_view_user_msg)
-		order by SendTime desc
-		)
-		as t
-		where Abouter = '%s'
+		select * ,User as Abouter from 
+		e0_view_user_msg
+		where User = '%s' AND State <> -1
 		group by Relater
 		order by SendTime desc
 STR;
-
 		$sql = sprintf($sql_format,$userid);
 		return $this->db->query($sql)->result_array();
 	}
@@ -40,11 +33,13 @@ STR;
 			*,'%s' as Abouter
 			FROM e0_view_user_msg
 			WHERE 
-			(Sender = '%s' AND Receiver = '%s') OR
-			(Sender = '%s' AND Receiver = '%s')
+			User = '%s' AND Relater = '%s'
+			AND State <> -1
+			Order By SendTime
 STR;
-		$sql = sprintf($sql_format,$userid,$userid,$mesuserid,$mesuserid,$userid);
+		$sql = sprintf($sql_format,$userid,$userid,$mesuserid);
 		$messages = $this->db->query($sql);
+		$this->SetUserMsgRead($userid,$mesuserid);
 		return $messages->result_array();
 	}
 
@@ -66,6 +61,59 @@ STR;
 		$sql2 = "SELECT * FROM e0_msg WHERE ID = ".$this->db->escape($messageid);
 		$this->db->query($sql);
 		return $this->db->query($sql2)->result_array();
+	}
+
+	private function SetUserMsgRead($userid,$mesuserid){
+		$sql_format = <<<STR
+		UPDATE e0_msg
+		SET State = 1
+		Where 
+		User = '%s' AND Relater = '%s'
+		AND State = 0
+STR;
+		$sql = sprintf($sql_format,$userid,$mesuserid);
+		$this->db->query($sql);
+	}
+
+	/**
+	 * 获取当前用户的未读消息的数目 
+	 *
+	 * @param string $user_id 当前用户的id
+	 * @return array 数据库返回的结果
+	 */
+	public function GetUnreadCount($user_id){
+		$sql_format = <<<STR
+		SELECT count(*) AS UnreadCount
+		FROM e0_view_user_msg
+		WHERE User = '%s'AND State = 0 
+STR;
+		$sql = sprintf($sql_format,$user_id);
+		$result = $this->db->query($sql);
+		return $result->result_array()[0];
+	}
+
+
+	/**
+	 * 标记与某一个用户的私信删除
+	 *
+	 * @param string $user_id 当前用户的id
+	 * @param string $relater_id 相关用户的id
+	 * @return boolean 返回是否成功
+	 */
+	public function DelRelMsg($user_id,$relater_id){
+		$sql_format = <<<STR
+		UPDATE e0_msg
+		SET State = -1
+		WHERE 
+		User = '%s' AND Relater = '%s'
+STR;
+		$sql = sprintf($sql_format,$user_id,$relater_id);
+		try{
+			$result = $this->db->query($sql);	
+		}catch(Exception $e){
+			return false;
+		}
+		return true;
 	}
 
 	/*管理员部分*/
@@ -109,12 +157,14 @@ STR;
 			$msgid = uniqid();
 			$sql_format = <<<STR
 			INSERT INTO e0_msg 
-			(ID,Sender,Receiver,Content,SendTime,Type,State)
+			(ID,User,Relater,Sender,Receiver,Content,SendTime,Type,State)
 			VALUES 
-			('%s','%s','%s','%s','%s',%s,%s)
+			('%s','%s','%s','%s','%s','%s','%s',%s,%s)
 STR;
-			$sql = sprintf($sql_format,$msgid,$userid,$targetuserid,$content,$send_time,1,0);
-			$this->db->query($sql);
+			$sql_main = sprintf($sql_format,$msgid,$userid,$targetuserid,$userid,$targetuserid,$content,$send_time,1,0);
+			$sql_re = sprintf($sql_format,$msgid,$targetuserid,$userid,$userid,$targetuserid,$content,$send_time,1,0);
+			$this->db->query($sql_main);
+			$this->db->query($sql_re);
 		}
 		return $this->db->affected_rows();
 	}
