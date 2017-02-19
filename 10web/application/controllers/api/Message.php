@@ -56,7 +56,8 @@ class Message extends CI_Controller{
     public function DeleteMessage(){
         $messageid = $this->input->post('MessageID');
         $info = $this->getInfo(100,"delete message successful","");
-        if($this->usermessage_model->DeleteMessage($messageid) === 0){
+        $userid = $this->session->userdata['info'][0]['ID'];
+        if($this->usermessage_model->DeleteMessage($messageid,$userid) === 0){
             //删除消息失败
             $info = $this->getInfo(-9,"delete message fail","");
         }
