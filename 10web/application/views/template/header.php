@@ -106,12 +106,24 @@
 .header-user-icon{
   line-height: 100px;
   cursor: pointer;
+  position: relative;
 }
 
 .header-user-icon img{
   height: 45px;
   padding-right: 10px;
 }
+
+.red-point{
+  height: 10px;
+  width: 10px;
+  background: #ea6f5a;
+  position: absolute;
+  left: 45px;
+  top: calc(50% + 10px);
+  border-radius: 100%;
+}
+
 </style>
 
 <header class="am-topbar am-topbar-fixed-top am-topbar-white">
@@ -180,15 +192,18 @@
       ?>
         <div class="am-dropdown" data-am-dropdown>
             <div class="am-dropdown-toggle header-user-icon" data-am-dropdown-toggle>
+              <div id="red-point" class=""></div>
               <img src=" <?php echo $head_icon; ?>">
               <span class="am-icon-caret-down"></span>
             </div>
             <ul class="am-dropdown-content">
               <li><a href="#">我的主页</a></li>
               <li><a href="#">我的文章</a></li>
-              <li><a href="/index.php/message">我的私信<span class="am-badge am-badge-danger am-round">6</span></a></li>
+              <li><a href="/index.php/message">我的私信<span class="am-badge am-badge-danger am-round" id="unread-msg-count"></span></a></li>
               <li><a href="#">我的活动</a></li>
               <li><a href="#">我的关注</a></li>
+              <li class="am-divider"></li>
+              <li><a href="/index.php/user/logout">登出</a></li>
             </ul>
         </div>
       <?php } ?>
@@ -196,4 +211,21 @@
    </div>
  </div>
 </header>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    //读取未读消息的数目
+    $.get('/index.php/api/message/GetUnreadMsgCount',function(data){
+      data = JSON.parse(data);
+      if(data.Flag > 0){
+        //已经登陆执行程序
+        var UnreadCount = data.Content.UnreadCount;
+        if(UnreadCount > 0){
+          $('#unread-msg-count').text(UnreadCount);
+          $('#red-point').addClass('red-point');
+        }
+      }
+    });
+  });
+</script>
 

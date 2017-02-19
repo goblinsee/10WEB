@@ -21,7 +21,7 @@
     </div>
 
     <div class="login-body">
-       <div data-am-widget="tabs" class="am-tabs am-tabs-login">
+       <div data-am-widget="tabs" class="am-tabs am-tabs-login" data-am-tabs-noswipe="1">
             
             <ul class="am-tabs-nav am-cf">
                 <li class="am-active to_login">

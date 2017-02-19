@@ -216,12 +216,17 @@ body{min-width: 1000px;}
 .am-summary-title,.am-summary-content{
 	text-align: center;
 	margin: 0;
+	color: black;
 }
 .am-summary-content{
 	font-size: 15px;
 	/*text-align: center;*/
 	width: 80%;
 	margin: 0 auto !important;
+}
+
+.am-summary-title{
+	padding: 0 30px;
 }
 
 /*下拉加载*/

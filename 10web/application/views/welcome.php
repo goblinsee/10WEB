@@ -100,37 +100,9 @@
   <div>-内容精选-</div>
 </div>
 
-<div class="am-summary am-container">
-  <div class="am-summary1">
-    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg"></div>
-    <h2 class="am-summary-title">Javascript全接触</h2>
-    <p class="am-summary-content am-wrap2">现今Javascript已经成为网络开发中不可或缺的一部分</p>
-    </a>
-  </div>
-    <div class="am-summary1">
-      <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-      <div class="am-summary-pic">
-        <img src="assets/i/p1153075313.jpg">
-      </div>
-      <h2 class="am-summary-title">Javascript全接触</h2>
-      <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
-      </a>
-    </div>
-    <div class="am-summary1">
-    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg "></div>
-    <h2 class="am-summary-title">Javascript全接触</h2>
-    <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
-    </a>
-  </div>
-    <div class="am-summary1">
-    <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
-    <div class="am-summary-pic"><img src="assets/i/p1153075313.jpg "></div>
-    <h2 class="am-summary-title">Javascript全接触</h2>
-    <p class="am-summary-content">现今Javascript已经成为网络开发中不可或缺的一部分</p>
-    </a>
-  </div>
+
+<div class="am-summary am-container" id="am-summary-box">
+
 </div>
 
 <div>
@@ -168,6 +140,67 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/javascript" src="/assets/js/ejs.min.js"></script>
+<script type="text/javascript">
+  setTimeout(function(){
+    //类似执行主程序，只是为了找到一个入口而已.
+    main();
+  },0);
+
+  //获取推荐的文章
+  var _init_range = 0;
+  //精选文章容器
+  var $summary_box = $("#am-summary-box");
+
+  var getComArc = function(range,cb){
+    $.get('/index.php/api/archive/getComArc/' +range,function(data){
+      data = JSON.parse(data);
+      if(data.Flag > 0){
+        cb(null,data.Content);
+        return ;
+      }
+      cb(data.Content);
+    });
+  };
+
+  //初始化内容精选
+  var initComArc = function(){
+    getComArc(_init_range,function(err,data){
+      console.log(data);
+      var _html = ejs.render(summary_box_html,{summary:data});
+      console.log(_html);
+      $summary_box.append(_html);
+    });
+  }
+
+  var main = function(){
+    //初始化推荐文章
+    initComArc();
+  }
+
+  var summary_box_html = `
+    <% for(var i = 0;i < 4;i++){%>
+
+      <div class="am-summary1">
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="#">
+          <div class="am-summary-pic">
+            <img src="<%- summary[i].LitPic %>">
+          </div>
+          <h2 class="am-summary-title">
+            <%- summary[i].Title %>
+          </h2>
+          <p class="am-summary-content">
+            
+          </p>
+        </a>
+      </div>
+
+    <% } %>
+  `;
+
+</script>
 
 
 <?php  
