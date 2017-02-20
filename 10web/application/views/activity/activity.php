@@ -15,13 +15,13 @@
     position: relative;
    }
   #act_headers_1{
-    background: url(assets/i/act_img/activity_head_bg.fw.png);
+    background: url(/assets/i/act_img/activity_head_bg.fw.png);
   }
   #act_headers_2{
-    background: url(assets/i/act_img/act_head_bg.fw.png);
+    background: url(/assets/i/act_img/act_head_bg.fw.png);
   }
   #act_headers_3{
-    background: url(assets/i/act_img/activity_wenzi_logo.fw.png);
+    background: url(/assets/i/act_img/activity_wenzi_logo.fw.png);
     background-position: center;
     background-repeat: no-repeat;
 
@@ -36,6 +36,7 @@
     width: 100%;
   }
 .act-span{
+  color: #000;
   height: 26px;
   width: 100px;
   display: inline-block;
@@ -129,7 +130,7 @@
       position:fixed;
       right:20%;
       top:70%;
-      background: url(assets/i/act_img/activity_float_button.fw.png);
+      background: url(/assets/i/act_img/activity_float_button.fw.png);
      }
 
 </style>
@@ -169,7 +170,7 @@
 <div class="activitybody">
   <div class="act_user" id="act_photo_and_name">
      <div class="act_user" id="act_user_photo">
-     <img src="assets/i/act_img/activity_touicang_logo.fw.png" >
+     <img src="/assets/i/act_img/activity_touicang_logo.fw.png" >
       </div>
      <div class="act_user" id="act_user_name"> 
      <p> Li Yang</p>
@@ -177,7 +178,7 @@
   </div>
 
   <div class="activity_poster">  
-      <img src="assets/i/act_img/temp_picture.fw.png"> 
+      <img src="/assets/i/act_img/temp_picture.fw.png"> 
   </div>
 
   <div class="ativitytitle">
@@ -186,7 +187,7 @@
 <div class="act_detail_info">
  <div class="#">
       <div class="activity_info_time">
-        <img src="assets/i/icon/activity_time_logo.fw.png" name="activity_time_logo">
+        <img src="/assets/i/icon/activity_time_logo.fw.png" name="activity_time_logo">
       </div>
       <div class="activity_info_time">
         <p>2016-12-12</p>
@@ -194,7 +195,7 @@
 </div>
 <div class="#">
       <div class="activity_info_location">
-        <img src="assets/i/icon/activity_location_logo.fw.png" name="activity_location_logo">
+        <img src="/assets/i/icon/activity_location_logo.fw.png" name="activity_location_logo">
      </div>
       <div class="activity_info_location">
           <p> 西楼报告厅</p>
@@ -202,12 +203,12 @@
 </div>
 <div class="activity_info_operation">
       <div class="activity_info_operation">
-      <img src="assets/i/icon/activity_zan_logo.fw.png" name="activity_operation_logo">
+      <img src="/assets/i/icon/activity_zan_logo.fw.png" name="activity_operation_logo">
       </div>
       <div class="activity_info_operation"> <p> 100</p></div>
       <div  class="activity_info_operation"  id="activity_info_operation_looked">
         <div class="activity_info_operation"> 
-      <img src="assets/i/icon/activity_looked_logo.fw.png" name="activity_operation_logo">
+      <img src="/assets/i/icon/activity_looked_logo.fw.png" name="activity_operation_logo">
       </div>
       <div class="activity_info_operation">  <p> 1024</p></div>
       </div>
