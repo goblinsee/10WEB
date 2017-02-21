@@ -36,20 +36,21 @@
     width: 100%;
   }
 .act-span{
-  color: #000;
   height: 26px;
   width: 100px;
   display: inline-block;
-   border-right:solid 3px black;
+  border-right:solid 3px black;
 }
 .dis{
+  color: #000;
   font-size: 20px;
   display: inline-block;
   padding:0 2%;
-  height:95px;
+  height:26px;
   text-align: center;
 }
 .act_headcontent{
+
   padding-top: 5px;
   text-align: center;
   display: inline-block;
@@ -60,23 +61,34 @@
 <!-- 活动body样式 -->
 
 <style type="text/css">
+.the_content_of_act{
+    background: #eee;
+    position: relative;
+    height: 100%;
+}
   .the_act_body{
-
     width: 1000px;
     left: 300px;
     padding-top: 20px;
-    background: #fff;
+    background: #eee;
     position: relative;
   }
   .activitybody{
     width: 226px;
     height: 340px;
-    background: #eee;
+    background: #fff;
     position: relative;
+    border-radius: 8px;
+    box-shadow: #666 0px 0px 10px;
   }
   .act_user{
     position: relative;
     display: inline-block; 
+  }
+  #act_photo_and_name{
+    position: relative;
+    margin-top: 5px;
+    margin-left: 15px;
   }
   #act_user_name{
     font-size: 15px;
@@ -85,42 +97,59 @@
 
   .activity_poster
   {
-       width: 226px;
-       height: 168px;
+     margin-top: 5px;
+     width: 226px;
+     height: 168px;
   }
   .ativitytitle{
      width: 228px;
      height: 31px;
      font-size: 25px;
-     top: 14px;
-     padding:0 2%;;
+     margin-top: 10px;
+     padding:0 2%;
   }
   .activity_detail_info{
        position: relative;
        width: 100%;
-       padding-left: 10px;
+       padding:0 2%;
       
   }
   .activity_info_time{
        height: 20px;
        position: relative;
        display: inline-block; 
+  }
+   #activity_info_time{
        margin-top: 5px;
+       left: 10px;
+       height: 20px;
+       position: relative;
   }
    .activity_info_location{
-       margin-top: 5px;
        height: 20px;
        position: relative;
        display: inline-block; 
+  }
+   #activity_info_location{
+       margin-top:5px;
+       left: 10px;
+       height: 20px;
+       position: relative;
   }
    .activity_info_operation{
        height: 20px;
        position: relative;
        display: inline-block; 
   }
+    #activity_info_operation{
+       margin-top:5px;
+       height: 20px;
+       position: relative;
+       display: inline-block; 
+       left: 10px;
+  }
   #activity_info_operation_looked{
-       margin-top: 5px;
-       margin-left: 20px;
+       margin-left: 15px;
        height: 20px;
        position: relative;
   }
@@ -130,6 +159,8 @@
       position:fixed;
       right:20%;
       top:70%;
+      border-radius: 8px;
+      box-shadow: #666 0px 0px 10px;
       background: url(/assets/i/act_img/activity_float_button.fw.png);
      }
 
@@ -166,8 +197,9 @@
 </div>
 </div>
 <!-- 活动body模块样式-->
+<body class="the_content_of_act">
 <div class="the_act_body">
-<div class="activitybody">
+ <div class="activitybody">
   <div class="act_user" id="act_photo_and_name">
      <div class="act_user" id="act_user_photo">
      <img src="/assets/i/act_img/activity_touicang_logo.fw.png" >
@@ -185,7 +217,7 @@
      <p  class="ativitytitle" id="ativitytitle">  超现实体验 </p>
   </div>
 <div class="act_detail_info">
- <div class="#">
+ <div id="activity_info_time">
       <div class="activity_info_time">
         <img src="/assets/i/icon/activity_time_logo.fw.png" name="activity_time_logo">
       </div>
@@ -193,7 +225,7 @@
         <p>2016-12-12</p>
       </div>
 </div>
-<div class="#">
+<div id="activity_info_location">
       <div class="activity_info_location">
         <img src="/assets/i/icon/activity_location_logo.fw.png" name="activity_location_logo">
      </div>
@@ -201,7 +233,7 @@
           <p> 西楼报告厅</p>
       </div>
 </div>
-<div class="activity_info_operation">
+<div id="activity_info_operation">
       <div class="activity_info_operation">
       <img src="/assets/i/icon/activity_zan_logo.fw.png" name="activity_operation_logo">
       </div>
@@ -213,14 +245,14 @@
       <div class="activity_info_operation">  <p> 1024</p></div>
       </div>
       
+    </div>
 </div>
 </div>
-</div>
- </div>
-  
+ </div>  
 <div id="nav"></div>
  </div>
   
+</body>
 
 <?php  
   //html 结束通用底部
