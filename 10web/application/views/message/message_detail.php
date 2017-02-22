@@ -2,13 +2,13 @@
     require('./application/views/template/html_begin.php');
     require('./application/views/template/header.php');
 ?>
-<link rel="stylesheet" type="text/css" href="/assets/css/message_detail.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/message.css">
 <body class="am-with-topbar-fixed-top">
     <div class="e0-msg-box">
         <!-- 聊天框标题 -->
         <div class="e0-msg-box-title">
             <div class="back" id="back-btn"><i class="am-icon am-icon-mail-reply"></i>返回</div>
-            <div class="title">与克莱汤普森的对话</div>
+            <div class="title">与<span id="msg-title"></span>的对话</div>
         </div>
         <!-- 聊天框内容 -->
         <div class="e0-msg-box-content">
@@ -37,25 +37,48 @@ $(document).ready(function(){
     var $msg_content = $("#msg-content");
 
     //读取对话消息
-    var getInitData = function(cb){
+    var getInitMsgData = function(cb){
         //知道和我对话的人是谁
         $.ajax({
-            url:'/index.php/api/user/GetMessage',
+            url:'/index.php/api/message/GetMessage',
             type:'post',
             data:{
                 MesUserID:re_id
             },
             success:function(data){
                 data = JSON.parse(data);
-                cb(null,data);
+                cb(null,data.Content);
             }
         });
     };
 
+    var getInitRelData = function(cb){
+        $.ajax({
+            url:'/index.php/api/user/GetUserBaseInfo',
+            type:'post',
+            data:{
+                UserID:re_id
+            },
+            success:function(data){
+                data = data.trim();
+                data = JSON.parse(data);
+                if(data.Flag > 0){
+                    cb(null,data.Content);
+                }else{
+                    cb(data.Content);
+                }
+            }
+        });
+    }
+
     //发送消息
     var sendMsg = function(cb){
+        var Content = $msg_content.val().trim();
+        if(Content.length == 0)
+            return ;
+
         $.ajax({
-            url:'/index.php/api/user/SendMessageToUser',
+            url:'/index.php/api/message/SendMessageToUser',
             type:'post',
             data:{
                 Content:$msg_content.val(),
@@ -64,25 +87,37 @@ $(document).ready(function(){
             success:function(data){
                 try{
                     data = JSON.parse(data);
+                    if(data.Flag < 0){
+                        alert(data.Content);
+                        // return ;
+                    }
                     cb(null,data);
                 }catch(e){
                     cb(e);
                 }
-                
             }
         });
     }
 
     //初始化对话消息
     var initMsg = function(){
-        getInitData(function(err,data){
+        getInitMsgData(function(err,data){
             var msg_box_html = ejs.render(_msg_box_html,{messages:data});
             $('.e0-msg-box-content').html(msg_box_html);
         });
     };
 
+    //初始化标题消息
+    var initTitle = function(){
+        getInitRelData(function(err,data){
+            var NickName = data.NickName;
+            $('#msg-title').text(NickName);
+        });
+    }
+
     var main = function(){
         //加载对话用户信息，控制标题
+        initTitle();
         //加载对话
         initMsg();
         //加载返回按钮功能

@@ -16,7 +16,12 @@ class Message extends CI_Controller {
 
     public function index()
     {
-       $this->load->view('message/message');
+       $user_id = $this->session->userdata['info'][0]['ID'];
+       $result = $this->usermessage_model->GetCommunicatedUser($user_id);
+       $data = array(
+        'messages' => $result
+       );
+       $this->load->view('message/message',$data);
     }
 
     public function detail($mes_user_id = null){
@@ -28,8 +33,8 @@ class Message extends CI_Controller {
     }
 
     private function _session_get_id(){
-        if($this->session->userdata['info'][0]['ID']){
-          return $userid = $this->session->userdata['info'][0]['ID'];
+        if($this->session->userdata['info'][0]){
+          return $userid = $this->session->userdata['info'][0];
         }
         return false;
     }

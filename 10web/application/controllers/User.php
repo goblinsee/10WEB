@@ -43,6 +43,11 @@ class User extends CI_Controller {
       //渲染
     	$this->load->view('user/active',$data);
     }
+
+    public function Logout(){
+      $this->session->userdata['info'] = null;
+      redirect('/signup');
+    }
 }
 
 ?>

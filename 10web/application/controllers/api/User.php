@@ -154,6 +154,22 @@ class User extends CI_Controller {
         echo $this->getInfo('-1',$e);
       }
     }  
+
+    /**
+     * 根据传来的UserID返回用户的NickName,Account,HeadIcon,Profile
+     */
+    public function GetUserBaseInfo(){
+      if(!isset($_POST['UserID'])){
+        $info = $this->getInfo(-1,"缺少参数","");
+        echo json_encode($info);
+        return ;
+      }
+
+      $user_id = $_POST['UserID'];
+      $result = $this->user_model->get_by_id($user_id);
+      $info = $this->getInfo(100,$result[0],"");
+      echo json_encode($info);
+    }
 }
     
 ?>
