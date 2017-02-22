@@ -201,10 +201,6 @@ $(document).ready(function(){
 
         //加载登陆动画
         var word = disableBtn(e).trim();
-        console.log({
-            Account:username,
-            Password:hex_md5(password)
-          });
 
         //发送ajax请求
         $.ajax({

@@ -48,7 +48,7 @@ STR;
 	*	@param messageid varchar(20)
 	*/
 	public function DeleteMessage($messageid,$userid){
-		$sql = "UPDATE e0_msg SET Type = ".$this->db->escape(-1)." WHERE ID = ".$this->db->escape($messageid)." AND User = ".$this.db->escape($userid);
+		$sql = "UPDATE e0_msg SET Type = ".$this->db->escape(-1)." WHERE ID = ".$this->db->escape($messageid)." AND User = ".$this->db->escape($userid);
 		$this->db->query($sql);
 		return $this->db->affected_rows();
 	}
