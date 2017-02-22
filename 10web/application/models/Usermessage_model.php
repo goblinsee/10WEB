@@ -10,7 +10,6 @@ class UserMessage_model extends CI_Model{
 	*	@param userid varchar(20)
 	*/
 	public function GetCommunicatedUser($userid){
-
 		$sql_format=<<<STR
 		select * ,User as Abouter from 
 		e0_view_user_msg
