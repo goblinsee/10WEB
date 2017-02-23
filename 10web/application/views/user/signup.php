@@ -208,7 +208,7 @@ $(document).ready(function(){
           type:'post',
           data:{
             Account:username,
-            Password:hex_md5(password)
+            Password:password//hex_md5(password)
           },
           success:function(data){
             //简单处理信息
@@ -262,7 +262,8 @@ $(document).ready(function(){
         type:'post',
         data:{
           Account:username,
-          Password:hex_md5(password)
+          Password:password,//hex_md5(password)
+          Usernick:usernick
         },
         success:function(data){
           //简单处理信息
