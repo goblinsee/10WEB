@@ -61,7 +61,7 @@ class Sign_model extends CI_Model{
 		$data = array(
 			'id' => $id,
 			'account' => $account,
-			'password' => $password,
+			'password' => md5($password),
 			'profile' => json_encode(array(
 				// "signuptime" => $signuptime,
 				// "nickname" => $nickname
@@ -82,6 +82,7 @@ class Sign_model extends CI_Model{
 	*	@return 1->未激活，2->激活， 3->账号被封， 4->密码错误， 5->账号不存在
 	*/
 	public function CheckAccount($account,$password){	
+		$password = md5($password);
 		//账号存在,检查密码是否正确
 		$query = $this->db->query("select * from e0_user where Account = '$account' ");
 		//echo $query->num_rows();
