@@ -6,8 +6,10 @@
 <div class="e0-error-block">
 </div>
 <div class="e0-error-background">
-	<body onload="show()">
-	<img id="showimg" width="100%" height="100%" alt="404">
+	<div id="bg-color">
+		<body onload="show()">
+		<img id="showimg" alt="404">
+	</div>
 </div>
 <?php  
     require('./application/views/template/html_end.php');
@@ -17,7 +19,11 @@
 function show()
 {
 	var NowFrame=parseInt(Math.floor(Math.random()*3) + 1);
-	document.getElementById("showimg").src="/assets/i/error_"+NowFrame+".png";
-	console.log(NowFrame);
+	document.getElementById("showimg").src="/assets/i/error_"+NowFrame+".png?asd=asds";
+	if (NowFrame == 2)
+		document.getElementById("bg-color").style="background-color:#c3a067;height:611px";
+	else if (NowFrame == 3)
+		document.getElementById("bg-color").style="background-color:#f8e300;height:611px;";
+	// console.log(NowFrame);
 }
 </script>
