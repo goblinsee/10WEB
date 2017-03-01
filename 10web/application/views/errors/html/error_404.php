@@ -21,9 +21,9 @@ function show()
 	var NowFrame=parseInt(Math.floor(Math.random()*3) + 1);
 	document.getElementById("showimg").src="/assets/i/error_"+NowFrame+".png?asd=asds";
 	if (NowFrame == 2)
-		document.getElementById("bg-color").style="background-color:#c3a067;height:611px";
+		document.getElementById("bg-color").style="background-color:#c3a067;height:100%;width:100%;position:fixed;";
 	else if (NowFrame == 3)
-		document.getElementById("bg-color").style="background-color:#f8e300;height:611px;";
+		document.getElementById("bg-color").style="background-color:#f8e300;height:100%;width:100%;position:fixed;";
 	// console.log(NowFrame);
 }
 </script>
