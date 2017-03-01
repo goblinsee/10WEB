@@ -38,7 +38,7 @@ class User extends CI_Controller {
         $info = null;
 
         //check the post argument
-        if(!isset($_POST['Account'])&&!isset($_POST['Password'])){
+        if(!isset($_POST['Account'])&&!isset($_POST['Password'])&&!isset($_POST['Usernick'])){
           $info = $this->getInfo(-1,"too few arguments","");
           echo urldecode(json_encode($info));
           return ;
@@ -50,11 +50,11 @@ class User extends CI_Controller {
         $nickname = $this->input->post('Usernick');
 
         //先检查密码长度是否为32以及是否全是小写
-        if(!(strlen($password) === 32 && preg_match('/^[a-z0-9]+$/',$password))){
-            $info = $this->getInfo(-14,"wrong password format","");
-            echo urldecode(json_encode($info));
-            return ;
-        }
+        // if(!(strlen($password) === 32 && preg_match('/^[a-z0-9]+$/',$password))){
+        //     $info = $this->getInfo(-14,"wrong password format","");
+        //     echo urldecode(json_encode($info));
+        //     return ;
+        // }
 
         //先检查账号是否存在
         if($this->sign_model->AccountExist($account)){
@@ -128,7 +128,7 @@ class User extends CI_Controller {
     /*用户api*/
     /**
      * 管理与自己相关的文章
-     * 用户文章关系 type：0->收藏，1->自己已经发布的文章，2->    自己尚未发布的文章
+     * 用户文章关系 type：0->收藏，1->自己已经发布的文章， 2->自己尚未发布的文章
      * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
      */
     public function GetUserArchives(){
