@@ -86,7 +86,7 @@
           <div class="e0-icon-tools e0-icon"></div>
       </div>
       <div class="intro">
-        <span class="title">生活服务</span>
+        <span class="title">web工具</span>
         <p class="am-fontsize">
           查成绩，坐公交，申请投诉，统统都有，快来看看吧！
         </p>
@@ -95,25 +95,24 @@
   </div>
 </div>
 
-<!-- 内容精选 -->
-<div class="am-divide am-container">
-  <div>-内容精选-</div>
-</div>
-
-
-<div class="am-summary am-container" id="am-summary-box">
-
-</div>
-
-<div>
-  <div>
+  <!-- 内容精选 -->
+  <div class="am-divide am-container">
+    <div>-内容精选-</div>
   </div>
+
+  <!-- 内容精选的容器 -->
+  <div class="am-summary am-container" id="am-summary-box">
+  </div>
+  
+<div>
+  
 </div>
 
 <hr class=" am-container am-article-divider">
 
 <div class="am-drop">
-  <span class="am-icon-chevron-circle-down am-icon-lg am-drop"></span>
+  <!-- 获取更多的内容精选 -->
+  <span class="am-icon-chevron-circle-down am-icon-lg am-drop" id="summary-more"></span>
 </div>
 
 <div class="hope">
@@ -157,6 +156,7 @@
   var getComArc = function(range,cb){
     $.get('/index.php/api/archive/getComArc/' +range,function(data){
       data = JSON.parse(data);
+      console.log(data);
       if(data.Flag > 0){
         cb(null,data.Content);
         return ;
@@ -168,20 +168,28 @@
   //初始化内容精选
   var initComArc = function(){
     getComArc(_init_range,function(err,data){
-      console.log(data);
       var _html = ejs.render(summary_box_html,{summary:data});
-      console.log(_html);
       $summary_box.append(_html);
     });
+  }
+
+  var initMoreBtn = function(){
+      //监听获取更多内容精选的内容
+      $('#summary-more').click(function(e){
+        _init_range +=4;
+        initComArc();
+      });
   }
 
   var main = function(){
     //初始化推荐文章
     initComArc();
+    //初始化获取更多内容精选的文章
+    initMoreBtn();
   }
 
   var summary_box_html = `
-    <% for(var i = 0;i < 4;i++){%>
+    <% for(var i = 0;i < Math.min(4,summary.length);i++){%>
 
       <div class="am-summary1">
         <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="#">
@@ -199,11 +207,12 @@
 
     <% } %>
   `;
-
 </script>
-
 
 <?php  
   //html 结束通用底部
   require('./application/views/template/html_end.php');
 ?>
+
+
+
