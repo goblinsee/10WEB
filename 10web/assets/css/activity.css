@@ -1,0 +1,68 @@
+.act_headers{
+    margin-top: 20px;
+    height: 196px;
+    position: relative;
+   }
+  #act_headers_1{
+    background: url(/assets/i/act_img/activity_head_bg.fw.png);
+  }
+  #act_headers_2{
+    background: url(/assets/i/act_img/act_head_bg.fw.png);
+  }
+  #act_headers_3{
+    background: url(/assets/i/act_img/activity_wenzi_logo.fw.png);
+    background-position: center;
+    background-repeat: no-repeat;
+
+  }
+  .act_headers_4{
+    height: 40px;
+    position: relative;
+    background-color: #BDBDBD;
+    opacity:0.8;
+    top: 140px;
+    text-align: center;
+    width: 100%;
+  }
+.act-span{
+  height: 26px;
+  width: 100px;
+  display: inline-block;
+  border-right:solid 3px black;
+}
+.dis{
+  color: #000;
+  font-size: 20px;
+  display: inline-block;
+  padding:0 2%;
+  height:26px;
+  text-align: center;
+}
+.act_headcontent{
+
+  padding-top: 5px;
+  text-align: center;
+  display: inline-block;
+}
+#nav {
+      width:64px; 
+      height: 63px; 
+      position:fixed;
+      right:20%;
+      top:70%;
+      border-radius: 8px;
+      box-shadow: #666 0px 0px 10px;
+      background: url(/assets/i/act_img/activity_float_button.fw.png);
+     }
+.the_content_of_act{
+    background: #eee;
+    position: relative;
+    height: 100%;
+}
+  .the_act_body{
+    width: 1000px;
+    left: 300px;
+    padding-top: 20px;
+    background: #eee;
+    position: relative;
+  }

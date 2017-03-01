@@ -37,7 +37,6 @@
 
 <!-- 四个导航模块 -->
 <div class="detail am-container">
-    
   <div class="detail-item">  
     <a href="/index.php/team">
       <div class="detail-item-icon">
