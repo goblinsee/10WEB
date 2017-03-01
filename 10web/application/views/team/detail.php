@@ -137,6 +137,11 @@
 
     $(".breif_item").hover(function(e){
         var text = $(e.currentTarget).text(); 
+        render_content(text);
+    });
+
+    //分离出函数
+    var render_content  = function(text){
         var breif_item = {};
 
         for(var i in breif_data){
@@ -146,9 +151,10 @@
         }
         $body_title.html(breif_item.title);
         $body_content.html(breif_item.data);
-    });
+    }
+
+    render_content('web组');
+
 </script>
-
-
 </body>
 </html>
