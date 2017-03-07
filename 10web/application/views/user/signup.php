@@ -17,7 +17,7 @@
 <div id="login-bg">
   <div class="login-container">
     <div class="login-icon">
-      <a href="/"><img src="/assets/i/web_logo.gif"></a>
+      <a href="/"><img src="/assets/i/web_logo.png"></a>
     </div>
 
     <div class="login-body">
