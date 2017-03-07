@@ -1,3 +1,8 @@
+.act_all_body{
+  overflow: auto;
+  text-align: center;
+  background: #eee;
+}
 .act_headers{
     margin-top: 20px;
     height: 196px;
@@ -28,7 +33,7 @@
   height: 26px;
   width: 100px;
   display: inline-block;
-  border-right:solid 3px black;
+ 
 }
 .dis{
   color: #000;
@@ -36,7 +41,19 @@
   display: inline-block;
   padding:0 2%;
   height:26px;
+  width: 100px;
   text-align: center;
+}
+#act_span_recent{
+  border-right:solid 3px black;
+  border-bottom-width: 1px;
+}
+
+#act_span_future{
+  border-right:solid 3px black;
+}
+#act_span_interst{
+  border-right:solid 3px black;
 }
 .act_headcontent{
 
@@ -45,24 +62,111 @@
   display: inline-block;
 }
 #nav {
-      width:64px; 
-      height: 63px; 
+      width:50px; 
+      height: 50px; 
       position:fixed;
-      right:20%;
-      top:70%;
+      right:18%;
+      top:80%;
       border-radius: 8px;
       box-shadow: #666 0px 0px 10px;
       background: url(/assets/i/act_img/activity_float_button.fw.png);
-     }
-.the_content_of_act{
-    background: #eee;
-    position: relative;
-    height: 100%;
-}
-  .the_act_body{
+      }
+.the_act_body
+    {   
     width: 1000px;
-    left: 300px;
     padding-top: 20px;
     background: #eee;
     position: relative;
+    display: inline-block; 
+    text-align: center;
+    }
+
+
+
+
+.activitybody{
+    margin-left: 20px;
+    margin-top: 50px;
+    width: 226px;
+    height: 340px;
+    background: #fff;
+    position: relative;
+    display: inline-block; 
+    border-radius: 8px;
+    box-shadow: #666 0px 0px 10px;
+    text-align: left;
+  }
+.act_user{
+    position: relative;
+    display: inline-block; 
+  }
+  #act_photo_and_name{
+    position: relative;
+    margin-left: 10px;
+  }
+  #act_user_name{
+    left: 10px;
+    font-size: 15px;
+    height:10px;
+  }
+  .activity_poster
+  {
+     margin-top: 5px;
+     width: 226px;
+     height: 168px;
+  }
+  .ativitytitle{
+     width: 228px;
+     height: 16px;
+     font-size: 25px;
+     margin-top: 10px;
+     margin-left: 5px;
+  }
+  .activity_detail_info{
+      position: relative;
+      width: 100%;
+      padding:0 2%;  
+
+  }
+  .activity_info_time{
+       height: 20px;
+       position: relative;
+       display: inline-block; 
+  }
+   #activity_info_time{
+       color: #c8c8c8;
+       margin-top: 18px;
+       left: 10px;
+       height: 20px;
+       position: relative;
+  }
+  .activity_info_location{
+       height: 20px;
+       position: relative;
+       display: inline-block; 
+  }
+  #activity_info_location{
+       color: #c8c8c8;
+       margin-top:5px;
+       left: 10px;
+       height: 20px;
+       position: relative;
+  }
+  .activity_info_operation{
+       height: 20px;
+       position: relative;
+       display: inline-block; 
+  }
+  #activity_info_operation{
+       color: #c8c8c8;
+       margin-top:5px;
+       height: 20px;
+       position: relative;
+       display: inline-block; 
+       left: 10px;
+  }
+  #activity_info_operation_looked{
+       margin-left: 15px;
+       height: 20px;
+       position: relative;
   }
