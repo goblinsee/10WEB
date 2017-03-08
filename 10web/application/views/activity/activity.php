@@ -18,7 +18,8 @@
  
 <!-- 活动头部背景模块样式-->
 <body class="act_all_body">
-  
+
+
 
 <div class="act_headers" id="act_headers_1"> 
 <div class="act_headers" id="act_headers_2">
@@ -85,7 +86,7 @@
         <img src="/assets/i/icon/activity_location_logo.fw.png" name="activity_location_logo">
      </div>
       <div class="activity_info_location">
-          <p> 西楼报告厅</p>
+          <p>   西楼报告厅   </p>
       </div>
 </div>
 <div id="activity_info_operation">
@@ -103,7 +104,10 @@
     </div>
 </div>
 </div>
+
 <?php } ?>
+
+
 
 
 
@@ -120,21 +124,55 @@
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 <script type="text/javascript">
 //四个点击事件
-$(function(){
+
+ //获取推荐的文章
+  var _init_range = 0;
+  //精选文章容器
+  var $summary_box = $("#the_act_body");
+
+  var getComArc = function(range,cb){
+    $.get('/index.php/api/archive/getComArc/' +range,function(data){
+      data = JSON.parse(data);
+      console.log(data);
+      if(data.Flag > 0){
+        cb(null,data.Content);
+        return ;
+      }
+      cb(data.Content);
+    });
+  };
+
   $("#act_span_recent").click(function(){
     $("#act_span_recent").css("border-bottom","solid 3px black");
      $("#act_span_future").css("border-bottom","none");
       $("#act_span_interst").css("border-bottom","none");
        $("#act_span_ganhuo").css("border-bottom","none");
 
+ getComArc(0,function(err,data){
+ $.get('/assets/template/act_item_body.html',function(cat_body){
+
+     var _html = ejs.render(cat_body,{summary:data});
+      $summary_box.html(_html);
+ });
+
+   
+    });
+       
   });
   $("#act_span_future").click(function(){
     $("#act_span_recent").css("border-bottom","none");
      $("#act_span_future").css("border-bottom","solid 3px black");
       $("#act_span_interst").css("border-bottom","none");
        $("#act_span_ganhuo").css("border-bottom","none");
+        getComArc(1,function(err,data){
+ $.get('/assets/template/act_item_body.html',function(cat_body){
 
+     var _html = ejs.render(cat_body,{summary:data});
+      $summary_box.html(_html);
+ });
 
+   
+    });
   });
   $("#act_span_interst").click(function(){
     $("#act_span_recent").css("border-bottom","none");
@@ -142,7 +180,15 @@ $(function(){
       $("#act_span_interst").css("border-bottom","solid 3px black");
        $("#act_span_ganhuo").css("border-bottom","none");
 
+ getComArc(2,function(err,data){
+ $.get('/assets/template/act_item_body.html',function(cat_body){
 
+     var _html = ejs.render(cat_body,{summary:data});
+      $summary_box.html(_html);
+ });
+
+   
+    });
   });
 
 $("#act_span_ganhuo").click(function(){
@@ -151,17 +197,22 @@ $("#act_span_ganhuo").click(function(){
       $("#act_span_interst").css("border-bottom","none");
        $("#act_span_ganhuo").css("border-bottom","solid 3px black");
 
+ getComArc(3,function(err,data){
+ $.get('/assets/template/act_item_body.html',function(cat_body){
 
-  });
-
-
-    });
+     var _html = ejs.render(cat_body,{summary:data});
+      $summary_box.html(_html);
+     });
+   });
+   });
 //点击回到顶部
   //绑定页面滚动事件
 $(function(){
  $("#nav").click(function() {
    $("html,body").animate({scrollTop:0}, 500);
  }); 
+
+
  });
 $(document).ready(function(){  
         var range = 50;             //距下边界长度/单位px  
@@ -179,56 +230,17 @@ $(document).ready(function(){
               
             totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
             if(($(document).height()-range) <= totalheight  && num != maxnum) {  
-                main.append(` <div class="activitybody">
-  <div class="act_user" id="act_photo_and_name">
-     <div class="act_user" id="act_user_photo">
-     <img src="/assets/i/act_img/activity_touicang_logo.fw.png" >
-      </div>
-     <div class="act_user" id="act_user_name"> 
-     <p> Li Yang</p>
-      </div>
-  </div>
 
-  <div class="activity_poster">  
-      <img src="/assets/i/act_img/temp_picture.fw.png"> 
-  </div>
+         getComArc(3,function(err,data){
+            $.get('/assets/template/act_item_body.html',function(cat_body){
 
-  <div class="ativitytitle">
-     <p  class="ativitytitle" id="ativitytitle"> 超现实体验 </p>
-  </div>
-<div class="act_detail_info">
- <div id="activity_info_time">
-      <div class="activity_info_time">
-        <img src="/assets/i/icon/activity_time_logo.fw.png" name="activity_time_logo">
-      </div>
-      <div class="activity_info_time">
-        <p>2016-12-12</p>
-      </div>
-</div>
-<div id="activity_info_location">
-      <div class="activity_info_location">
-        <img src="/assets/i/icon/activity_location_logo.fw.png" name="activity_location_logo">
-     </div>
-      <div class="activity_info_location">
-          <p> 西楼报告厅</p>
-      </div>
-</div>
-<div id="activity_info_operation">
-      <div class="activity_info_operation">
-      <img src="/assets/i/icon/activity_zan_logo.fw.png" name="activity_operation_logo">
-      </div>  
-      <div class="activity_info_operation"> <p> 100</p></div>
-      <div  class="activity_info_operation"  id="activity_info_operation_looked">
-        <div class="activity_info_operation"> 
-      <img src="/assets/i/icon/activity_looked_logo.fw.png" name="activity_operation_logo">
-      </div>
-      <div class="activity_info_operation">  <p> 1024</p></div>
-      </div>
-      
-    </div>
-</div>
-</div>`);  
-                num++;  
+            var _html = ejs.render(cat_body,{summary:data});
+               $summary_box.append(_html);    
+                  num++;  
+     });
+   });
+               
+                  
             }  
         });  
     });  

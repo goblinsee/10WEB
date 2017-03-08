@@ -21,6 +21,7 @@
 
   }
   .act_headers_4{
+
     height: 40px;
     position: relative;
     background-color: #BDBDBD;
@@ -31,29 +32,33 @@
   }
 .act-span{
   height: 26px;
-  width: 100px;
   display: inline-block;
- 
+  text-align: center;
+  margin-bottom: 8px;
 }
 .dis{
   color: #000;
   font-size: 20px;
   display: inline-block;
-  padding:0 2%;
   height:26px;
-  width: 100px;
   text-align: center;
 }
 #act_span_recent{
+  width: 80px;
   border-right:solid 3px black;
   border-bottom-width: 1px;
 }
 
 #act_span_future{
+    width: 80px;
   border-right:solid 3px black;
 }
 #act_span_interst{
+    width: 100px;
   border-right:solid 3px black;
+}
+#act_span_ganhuo{
+    width: 80px;
 }
 .act_headcontent{
 
