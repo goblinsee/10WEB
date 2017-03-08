@@ -55,7 +55,7 @@
     <div class="user-follow"  >
       <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
       <div class="user-icon">
-        <img class="user-icon-pic" id="user-follow-icon" onclick="FollowAuthor()" src="/assets/i/heart-big.png" >   
+        <img class="user-icon-pic" id="user-follow-icon"  src="/assets/i/heart-big.png" >   
       </div>
       <p class="user-op" id="user-op-follow">关注</p>  
       </a>
@@ -102,7 +102,7 @@
       <div class="article-follows">
         <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;" >
         <span  >
-          <img id="am-heart-active" onclick="FollowArticle()" src="/assets/i/heart-small.png" >
+          <img id="am-heart-active"  src="/assets/i/heart-small.png" >
         </span>
         </a>
         <span id="article-follow-users">100</span>

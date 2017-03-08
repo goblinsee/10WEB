@@ -13,31 +13,29 @@
   });
 })(jQuery);
 
-function FollowArticle(){
-  var element=document.getElementById("am-heart-active");
-  element.src="/assets/i/heart-small-active.png";
-  document.getElementById("article-follow-users").innerHTML='101';
-}
+$("#am-heart-active").click(function(){
+  $("#am-heart-active").attr("src","assets/i/heart-small-active.png");
+  $("#article-follow-users").html('101');
+});
 
-function FollowAuthor(){
-  var element=document.getElementById("user-follow-icon");
-  element.src="/assets/i/heart-big-active.png";
-  var element1=document.getElementById("user-op-follow");
-  element1.innerHTML='已关注';
-}
-
-
+$("#user-follow-icon").click(function(){
+  $("#user-follow-icon").attr("src","assets/i/heart-big-active.png");
+  $("#user-op-follow").html('已关注');
+});
+/*查找文章*/
 $("#am-search-button").click(function(){
   $.ajax({
     url:'/index.php/api/Archive/find',
     type:'post',
-    dataType:'JSONP',
     data:{
       Title:document.getElementById("am-searchbox").value
     },
     success:function(){
-      alert("!!!");
     }
   });
 });
 
+/*加载文章列表*/
+$(function(){
+  
+});
