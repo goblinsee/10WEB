@@ -3,100 +3,100 @@ class Archives_model extends CI_Model {
 	public function __construct() {
 		parent::__construct();
 		$this->load->database();
-		$this->load->library('session');
+		// $this->load->library('session');
 	}
 
-	public function addArchive() {
-		$Title = $_POST['Title'];
-		$Source = $_POST['Source'];
-		$Writer = null;
-		$UserID = null;
-		if($this->session->userdata['info'][0]['ID']){
-          $UserID = $this->session->userdata['info'][0]['ID'];
-          $Writer = $this->session->userdata['info'][0]['Account'];
-        }
-        else{
-          $info = array(
-              "Flag" => -101,
-              "Content" => urldecode("你没登陆"),
-              "Extra" => ""
-          );
-          echo urldecode(json_encode($info));
-          return;
-        }
-		$RedirectUrl = "";
-		$LitPic = "";
-		if(isset($_POST['RedirectUrl']))
-			$RedirectUrl = $_POST['RedirectUrl'];
-		if(isset($_POST['LitPic']))
-			$LitPic = $_POST['LitPic'];
-		$PubDate = date("Y-m-d H:i:s");
-		$id = md5($PubDate.$Title);
-		$error_code = $this->addArc($id, $Title, $UserID, $Writer, $Source, $RedirectUrl, $LitPic, $PubDate);
-		return $error_code;
-	}
+	// public function addArchive() {
+	// 	$Title = $_POST['Title'];
+	// 	$Source = $_POST['Source'];
+	// 	$Writer = null;
+	// 	$UserID = null;
+	// 	if($this->session->userdata['info'][0]['ID']){
+    //       $UserID = $this->session->userdata['info'][0]['ID'];
+    //       $Writer = $this->session->userdata['info'][0]['Account'];
+    //     }
+    //     else{
+    //       $info = array(
+    //           "Flag" => -101,
+    //           "Content" => urldecode("你没登陆"),
+    //           "Extra" => ""
+    //       );
+    //       echo urldecode(json_encode($info));
+    //       return;
+    //     }
+	// 	$RedirectUrl = "";
+	// 	$LitPic = "";
+	// 	if(isset($_POST['RedirectUrl']))
+	// 		$RedirectUrl = $_POST['RedirectUrl'];
+	// 	if(isset($_POST['LitPic']))
+	// 		$LitPic = $_POST['LitPic'];
+	// 	$PubDate = date("Y-m-d H:i:s");
+	// 	$id = md5($PubDate.$Title);
+	// 	$error_code = $this->addArc($id, $Title, $UserID, $Writer, $Source, $RedirectUrl, $LitPic, $PubDate);
+	// 	return $error_code;
+	// }
 
-	public function delArchive() {
-		$Title = $_POST['Title'];
-		$ID = $_POST['ID'];
-		$error_code = $this->delArc($ID,$Title);
-		return $error_code;
-	}
+	// public function delArchive() {
+	// 	$Title = $_POST['Title'];
+	// 	$ID = $_POST['ID'];
+	// 	$error_code = $this->delArc($ID,$Title);
+	// 	return $error_code;
+	// }
 
-	public function editArchive() {
-		$OldTitle = $_POST['OldTitle'];
-		$ID = $_POST['ID'];
-		$UserID = null;
-		if($this->session->userdata['info'][0]['ID']){
-          $UserID = $this->session->userdata['info'][0]['ID'];
-          print_r($this->session->userdata['info'][0]);//api test
-        }
-        else{
-          $info = array(
-              "Flag" => -101,
-              "Content" => urldecode("你没登陆"),
-              "Extra" => ""
-          );
-          echo urldecode(json_encode($info));
-          return;
-        }
-		$NewTitle = $OldTitle;
-		$Source = $_POST['OldSource'];
-		$RedirectUrl = $_POST['OldRedirectUrl'];
-		$LitPic = $_POST['OldLitPic'];
+	// public function editArchive() {
+	// 	$OldTitle = $_POST['OldTitle'];
+	// 	$ID = $_POST['ID'];
+	// 	$UserID = null;
+	// 	if($this->session->userdata['info'][0]['ID']){
+    //       $UserID = $this->session->userdata['info'][0]['ID'];
+    //       print_r($this->session->userdata['info'][0]);//api test
+    //     }
+    //     else{
+    //       $info = array(
+    //           "Flag" => -101,
+    //           "Content" => urldecode("你没登陆"),
+    //           "Extra" => ""
+    //       );
+    //       echo urldecode(json_encode($info));
+    //       return;
+    //     }
+	// 	$NewTitle = $OldTitle;
+	// 	$Source = $_POST['OldSource'];
+	// 	$RedirectUrl = $_POST['OldRedirectUrl'];
+	// 	$LitPic = $_POST['OldLitPic'];
 
-		$Release = null;//修改文章发布状态的：1 -> 发布，2 -> 取消发布
-		if(isset($_POST['NewSource']))
-			$Source = $_POST['NewSource'];
-		if(isset($_POST['NewTitle']))
-			$NewTitle = $_POST['NewTitle'];
-		if(isset($_POST['NewRedirectUrl']))
-			$RedirectUrl = $_POST['NewRedirectUrl'];
-		if(isset($_POST['NewLitPic']))
-			$LitPic = $_POST['NewLitPic'];
+	// 	$Release = null;//修改文章发布状态的：1 -> 发布，2 -> 取消发布
+	// 	if(isset($_POST['NewSource']))
+	// 		$Source = $_POST['NewSource'];
+	// 	if(isset($_POST['NewTitle']))
+	// 		$NewTitle = $_POST['NewTitle'];
+	// 	if(isset($_POST['NewRedirectUrl']))
+	// 		$RedirectUrl = $_POST['NewRedirectUrl'];
+	// 	if(isset($_POST['NewLitPic']))
+	// 		$LitPic = $_POST['NewLitPic'];
 
-		if(isset($_POST['Release']))
-			$Release = $_POST['Release'];
-		$error_code = $this->editArc($ID,$UserID,$OldTitle,$NewTitle,$Source,$RedirectUrl,$LitPic,$Release);
-		return $error_code;
-	}
+	// 	if(isset($_POST['Release']))
+	// 		$Release = $_POST['Release'];
+	// 	$error_code = $this->editArc($ID,$UserID,$OldTitle,$NewTitle,$Source,$RedirectUrl,$LitPic,$Release);
+	// 	return $error_code;
+	// }
 	
-	//Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户没有发布的文章	3 -> 查找用户所有的文章
-	public function findArchive() {
-		if(!isset($_POST['ID'])){
-			return null;
-		}
-		$ID = $_POST['ID'];
-		$row = $this->findArcByID($ID);
-		return $row;
-	}
+	// //Type: 0 -> 查找用户收藏的类型   1 ->  查找用户已发布的文章	2 -> 查找用户没有发布的文章	3 -> 查找用户所有的文章
+	// public function findArchive() {
+	// 	if(!isset($_POST['ID'])){
+	// 		return null;
+	// 	}
+	// 	$ID = $_POST['ID'];
+	// 	$row = $this->findArcByID($ID);
+	// 	return $row;
+	// }
 	
-	public function findUserArchive() {
-		$Type = $_POST['Type'];
-		$UserID = $_POST['UserID'];
-		$row = $this->findUserArc($UserID, $Type);
-		return $row;
-	}
+	// public function findUserArchive() {
+	// 	$Type = $_POST['Type'];
+	// 	$UserID = $_POST['UserID'];
+	// 	$row = $this->findUserArc($UserID, $Type);
+	// 	return $row;
+	// }
 
 	public function addArc($ID, $Title, $UserID, $Writer, $Source,  $RedirectUrl, $LitPic, $PubDate) {
 		$sql = "INSERT INTO e0_archives (ID, Title, Writer, Source, RedirectUrl, LitPic, PubDate,State) VALUES (".$this->db->escape($ID).",".$this->db->escape($Title).",".$this->db->escape($Writer).",".$this->db->escape($Source).",".$this->db->escape($RedirectUrl).",".$this->db->escape($LitPic).",".$this->db->escape($PubDate).",0)";
