@@ -167,6 +167,7 @@
   //初始化内容精选
   var initComArc = function(){
     getComArc(_init_range,function(err,data){
+      console.log(data);
       var _html = ejs.render(summary_box_html,{summary:data});
       $summary_box.append(_html);
     });
