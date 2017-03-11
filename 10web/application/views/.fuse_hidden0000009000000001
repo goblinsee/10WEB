@@ -37,6 +37,7 @@
 
 <!-- 四个导航模块 -->
 <div class="detail am-container">
+    
   <div class="detail-item">  
     <a href="/index.php/team">
       <div class="detail-item-icon">
@@ -167,7 +168,6 @@
   //初始化内容精选
   var initComArc = function(){
     getComArc(_init_range,function(err,data){
-      console.log(data);
       var _html = ejs.render(summary_box_html,{summary:data});
       $summary_box.append(_html);
     });

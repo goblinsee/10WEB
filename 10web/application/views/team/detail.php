@@ -4,10 +4,12 @@
     <title>社团简介</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/team_detail.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/team_detail.css?asd">
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
 </head>
+
 <body>
+    <div class="fixed-bg"></div>
     <!-- 背景 -->
     <div class="team_detail_bg">
 
@@ -42,7 +44,6 @@
     
         <!-- 部门的介绍 -->
         <div class="team_detail_body">
-            <img src="/assets/i/icon/l_7.png" />
             <div class="body-content">
                 <div class="title">
                     <h1>web组</h1>
@@ -74,14 +75,14 @@
             </div>
 
             <div class="decorate_5">
-                <img src="./assets/i/icon/l_5.png">
+                <img src="/assets/i/icon/l_5.png">
             </div>
         </div>
-        
-        <!--背景的遮罩-->
-        <div class="team_detail_bg_mask">
-        </div>
     </div>
+
+
+<!--背景的遮罩-->
+<div class="team_detail_bg_mask"></div>
 
 <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 <script type="text/javascript">
@@ -136,6 +137,11 @@
 
     $(".breif_item").hover(function(e){
         var text = $(e.currentTarget).text(); 
+        render_content(text);
+    });
+
+    //分离出函数
+    var render_content  = function(text){
         var breif_item = {};
 
         for(var i in breif_data){
@@ -145,9 +151,10 @@
         }
         $body_title.html(breif_item.title);
         $body_content.html(breif_item.data);
-    });
+    }
+
+    render_content('web组');
+
 </script>
-
-
 </body>
 </html>

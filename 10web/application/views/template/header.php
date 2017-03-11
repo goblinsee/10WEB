@@ -155,10 +155,10 @@
             <li class="am-dropdown am-navvv" data-am-dropdown="">
               <span class="dis ">导航</span></a>
               <ul class="am-dropdown-content am-content">
-                <li><a href="">社团简介</a></li>
-                <li><a href="">技术文章</a></li>
-                <li><a href="">社团活动</a></li>
-                <li><a href="">生活服务</a></li>
+                <li><a href="/index.php/team">社团简介</a></li>
+                <li><a href="/index.php/archive">技术文章</a></li>
+                <li><a href="/index.php/activity">社团活动</a></li>
+                <li><a href="/index.php/webtools">web工具s</a></li>
               </ul>
             </li>
           </a>
