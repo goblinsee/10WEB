@@ -8,8 +8,8 @@
     /**
      * 获取和某一个人的消息
      * 
-     * @param re_id {string} 相关人的id
-     * @param cb {function} 回调函数
+     * @param {string} re_id 相关人的id
+     * @param {function} cb  回调函数
      */
     Message.fn.get = function(re_id,cb){
         //知道和我对话的人是谁
@@ -29,8 +29,8 @@
     /**
      * 获取和你聊天联系相关人的信息
      * 
-     * @param re_id {string} 相关的人的id
-     * @param cb {function} 回调函数
+     * @param {string} re_id  相关的人的id
+     * @param {function} cb  回调函数
      */
     Message.fn.getInfo = function(re_id,cb){
         $.ajax({
@@ -78,5 +78,4 @@
             }
         });
     }
-
 })(jQuery)
