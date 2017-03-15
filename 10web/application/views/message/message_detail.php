@@ -168,9 +168,12 @@ $(document).ready(function(){
         <% 
             //如果是我自己发出的消息
             var dire_flag = 'r';
+            var headIcon = val.SenderHeadIcon;
             if(val.Sender == val.Abouter){
+                headIcon = val.SenderHeadIcon;
                 dire_flag = 'r';
             }else{
+                headIcon = val.ReceiverHeadIcon;
                 dire_flag = 'l';
             }
         %>

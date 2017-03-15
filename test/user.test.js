@@ -41,5 +41,24 @@ describe('用户部分模块测试',function(){
         });
     });
 
+    it("根据session获取当前用户的个人信息",function(done){
+        user.done(function(err,request){
+            if(err)
+                throw new Error(err);
+            request('http://www.jyonline.cc:6070/index.php/api/User/GetUserInfoBySession',function(err,req,body){
+                if(err)
+                    throw new Error(err);
+                try{
+                    body = JSON.parse(body);
+                    if(body.Flag < 0)
+                        throw Error("返回信息错误");
+                    done();
+                }catch(e){
+                    throw Error(e);
+                }
+            });
+        });
+    });
+
 });
 
