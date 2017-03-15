@@ -150,7 +150,7 @@ $(document).ready(function(){
         //发送消息事件监听
         $("#msg-send").click(_sendMsg_fn);
         $msg_content.keydown(function(e){
-            if(e.keyCode == 13){
+            if(e.keyCode == 13 && e.white == 13){
                 _sendMsg_fn();    
             }
         });
