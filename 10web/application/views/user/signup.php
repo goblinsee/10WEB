@@ -182,6 +182,14 @@ $(document).ready(function(){
       $to_login.click();
     });
 
+    //监听回车事件
+    $('.login-input-box').on('keydown','input',function(e){
+        if(e.which == 13){
+          var btn = $('.am-active').find('button')[0];
+          $(btn).click();
+        }
+    });
+
     //----------------------------------------->登陆用函数
     var login_fn = function(e,cb){
         //检查输入框的字符串
