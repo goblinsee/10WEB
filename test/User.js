@@ -119,4 +119,10 @@ User.fn.getMsg = function(cb){
     });
 }
 
+/**
+ * 获取与用户有关的文章
+ * @
+ */
+
+
 exports = module.exports = User;
