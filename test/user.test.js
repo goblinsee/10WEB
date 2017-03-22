@@ -41,6 +41,7 @@ describe('用户部分模块测试',function(){
         });
     });
 
+
     it('获取与用户有关的文章API',function(done){
         user.done(function(err,request){
             request.post('http://localhost:6070/index.php/api/user/GetUserArchives',function(err,req,body){
@@ -163,6 +164,7 @@ describe('用户部分模块测试',function(){
                 done();
             })
         })
+
     });
 
 });

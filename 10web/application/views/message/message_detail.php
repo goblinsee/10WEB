@@ -150,7 +150,7 @@ $(document).ready(function(){
         //发送消息事件监听
         $("#msg-send").click(_sendMsg_fn);
         $msg_content.keydown(function(e){
-            if(e.keyCode == 13){
+            if(e.keyCode == 13 || e.white == 13){
                 _sendMsg_fn();    
             }
         });
@@ -168,16 +168,19 @@ $(document).ready(function(){
         <% 
             //如果是我自己发出的消息
             var dire_flag = 'r';
+            var headIcon = "";
             if(val.Sender == val.Abouter){
+                headIcon = val.SenderHeadIcon;
                 dire_flag = 'r';
             }else{
+                headIcon = val.ReceiverHeadIcon;
                 dire_flag = 'l';
             }
         %>
 
         <div class="msg-item-<%- dire_flag %> clearfix">
             <div class="msg-item-head">
-                <img src="<%- val.ReceiverHeadIcon %>">
+                <img src="<%- headIcon %>">
             </div>
             <div class="msg-item-body">
                 <%- val.Content %>
