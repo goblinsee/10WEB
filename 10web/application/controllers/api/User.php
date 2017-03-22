@@ -1,6 +1,7 @@
 <?php
 
 require("tools.php");
+require("Archive.php");
 
 class User extends CI_Controller {
     public function __construct(){
@@ -132,7 +133,9 @@ class User extends CI_Controller {
      * 如果要获取以上三种中的某种直接传入参数0，1，2即可，但是如果要获取所有自己写的文章，即要获取类型1和类型2的文章，传入参数3(但是3不是用户和文章的关系)
      */
     public function GetUserArchives(){
-        $archives = $this->Archives_model->findUserArchive();//传入
+        $user_id = $userid = $this->session->userdata['info'][0]['ID'];
+        $type = $_POST['Type'];
+        $archives = $this->archives_model->findArcByUserID($user_id,$type);//传入
         print_r($archives);
     }
 

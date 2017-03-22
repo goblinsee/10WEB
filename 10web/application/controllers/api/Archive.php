@@ -168,7 +168,7 @@ public function delArchive() {
 	public function findUserArchive() {
 		$Type = $_POST['Type'];
 		$UserID = $_POST['UserID'];
-		$row = $this->Archives_model->findUserArc($UserID, $Type);
+		$row = $this->Archives_model->findArcByUserID($UserID, $Type);
 		return $row;
 	}
 //--------------------------->2017年2月15日增加
