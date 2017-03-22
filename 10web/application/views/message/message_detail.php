@@ -76,7 +76,6 @@ $(document).ready(function(){
         var Content = $msg_content.val().trim();
         if(Content.length == 0)
             return ;
-
         $.ajax({
             url:'/index.php/api/message/SendMessageToUser',
             type:'post',
@@ -104,6 +103,10 @@ $(document).ready(function(){
         getInitMsgData(function(err,data){
             var msg_box_html = ejs.render(_msg_box_html,{messages:data});
             $('.e0-msg-box-content').html(msg_box_html);
+            setTimeout(function() {
+                var $box = $('.e0-msg-box-content');
+                $box.scrollTop($box.height());
+            }, 100);
         });
     };
 
@@ -124,6 +127,7 @@ $(document).ready(function(){
         initBtn();
     }
 
+    //初始化按键监听
     var initBtn = function(){
         //返回按钮
         $("#back-btn").click(function(){
@@ -137,6 +141,7 @@ $(document).ready(function(){
                     return ;
                 }
                 if(data.Flag > 0){
+                    //直接再次读取数据
                     initMsg();
                     $msg_content.val("");
                 }
@@ -145,7 +150,7 @@ $(document).ready(function(){
         //发送消息事件监听
         $("#msg-send").click(_sendMsg_fn);
         $msg_content.keydown(function(e){
-            if(e.keyCode == 13){
+            if(e.keyCode == 13 || e.white == 13){
                 _sendMsg_fn();    
             }
         });
@@ -163,16 +168,19 @@ $(document).ready(function(){
         <% 
             //如果是我自己发出的消息
             var dire_flag = 'r';
+            var headIcon = "";
             if(val.Sender == val.Abouter){
+                headIcon = val.SenderHeadIcon;
                 dire_flag = 'r';
             }else{
+                headIcon = val.ReceiverHeadIcon;
                 dire_flag = 'l';
             }
         %>
 
         <div class="msg-item-<%- dire_flag %> clearfix">
             <div class="msg-item-head">
-                <img src="<%- val.ReceiverHeadIcon %>">
+                <img src="<%- headIcon %>">
             </div>
             <div class="msg-item-body">
                 <%- val.Content %>

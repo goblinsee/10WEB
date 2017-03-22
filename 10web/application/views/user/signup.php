@@ -17,7 +17,7 @@
 <div id="login-bg">
   <div class="login-container">
     <div class="login-icon">
-      <a href="/"><img src="/assets/i/web_logo.gif"></a>
+      <a href="/"><img src="/assets/i/web_logo.png"></a>
     </div>
 
     <div class="login-body">
@@ -182,6 +182,14 @@ $(document).ready(function(){
       $to_login.click();
     });
 
+    //监听回车事件
+    $('.login-input-box').on('keydown','input',function(e){
+        if(e.which == 13){
+          var btn = $('.am-active').find('button')[0];
+          $(btn).click();
+        }
+    });
+
     //----------------------------------------->登陆用函数
     var login_fn = function(e,cb){
         //检查输入框的字符串
@@ -201,10 +209,6 @@ $(document).ready(function(){
 
         //加载登陆动画
         var word = disableBtn(e).trim();
-        console.log({
-            Account:username,
-            Password:hex_md5(password)
-          });
 
         //发送ajax请求
         $.ajax({
@@ -212,7 +216,7 @@ $(document).ready(function(){
           type:'post',
           data:{
             Account:username,
-            Password:hex_md5(password)
+            Password:password//hex_md5(password)
           },
           success:function(data){
             //简单处理信息
@@ -266,7 +270,8 @@ $(document).ready(function(){
         type:'post',
         data:{
           Account:username,
-          Password:hex_md5(password)
+          Password:password,//hex_md5(password)
+          Usernick:usernick
         },
         success:function(data){
           //简单处理信息

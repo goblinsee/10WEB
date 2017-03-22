@@ -1,3 +1,5 @@
 
 10web/application/config/*
 db/*
+node_modules/*
+*.log.*
